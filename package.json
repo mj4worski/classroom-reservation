@@ -6,11 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "storybook": "start-storybook -p 8080 -c .storybook"
   },
   "author": "Mateusz Jaworski (jaworskimateusz2@gmail.com)",
   "license": "ISC",
   "devDependencies": {
+    "@storybook/react": "^3.3.3",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-es2015-destructuring": "^6.23.0",
