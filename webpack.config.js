@@ -84,7 +84,6 @@ module.exports = {
             Tether: 'tether',
             'window.Tether': 'tether',
             Popper: ['popper.js', 'default'],
-            'window.Tether': 'tether',
         }),
     ]
 };
