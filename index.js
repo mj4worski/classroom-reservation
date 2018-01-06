@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'bootstrap';
 
-import HelloWord from './src/HelloWord.jsx';
+import './main.scss';
 
-ReactDOM.render(<HelloWord />, document.getElementById('app'),);
+import App from './src';
+
+ReactDOM.render(<App />, document.getElementById('app'));
