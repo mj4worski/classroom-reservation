@@ -4,7 +4,7 @@ import React from 'react';
 import './Navigatio.scss';
 
 export default () => (
-  <nav className="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+  <nav className="navbar navbar-expand-lg navbar-dark cr-navbar fixed-top">
     <div className="container">
       <a className="navbar-brand" href="#">Rezerwacja sal</a>
       <button
