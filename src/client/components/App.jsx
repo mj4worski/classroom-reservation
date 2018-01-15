@@ -31,7 +31,6 @@ const BasicSection = () => (
   </section>
 );
 
-
 export default () => (
   <Fragment>
     <Navigation />
