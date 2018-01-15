@@ -26,21 +26,16 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
-        test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: 'url-loader?limit=10000',
-      },
-      {
         test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
         use: 'file-loader',
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        use: [
-          'file-loader?name=images/[name].[ext]',
-          'image-webpack-loader?bypassOnDebug',
-        ],
+        loader: 'file-loader',
+        options: {
+          name: '[path][name].[ext]',
+        },
       },
-
       {
         test: /\.css$/, use: ['style-loader', 'css-loader', 'postcss-loader'],
       },

@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import Navigation from './navigation';
 import Header from './header';
 import Footer from './footer';
+import imageSrc from '../../../assets/images/agh.jpg';
 
 import './App.scss';
 import '../main.scss';
@@ -12,8 +13,7 @@ const BasicSection = () => (
       <div className="row align-items-center">
         <div className="col-lg-6 order-lg-2">
           <div className="p-5">
-            {/* @fixme: webpack server (static files loading) */}
-            <img className="img-fluid rounded-circle" src="../../../assets/images/agh.jpg" alt="" />
+            <img className="img-fluid rounded-circle" src={imageSrc} alt="" />
           </div>
         </div>
         <div className="col-lg-6 order-lg-1">
