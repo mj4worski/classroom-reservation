@@ -1,12 +1,17 @@
-.bg-black {
-  background-color: #000
-}
-
-.footer {
+.cr-footer {
+  background-color: #000;
   max-height: 300px;
 
   &__container {
     display: flex;
     align-items: center;
+  }
+
+  &__agh-logo {
+    height: 80px;
+
+    @media (min-width: 992px) {
+        height: 250px;
+    }
   }
 }

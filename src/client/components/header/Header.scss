@@ -62,9 +62,10 @@
   border-color: white;
   border-radius: 5rem;
   text-transform: uppercase;
-  padding: 1.5rem 3rem;
-  font-size: .9rem;
+  padding: 1rem 2.5rem;
+  font-size: .6rem;
   font-weight: 700;
+  color: white;
   letter-spacing: .1rem;
 
   &:active,
@@ -91,5 +92,10 @@
 
   .cr-header-content__subheading {
     font-size: 4rem
+  }
+
+  .cr-button {
+    padding: 1.5rem 3rem;
+    font-size: .9rem;
   }
 }
