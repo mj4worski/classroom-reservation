@@ -4,7 +4,7 @@
   position: relative;
   overflow: hidden;
   padding-top: calc(7rem + 72px);
-  padding-bottom: 7rem;
+  padding-bottom: 2rem;
   background: linear-gradient(45deg, $green-color, $black-color 55%, $red-color) no-repeat scroll center center;
   background-size: cover
 }
@@ -83,7 +83,7 @@
 @media (min-width: 992px) {
   .cr-header {
     padding-top: calc(10rem + 55px);
-    padding-bottom: 10rem
+    padding-bottom: 9rem
   }
 
   .cr-header-content__heading {

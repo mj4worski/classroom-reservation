@@ -9,9 +9,19 @@
 
   &__agh-logo {
     height: 80px;
+  }
+}
 
-    @media (min-width: 992px) {
-        height: 250px;
+@media (min-width: 992px) {
+  .cr-footer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1030;
+
+    &__agh-logo {
+      height: 175px;
     }
   }
 }
