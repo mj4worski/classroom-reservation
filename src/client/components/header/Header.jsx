@@ -4,17 +4,17 @@ import React from 'react';
 import './Header.scss';
 
 export default () => (
-  <header className="masthead text-center text-white">
-    <div className="masthead-content">
+  <header className="cr-header text-center text-white">
+    <div className="cr-header-content">
       <div className="container">
-        <h1 className="masthead-heading mb-0">Rezerwacja sal</h1>
-        <h2 className="masthead-subheading mb-0">Akademia Górniczo-Hutnicza</h2>
-        <a href="#" className="btn btn-primary btn-xl rounded-pill mt-5">Sprawdź dostępność</a>
+        <h1 className="cr-header-content__heading mb-0">Rezerwacja sal</h1>
+        <h2 className="cr-header-content__subheading mb-0">Akademia Górniczo-Hutnicza</h2>
+        <a href="#" className="btn cr-button mt-5">Sprawdź dostępność</a>
       </div>
     </div>
-    <div className="bg-circle-1 bg-circle" />
-    <div className="bg-circle-2 bg-circle" />
-    <div className="bg-circle-3 bg-circle" />
-    <div className="bg-circle-4 bg-circle" />
+    <div className="cr-circle cr-circle--position-1" />
+    <div className="cr-circle cr-circle--position-2" />
+    <div className="cr-circle cr-circle--position-3" />
+    <div className="cr-circle cr-circle--position-4" />
   </header>
 );

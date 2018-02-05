@@ -1,103 +1,95 @@
 @import "../../theme.scss";
 
-header.masthead {
+.cr-header {
   position: relative;
   overflow: hidden;
   padding-top: calc(7rem + 72px);
   padding-bottom: 7rem;
-  background: linear-gradient(45deg, $green-color, $black-color 55%, $red-color);
-
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: scroll;
+  background: linear-gradient(45deg, $green-color, $black-color 55%, $red-color) no-repeat scroll center center;
   background-size: cover
 }
 
-header.masthead .masthead-content {
+.cr-header-content {
   z-index: 1;
   position: relative
 }
 
-header.masthead .masthead-content .masthead-heading {
-  font-size: 4rem
+.cr-header-content__heading {
+  font-size: 3rem
 }
 
-header.masthead .masthead-content .masthead-subheading {
-  font-size: 2rem
+.cr-header-content__subheading {
+  font-size: 1rem
 }
 
-header.masthead .bg-circle {
+.cr-circle {
   z-index: 0;
   position: absolute;
   border-radius: 100%;
   background: linear-gradient(45deg, $green-color, $black-color 50%, $red-color)
 }
 
-header.masthead .bg-circle-1 {
+.cr-circle--position-1 {
   height: 90rem;
   width: 90rem;
   bottom: -55rem;
   left: -55rem
 }
 
-header.masthead .bg-circle-2 {
+.cr-circle--position-2 {
   height: 50rem;
   width: 50rem;
   top: -25rem;
   right: -25rem
 }
 
-header.masthead .bg-circle-3 {
+.cr-circle--position-3 {
   height: 20rem;
   width: 20rem;
   bottom: -10rem;
   right: 5%
 }
 
-header.masthead .bg-circle-4 {
+.cr-circle--position-4 {
   height: 30rem;
   width: 30rem;
   top: -5rem;
   right: 35%
 }
 
-@media (min-width: 992px) {
-  header.masthead {
-    padding-top: calc(10rem + 55px);
-    padding-bottom: 10rem
-  }
-
-  header.masthead .masthead-content .masthead-heading {
-    font-size: 6rem
-  }
-
-  header.masthead .masthead-content .masthead-subheading {
-    font-size: 4rem
-  }
-}
-
-.btn-primary {
+.cr-button {
   background-color: $black-color;
   border-color: white;
-}
-
-.btn-primary:active, .btn-primary:focus, .btn-primary:hover {
-  background-color: $red-color;
-  border-color: white;
-}
-
-.btn-primary:focus {
-  box-shadow: 0 0 0 .2rem rgba(238, 9, 121, .5)
-}
-
-.btn-xl {
+  border-radius: 5rem;
   text-transform: uppercase;
   padding: 1.5rem 3rem;
   font-size: .9rem;
   font-weight: 700;
-  letter-spacing: .1rem
+  letter-spacing: .1rem;
+
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: $red-color;
+    border-color: white;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 .2rem rgba(238, 9, 121, .5)
+  }
 }
 
-.rounded-pill {
-  border-radius: 5rem
+@media (min-width: 992px) {
+  .cr-header {
+    padding-top: calc(10rem + 55px);
+    padding-bottom: 10rem
+  }
+
+  .cr-header-content__heading {
+    font-size: 6rem
+  }
+
+  .cr-header-content__subheading {
+    font-size: 4rem
+  }
 }
