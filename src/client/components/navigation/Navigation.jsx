@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import Login from '../Login';
 
 import './Navigatio.scss';
 
@@ -24,7 +25,7 @@ export default () => (
             <a className="nav-link" href="#">Rejestracja</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">Logowanie</a>
+            <Login />
           </li>
         </ul>
       </div>
