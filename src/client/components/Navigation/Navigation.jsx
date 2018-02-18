@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Login from '../Login';
 
 import './Navigatio.scss';
@@ -22,7 +23,7 @@ export default () => (
       <div className="collapse navbar-collapse" id="navbarResponsive">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-            <a className="nav-link" href="#">Rejestracja</a>
+            <Link to="/registration" className="nav-link">Rejestracja</Link>
           </li>
           <li className="nav-item">
             <Login />

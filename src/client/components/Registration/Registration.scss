@@ -1,0 +1,23 @@
+.registration-form {
+  &__label {
+    width: 100%;
+  }
+
+  &__button {
+    width: 75%;
+    margin-left: 12.5%;
+  }
+}
+
+@media (min-width: 992px) {
+  .registration-form {
+    &__label {
+      width: 100%;
+    }
+
+    &__button {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+}
