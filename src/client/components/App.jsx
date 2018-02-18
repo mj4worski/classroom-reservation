@@ -1,41 +1,23 @@
-import React, { Fragment } from 'react';
-import Navigation from './navigation';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+} from 'react-router-dom';
+
+import Routes from './Routes';
+import Navigation from './Navigation';
 import Header from './header';
 import Footer from './footer';
-import imageSrc from '../../../assets/images/agh.jpg';
 
 import './App.scss';
 import '../main.scss';
 
-const BasicSection = () => (
-  <section>
-    <div className="container">
-      <div className="row align-items-center">
-        <div className="col-lg-6 order-lg-2">
-          <div className="p-5">
-            <img className="img-fluid rounded-circle" src={imageSrc} alt="" />
-          </div>
-        </div>
-        <div className="col-lg-6 order-lg-1">
-          <div className="p-5">
-            <h2 className="display-4">Lorem ipsum dolor sit amet...</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Quod aliquid, mollitia odio veniam sit iste esse assumenda
-                amet aperiam exercitationem, ea animi blanditiis recusandae!
-                Ratione voluptatum molestiae adipisci, beatae obcaecati.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
 export default () => (
-  <Fragment>
-    <Navigation />
-    <Header />
-    <BasicSection />
-    <Footer />
-  </Fragment>
+  <Router>
+    <div>
+      <Navigation />
+      <Header />
+      <Routes />
+      <Footer />
+    </div>
+  </Router>
 );
