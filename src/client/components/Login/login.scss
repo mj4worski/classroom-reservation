@@ -1,0 +1,29 @@
+.dropdown-container {
+  margin-top: 15px;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.login-form {
+  &__label {
+    width: 100%;
+  }
+
+  &__button {
+    width: 75%;
+    margin-left: 12.5%;
+  }
+}
+
+@media (min-width: 992px) {
+  .login-form {
+    &__label {
+      color:white;
+      width: 100%;
+    }
+
+    &__button {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+}

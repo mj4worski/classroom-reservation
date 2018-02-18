@@ -1,11 +1,14 @@
 import React from 'react';
-
 import LoginFrom from './LoginForm';
 
+import './login.scss';
+
 const LoginDesktop = () => (
-  <div className="dropdown show">
+  <div className="dropdown">
     <span className="nav-link dropdown-toggle" data-toggle="dropdown">Logowanie Desktop</span>
-    <LoginFrom />
+    <div className="dropdown-menu dropdown-container">
+      <LoginFrom />
+    </div>
   </div>
 );
 

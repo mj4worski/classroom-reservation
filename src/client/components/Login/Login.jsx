@@ -10,7 +10,7 @@ const Login = () => (
           if (matches) {
               return <LoginDesktop />;
           }
-              return <Link to="/login">Logowanie Mobilne</Link>;
+              return <Link to="/login" className="nav-link">Logowanie Mobilne</Link>;
       }}
   </MediaQuery>
 );
