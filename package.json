@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "start": "webpack-dev-server",
+    "start:server": "node src/server/server.js",
     "storybook": "start-storybook -p 8080 -c .storybook",
     "lint": "eslint --ext js,jsx src"
   },
@@ -42,6 +43,7 @@
     "autoprefixer": "^7.2.3",
     "bootstrap": "^4.0.0-beta.3",
     "exports-loader": "^0.6.4",
+    "express": "^4.16.2",
     "imports-loader": "^0.7.1",
     "popper.js": "^1.12.9",
     "postcss-loader": "^2.0.9",
