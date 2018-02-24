@@ -31,6 +31,10 @@
           "preferButton"
         ]
       }
-    ]
+    ],
+    "consistent-return": "off",
+    "no-shadow":"off",
+    "no-underscore-dangle": "off",
+    "func-names": "off"
   }
 }
