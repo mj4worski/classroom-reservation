@@ -12,7 +12,7 @@ router.post('/registration', (req, res, next) => {
         return next(error);
       }
       req.session.userId = user._id;
-      return res;
+      return res.status(200).end();
     });
   } else {
     const err = new Error('All fields required');
@@ -34,7 +34,7 @@ router.post('/login', (req, res, next) => {
       return next(err);
     }
     req.session.userId = user._id;
-    return res.status(200);
+    return res.status(200).end();
   });
 });
 

@@ -1,8 +1,15 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { registration } from './actions';
 
 import './Registration.scss';
 
-export default class Registration extends PureComponent {
+class Registration extends PureComponent {
+    static propTypes = {
+      onSubmitRequest: PropTypes.func.isRequired,
+    };
+
     state = {
       email: '',
       password: '',
@@ -17,7 +24,9 @@ export default class Registration extends PureComponent {
     };
 
     onSubmit = () => {
-
+      const { onSubmitRequest } = this.props;
+      const { email, password } = this.state;
+      onSubmitRequest({ email, password });
     };
 
     render() {
@@ -58,9 +67,11 @@ export default class Registration extends PureComponent {
             className="registration-form__button btn btn-danger"
             onClick={this.onSubmit}
           >
-                    Zarejestruj
+              Zarejestruj
           </button>
         </form>
       );
     }
 }
+
+export default connect(null, { onSubmitRequest: registration })(Registration);

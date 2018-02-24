@@ -6,12 +6,13 @@ const autoprefixer = require('autoprefixer');
 const precss = require('precss');
 
 module.exports = {
-  entry: './src/client/index.js',
+  entry: ['babel-polyfill', './src/client/index.js'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
   },
 
+  devtool: 'source-map',
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
@@ -82,6 +83,9 @@ module.exports = {
       Tether: 'tether',
       'window.Tether': 'tether',
       Popper: ['popper.js', 'default'],
+    }),
+    new webpack.DefinePlugin({
+      SERVICE_URL: JSON.stringify('http://localhost:3000'),
     }),
   ],
 };

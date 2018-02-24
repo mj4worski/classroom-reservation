@@ -1,2 +1,2 @@
-export { default } from './Login.jsx';
-export { default as LoginMobile } from './LoginMobile.jsx';
+export { default } from './Login';
+export { default as LoginMobile } from './LoginMobile';

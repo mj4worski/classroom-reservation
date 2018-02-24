@@ -1,10 +1,19 @@
-/* eslint-disable import/extensions */
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import 'bootstrap';
+import App from './components/App';
+import { sagaMiddleware, createStore, rootSaga } from './config';
 
 import './main.scss';
 
-import App from './components/App.jsx';
+const store = createStore();
+sagaMiddleware.run(rootSaga);
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('app'),
+);
