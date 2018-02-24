@@ -2,6 +2,7 @@
   "presets": ["es2015","env", "react"],
   "plugins": [
     "transform-es2015-destructuring",
-    "transform-object-rest-spread"
+    "transform-object-rest-spread",
+    "transform-class-properties"
   ]
 }
