@@ -8,7 +8,6 @@ const registration = (user) => {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body,
-    credentials: 'include',
   }).then(res => res.status)
     .catch(err => err);
 };

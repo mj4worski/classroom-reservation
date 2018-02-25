@@ -23,7 +23,8 @@ class Registration extends PureComponent {
       this.setState({ password: target.value });
     };
 
-    onSubmit = () => {
+    onSubmit = (event) => {
+      event.preventDefault();
       const { onSubmitRequest } = this.props;
       const { email, password } = this.state;
       onSubmitRequest({ email, password });
