@@ -5,10 +5,10 @@ export const registration = user => ({
   user,
 });
 
-export const succeededLogin = () => ({
+export const succeededRegistration = () => ({
   type: SUCCEEDED_REGISTRATION,
 });
 
-export const failedLogin = () => ({
+export const failedRegistration = () => ({
   type: FAILED_REGISTRATION,
 });

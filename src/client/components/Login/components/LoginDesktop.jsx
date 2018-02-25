@@ -1,7 +1,7 @@
 import React from 'react';
 import LoginFrom from './LoginForm';
 
-import './login.scss';
+import './LoginDesktop.scss';
 
 const LoginDesktop = () => (
   <div className="dropdown">

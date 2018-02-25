@@ -7,7 +7,6 @@ import Header from './header';
 import Footer from './footer';
 
 import './App.scss';
-import '../main.scss';
 
 export default () => (
   <Router>
