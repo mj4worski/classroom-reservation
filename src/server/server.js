@@ -4,6 +4,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
 const routes = require('./routes/router');
+const cors = require('cors');
 
 mongoose.connect('mongodb://localhost:27017/classroom');
 const db = mongoose.connection;
@@ -26,6 +27,12 @@ app.use(session({
   }),
 }));
 
+const corsOptions = {
+  origin: 'http://localhost:8080',
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
