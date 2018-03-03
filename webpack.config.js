@@ -37,31 +37,27 @@ module.exports = {
         },
       },
       {
-        test: /\.css$/, use: ['style-loader', 'css-loader', 'postcss-loader'],
+        test: /\.css$/, use: ['style-loader?singleton', 'css-loader', 'postcss-loader'],
       },
       {
         test: /\.(scss)$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader', // translates CSS into CommonJS modules
-            }, {
-              loader: 'postcss-loader', // Run post css actions
-              options: {
-                plugins() {
-                  // post css plugins, can be exported to postcss.config.js
-                  return [
-                    precss,
-                    autoprefixer,
-                  ];
-                },
-              },
-            }, {
-              loader: 'sass-loader', // compiles SASS to CSS
+        use: [{
+          loader: 'style-loader', // inject CSS to page
+        }, {
+          loader: 'css-loader', // translates CSS into CommonJS modules
+        }, {
+          loader: 'postcss-loader', // Run post css actions
+          options: {
+            plugins() { // post css plugins, can be exported to postcss.config.js
+              return [
+                precss,
+                autoprefixer,
+              ];
             },
-          ],
-        }),
+          },
+        }, {
+          loader: 'sass-loader', // compiles Sass to CSS
+        }],
       },
     ],
   },

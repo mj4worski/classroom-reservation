@@ -1,0 +1,48 @@
+$cell-min-width: 45px;
+
+header {
+  text-align: center;
+}
+
+.calendar-content {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.weekdays {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 0;
+  flex-wrap: nowrap;
+  width: 100%;
+  min-height: 35px;
+  background-color: green;
+
+  &__day {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    min-width: $cell-min-width;
+    border: 1px solid #000000;
+  }
+}
+
+.days-container {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 0;
+  flex-wrap: nowrap;
+  width: 100%;
+  min-height: 65px;
+
+  &__day {
+    flex: 1;
+    overflow: hidden; //Dlaczego ?
+    white-space: nowrap;
+    text-overflow: ellipsis; // Jak zrobic 1 litere ?
+    min-width: $cell-min-width; // dopracowac wielkosc
+    border: 1px solid #000000;
+  }
+}

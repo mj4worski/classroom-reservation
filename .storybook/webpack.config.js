@@ -4,6 +4,13 @@ const webpackConfig = require('../webpack.config');
 
 module.exports = {
     module: webpackConfig.module,
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
+    devServer: {
+        inline: true,
+        hot: true
+    },
     plugins: [
         new ExtractTextPlugin("styles.css"),
         new webpack.ProvidePlugin({
