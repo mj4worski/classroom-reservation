@@ -29,7 +29,7 @@ header {
   }
 }
 
-.days-container {
+.week {
   display: flex;
   flex-direction: row;
   flex-grow: 0;
@@ -39,10 +39,10 @@ header {
 
   &__day {
     flex: 1;
-    overflow: hidden; //Dlaczego ?
+    overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis; // Jak zrobic 1 litere ?
-    min-width: $cell-min-width; // dopracowac wielkosc
+    text-overflow: ellipsis;
+    min-width: $cell-min-width;
     border: 1px solid #000000;
   }
 }

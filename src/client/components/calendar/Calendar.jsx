@@ -1,169 +1,59 @@
 import React, { Component } from 'react';
+import moment from 'moment';
+import { prepareWeeks } from './prepareWeeks';
 
 import './Calendar.scss';
 
+const Week = ({ date }) => {
+  const days = [];
+  let currentDate = date;
+  for (let i = 0; i < 7; i += 1) {
+    const dayNumber = currentDate.date();
+    days.push(<span className="week__day" key={dayNumber}>{dayNumber}</span>);
+    currentDate = date.add(1, 'd');
+  }
+
+  return (
+    <div className="week">
+      {days}
+    </div>
+  );
+};
+
 export default class Calendar extends Component {
+  state = {
+    month: moment(),
+  };
+
+  previous = () => {
+    this.setState({ month: this.state.month.add(-1, 'M') });
+  };
+
+  next = () => {
+    this.setState({ month: this.state.month.add(1, 'M') });
+  };
+
   render() {
+    const { month } = this.state;
     return (
       <div className="calendar">
         <header>
-          <h1>2017</h1>
+          <button onClick={this.previous}>Left</button>
+          <h1>{this.state.month.format('dddd, MMMM Do YYYY')}</h1>
+          <button onClick={this.next}>Rightss</button>
         </header>
         <div className="calendar-content">
           <div className="weekdays">
-            <div className="weekdays__day">Sunday</div>
-            <div className="weekdays__day">Monday</div>
-            <div className="weekdays__day">Tuesday</div>
-            <div className="weekdays__day">Wednesday</div>
-            <div className="weekdays__day">Thursday</div>
-            <div className="weekdays__day">Friday</div>
-            <div className="weekdays__day">Saturday</div>
+            <div className="weekdays__day">Niedziela</div>
+            <div className="weekdays__day">Poniedziałek</div>
+            <div className="weekdays__day">Wtorek</div>
+            <div className="weekdays__day">Środa</div>
+            <div className="weekdays__day">Czwartek</div>
+            <div className="weekdays__day">Piątek</div>
+            <div className="weekdays__day">Sobota</div>
           </div>
 
-          <div className="days-container">
-            <div className="days-container__day">
-              27
-            </div>
-            <div className="days-container__day">
-              28
-            </div>
-            <div className="days-container__day">
-              29
-            </div>
-            <div className="days-container__day">
-              30
-            </div>
-            <div className="days-container__day">
-              31
-            </div>
-
-            <div className="days-container__day">
-              1
-            </div>
-            <div className="days-container__day">
-              2
-            </div>
-          </div>
-
-          <div className="days-container">
-            <div className="days-container__day">
-              3
-            </div>
-            <div className="days-container__day">
-              4
-            </div>
-            <div className="days-container__day">
-              5
-            </div>
-            <div className="days-container__day">
-              6
-            </div>
-            <div className="days-container__day">
-              7
-            </div>
-            <div className="days-container__day">
-              8
-            </div>
-            <div className="days-container__day">
-              9
-            </div>
-          </div>
-
-          <div className="days-container">
-            <div className="days-container__day">
-              10
-            </div>
-            <div className="days-container__day">
-              11
-            </div>
-            <div className="days-container__day">
-              12
-            </div>
-            <div className="days-container__day">
-              13
-            </div>
-            <div className="days-container__day">
-              14
-            </div>
-            <div className="days-container__day">
-              15
-            </div>
-            <div className="days-container__day">
-              16
-            </div>
-          </div>
-
-          <div className="days-container">
-            <div className="days-container__day">
-              17
-            </div>
-            <div className="days-container__day">
-              18
-            </div>
-            <div className="days-container__day">
-              19
-            </div>
-            <div className="days-container__day">
-              20
-            </div>
-            <div className="days-container__day">
-              21
-            </div>
-            <div className="days-container__day">
-              22
-            </div>
-            <div className="days-container__day">
-              23
-            </div>
-          </div>
-
-          <div className="days-container">
-            <div className="days-container__day">
-              24
-            </div>
-            <div className="days-container__day">
-              25
-            </div>
-            <div className="days-container__day">
-              26
-            </div>
-            <div className="days-container__day">
-              27
-            </div>
-            <div className="days-container__day">
-              28
-            </div>
-            <div className="days-container__day">
-              29
-            </div>
-            <div className="days-container__day">
-              30
-            </div>
-          </div>
-
-          <div className="days-container">
-            <div className="days-container__day">
-              31
-            </div>
-            <div className="days-container__day">
-              1
-            </div>
-            <div className="days-container__day">
-              2
-            </div>
-            <div className="days-container__day">
-              3
-            </div>
-            <div className="days-container__day">
-              4
-            </div>
-            <div className="days-container__day">
-              5
-            </div>
-            <div className="days-container__day">
-              6
-            </div>
-          </div>
+          {prepareWeeks(month).map(week => <Week date={week} key={week.date() + week.month()} />)}
         </div>
       </div>
     );
