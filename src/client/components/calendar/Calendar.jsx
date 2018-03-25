@@ -40,7 +40,7 @@ export default class Calendar extends Component {
         <header>
           <button onClick={this.previous}>Left</button>
           <h1>{this.state.month.format('dddd, MMMM Do YYYY')}</h1>
-          <button onClick={this.next}>Rightss</button>
+          <button onClick={this.next}>Right</button>
         </header>
         <div className="calendar-content">
           <div className="weekdays">

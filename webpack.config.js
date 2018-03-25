@@ -26,15 +26,8 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
-        test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
-        use: 'file-loader',
-      },
-      {
         test: /\.(jpe?g|png|gif|svg)$/i,
         loader: 'file-loader',
-        options: {
-          name: '[path][name].[ext]',
-        },
       },
       {
         test: /\.css$/, use: ['style-loader?singleton', 'css-loader', 'postcss-loader'],

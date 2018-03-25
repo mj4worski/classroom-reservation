@@ -1,0 +1,29 @@
+.check-availability {
+  display: flex;
+  background-color: #344a71;
+  height: 9vh;
+  color: white;
+}
+
+.check-availability-heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  flex: 1;
+
+  &__tick {
+    height: 30%;
+  }
+
+  &__text {
+    font-size: 1.5rem;
+  }
+}
+
+.check-availability-interactive {
+  display: flex;
+  align-items: center;
+  flex: 6;
+  justify-content: space-around;
+}
