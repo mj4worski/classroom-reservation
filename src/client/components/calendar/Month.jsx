@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { prepareWeeks } from './prepareWeeks';
 import WeekDays from './WeekDays';
+import CalendarRow from './CalendarRow';
 
 import './Month.scss';
 
@@ -10,14 +11,14 @@ const Week = ({ date }) => {
   let currentDate = date;
   for (let i = 0; i < 7; i += 1) {
     const dayNumber = currentDate.date();
-    days.push(<span className="week__day" key={dayNumber}>{dayNumber}</span>);
+    days.push(<span className="month__day" key={dayNumber}>{dayNumber}</span>);
     currentDate = date.add(1, 'd');
   }
 
   return (
-    <div className="week">
+    <CalendarRow>
       {days}
-    </div>
+    </CalendarRow>
   );
 };
 

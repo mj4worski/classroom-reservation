@@ -1,16 +1,17 @@
 import React from 'react';
+import CalendarRow from './CalendarRow';
 import './WeekDays.scss';
 
 const WeekDays = () => (
-  <div className="week-days">
-    <div className="week-days__day">Niedziela</div>
-    <div className="week-days__day">Poniedziałek</div>
-    <div className="week-days__day">Wtorek</div>
-    <div className="week-days__day">Środa</div>
-    <div className="week-days__day">Czwartek</div>
-    <div className="week-days__day">Piątek</div>
-    <div className="week-days__day">Sobota</div>
-  </div>
+  <CalendarRow>
+    <div className="week-days">Niedziela</div>
+    <div className="week-days">Poniedziałek</div>
+    <div className="week-days">Wtorek</div>
+    <div className="week-days">Środa</div>
+    <div className="week-days">Czwartek</div>
+    <div className="week-days">Piątek</div>
+    <div className="week-days">Sobota</div>
+  </CalendarRow>
 );
 
 export default WeekDays;

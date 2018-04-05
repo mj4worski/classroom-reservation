@@ -24,6 +24,14 @@ export default class Calendar extends Component {
     this.setState({ month: this.state.month.add(1, 'M') });
   };
 
+  monthView = () => {
+    this.setState({ calendarType: CalendarType.MONTH });
+  };
+
+  weekView = () => {
+    this.setState({ calendarType: CalendarType.WEEK });
+  };
+
   render() {
     const { month, calendarType } = this.state;
     const CalendarContent = calendarType === CalendarType.MONTH ? Month : Week;
@@ -35,8 +43,8 @@ export default class Calendar extends Component {
             <h1>{this.state.month.format('MMMM YYYY')}</h1>
           </div>
           <div>
-            <button onClick={() => { this.setState({ calendarType: CalendarType.MONTH }); }}>Miesiac</button>
-            <button onClick={() => { this.setState({ calendarType: CalendarType.WEEK }); }}>Tydzien</button>
+            <button onClick={this.monthView}>Miesiac</button>
+            <button onClick={this.weekView}>Tydzien</button>
           </div>
           <div className="calendar-header__navigation">
             <button onClick={this.previous}>Left</button>

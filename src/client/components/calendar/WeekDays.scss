@@ -1,21 +1,8 @@
-//TODO:: Extract (DRY)
-$cell-min-width: 45px;
-
 .week-days {
-  display: flex;
-  flex-direction: row;
-  flex-grow: 0;
-  flex-wrap: nowrap;
-  width: 100%;
-  min-height: 35px;
-  background-color: green;
-
-  &__day {
     flex: 1;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    min-width: $cell-min-width;
     border: 1px solid #000000;
-  }
+    background-color: green;
 }
