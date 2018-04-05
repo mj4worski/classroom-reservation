@@ -37,20 +37,25 @@ export default class Calendar extends Component {
     const { month } = this.state;
     return (
       <div className="calendar">
-        <header>
-          <button onClick={this.previous}>Left</button>
-          <h1>{this.state.month.format('dddd, MMMM Do YYYY')}</h1>
-          <button onClick={this.next}>Right</button>
+        <header className="calendar-header">
+          <div>
+            <h1>{this.state.month.format('D dddd')}</h1>
+            <h1>{this.state.month.format('MMMM YYYY')}</h1>
+          </div>
+          <div className="calendar-header__navigation">
+            <button onClick={this.previous}>Left</button>
+            <button onClick={this.next}>Right</button>
+          </div>
         </header>
         <div className="calendar-content">
-          <div className="weekdays">
-            <div className="weekdays__day">Niedziela</div>
-            <div className="weekdays__day">Poniedziałek</div>
-            <div className="weekdays__day">Wtorek</div>
-            <div className="weekdays__day">Środa</div>
-            <div className="weekdays__day">Czwartek</div>
-            <div className="weekdays__day">Piątek</div>
-            <div className="weekdays__day">Sobota</div>
+          <div className="calendar-week">
+            <div className="calendar-week__day">Niedziela</div>
+            <div className="calendar-week__day">Poniedziałek</div>
+            <div className="calendar-week__day">Wtorek</div>
+            <div className="calendar-week__day">Środa</div>
+            <div className="calendar-week__day">Czwartek</div>
+            <div className="calendar-week__day">Piątek</div>
+            <div className="calendar-week__day">Sobota</div>
           </div>
 
           {prepareWeeks(month).map(week => <Week date={week} key={week.date() + week.month()} />)}
