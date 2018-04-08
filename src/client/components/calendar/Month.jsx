@@ -3,36 +3,60 @@ import PropTypes from 'prop-types';
 import { prepareWeeks } from './prepareWeeks';
 import WeekDays from './WeekDays';
 import CalendarRow from './CalendarRow';
+import { eventsType } from './types';
 
 import './Month.scss';
 
-const Week = ({ date }) => {
-  const days = [];
-  let currentDate = date;
-  for (let i = 0; i < 7; i += 1) {
-    const dayNumber = currentDate.date();
-    days.push(<span className="month__day" key={dayNumber}>{dayNumber}</span>);
-    currentDate = date.add(1, 'd');
-  }
+const MonthDay = ({ dayNumber, events }) => (
+  <span className="month-day">
+    {dayNumber}
+    {events.length > 0 && events.map(event => <div>{event.name}</div>)}
+  </span>
+);
 
-  return (
-    <CalendarRow>
-      {days}
-    </CalendarRow>
-  );
+MonthDay.propTypes = {
+  dayNumber: PropTypes.string.isRequired,
+  events: eventsType.isRequired,
 };
 
 export default class Month extends Component {
   static propTypes = {
+    // TODO: Consider how handle moment is type
     month: PropTypes.any.isRequired,
+    events: PropTypes.arrayOf(PropTypes.shape({
+      when: PropTypes.instanceOf(Date),
+      startTime: PropTypes.instanceOf(Date),
+      endTime: PropTypes.instanceOf(Date),
+      name: PropTypes.string,
+    })).isRequired,
+  };
+
+  renderDays = (week, events) => {
+    const days = [];
+    for (let i = 0; i < 7; i += 1) {
+      const dayNumber = week.date();
+      days.push(<MonthDay
+        dayNumber={dayNumber}
+        key={dayNumber}
+        events={events.filter(({ when }) => when.getDate() === dayNumber)}
+      />);
+      week = week.add(1, 'd');
+    }
+    return days;
   };
 
   render() {
-    const { month } = this.props;
+    const { month, events } = this.props;
+    const weeks = prepareWeeks(month);
     return (
       <div className="month">
         <WeekDays />
-        {prepareWeeks(month).map(week => <Week date={week} key={week.date() + week.month()} />)}
+        {weeks.map(week => (
+          <CalendarRow>
+            {this.renderDays(week, events)}
+          </CalendarRow>
+          ))
+        }
       </div>
     );
   }

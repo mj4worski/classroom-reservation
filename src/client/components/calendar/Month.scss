@@ -3,12 +3,14 @@
   width: 100%;
   flex-direction: column;
 
-  &__day {
-    flex: 1;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    border: 1px solid #000000;
-    min-height: 65px;
-  }
+
+}
+
+.month-day {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border: 1px solid #000000;
+  min-height: 65px;
 }

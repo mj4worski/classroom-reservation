@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import Month from './Month';
 import Week from './Week';
+import { eventsType } from './types';
 
 import './Calendar.scss';
 
@@ -10,7 +11,18 @@ const CalendarType = {
   WEEK: 'week',
 };
 
+const filterEventForSpecificMonth = (events, month) =>
+  events.filter(({ when }) => when.getMonth() === month);
+
 export default class Calendar extends Component {
+  static propTypes = {
+    events: eventsType,
+  };
+
+  static defaultProps = {
+    events: [],
+  };
+
   state = {
     month: moment(),
     calendarType: CalendarType.MONTH,
@@ -34,6 +46,8 @@ export default class Calendar extends Component {
 
   render() {
     const { month, calendarType } = this.state;
+    const { events } = this.props;
+    const eventsForCurrentMonth = filterEventForSpecificMonth(events, month.get('month'));
     const CalendarContent = calendarType === CalendarType.MONTH ? Month : Week;
     return (
       <div className="calendar">
@@ -51,7 +65,10 @@ export default class Calendar extends Component {
             <button onClick={this.next}>Right</button>
           </div>
         </header>
-        <CalendarContent month={month} />
+        <CalendarContent
+          month={month}
+          events={eventsForCurrentMonth}
+        />
       </div>
     );
   }
