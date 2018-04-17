@@ -1,5 +1,5 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './Header.scss';
 
@@ -9,7 +9,7 @@ export default () => (
       <div className="container">
         <h1 className="cr-header-content__heading mb-0">Rezerwacja sal</h1>
         <h2 className="cr-header-content__subheading mb-0">Akademia Górniczo-Hutnicza</h2>
-        <a href="#" className="btn cr-button mt-5">Sprawdź dostępność</a>
+        <Link to="/reservation" className="btn cr-button mt-5">Sprawdź dostępność</Link>
       </div>
     </div>
     <div className="cr-circle cr-circle--position-1" />

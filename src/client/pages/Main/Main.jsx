@@ -1,7 +1,7 @@
 import React from 'react';
 import imageSrc from '../../../../assets/images/agh.jpg';
 
-const MainPage = () => (
+const Main = () => (
   <section>
     <div className="container">
       <div className="row align-items-center">
@@ -25,4 +25,4 @@ const MainPage = () => (
   </section>
 );
 
-export default MainPage;
+export default Main;

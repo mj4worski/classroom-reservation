@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import 'bootstrap';
-import App from './components/App';
+import App from './App';
 import { sagaMiddleware, createStore, rootSaga } from './config';
 
 

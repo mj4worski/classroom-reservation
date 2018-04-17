@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Login from '../Login';
@@ -8,7 +7,7 @@ import './Navigatio.scss';
 export default () => (
   <nav className="navbar navbar-expand-lg navbar-dark cr-navbar fixed-top">
     <div className="container">
-      <a className="navbar-brand" href="#">Rezerwacja sal</a>
+      <span className="navbar-brand">Rezerwacja sal</span>
       <button
         className="navbar-toggler"
         type="button"

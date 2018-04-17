@@ -83,7 +83,7 @@ class FindReservedClass extends PureComponent {
 
     return (
       <div className="find-reserved-class">
-        <label htmlFor="example-search-input" className="col-2 col-form-label">
+        <label htmlFor="example-search-input" className="col-11 col-form-label">
           Wyszukaj sali
           <Autosuggest
             suggestions={suggestions}
@@ -95,7 +95,7 @@ class FindReservedClass extends PureComponent {
             theme={{ input: 'form-control' }}
           />
         </label>
-        <button type="button" className="btn btn-primary">Szukaj</button>
+        <button type="button" className="btn btn-primary col-1">Szukaj</button>
       </div>
     );
   }

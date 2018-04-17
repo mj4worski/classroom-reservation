@@ -1,12 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-
-import Routes from './Routes';
-import Navigation from './Navigation';
-import Header from './header';
-import Footer from './footer';
-
-import './App.scss';
+import Routes from './pages/Routes';
+import Navigation from './components/Navigation';
+import Header from './components/header';
+import Footer from './components/footer';
 
 export default () => (
   <Router>
