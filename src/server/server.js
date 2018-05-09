@@ -39,9 +39,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // error handler
 // define as the last app.use callback
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   res.status(err.status || 500);
   res.send(err.message);
+});
+
+// Make our db accessible to our router
+app.use((req, res, next) => {
+  req.db = db;
+  next();
 });
 
 app.use('/', routes);

@@ -1,5 +1,8 @@
 const express = require('express');
 const User = require('../models/user');
+const Class = require('../models/class');
+
+// TODO:: Split route to separate files.
 
 const router = express.Router();
 
@@ -49,6 +52,17 @@ router.get('/logout', (req, res, next) => {
       return res.redirect('/');
     });
   }
+});
+
+router.get('/classes', (req, res, next) => {
+  Class.find({}, (error, classes) => {
+    if (error) {
+      const err = new Error('Problem with downloading Classes for Reservation');
+      err.status = 500;
+      return next(err);
+    }
+    res.json(classes);
+  });
 });
 
 module.exports = router;

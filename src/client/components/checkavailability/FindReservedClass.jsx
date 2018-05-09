@@ -1,21 +1,7 @@
 import React, { PureComponent } from 'react';
 import Autosuggest from 'react-autosuggest';
+import { getClasses } from '../../services';
 import './FindReservedClass.scss';
-
-const classesMockData = [
-  {
-    name: 'B4 - 101',
-  },
-  {
-    name: 'B4 - 106',
-  },
-  {
-    name: 'B5 - 201',
-  },
-  {
-    name: 'B5 - 301',
-  },
-];
 
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
@@ -29,16 +15,20 @@ const renderSuggestion = suggestion => (
   </div>
 );
 
+function inputValueSameAsClassName(inputLength, inputValue) {
+  return ({ name: className }) => className.toLowerCase().slice(0, inputLength) === inputValue;
+}
+
 class FindReservedClass extends PureComponent {
   state = {
     value: '',
-    suggestions: [],
-    suggestionsFromServer: [],
+    classes: [],
+    fetchedClasses: [],
   };
 
   componentDidMount() {
-  // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState({ suggestionsFromServer: classesMockData });
+    getClasses()
+      .then(classes => this.setState({ fetchedClasses: classes, classes }));
   }
 
   onChange = (event, { newValue }) => {
@@ -51,14 +41,14 @@ class FindReservedClass extends PureComponent {
   // You already implemented this logic above, so just use it.
   onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
-      suggestions: this.getSuggestions(value),
+      classes: this.getSuggestions(value),
     });
   };
 
   // Autosuggest will call this function every time you need to clear suggestions.
   onSuggestionsClearRequested = () => {
     this.setState({
-      suggestions: [],
+      classes: this.state.fetchedClasses,
     });
   };
 
@@ -66,13 +56,13 @@ class FindReservedClass extends PureComponent {
   getSuggestions = (value) => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
-
-    return inputLength === 0 ? [] : this.state.suggestionsFromServer.filter(lang =>
-      lang.name.toLowerCase().slice(0, inputLength) === inputValue);
+    return inputLength === 0 ?
+      this.state.fetchedClasses :
+      this.state.fetchedClasses.filter(inputValueSameAsClassName(inputLength, inputValue));
   };
 
   render() {
-    const { value, suggestions } = this.state;
+    const { value, classes } = this.state;
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
@@ -86,7 +76,7 @@ class FindReservedClass extends PureComponent {
         <label htmlFor="example-search-input" className="col-11 col-form-label">
           Wyszukaj sali
           <Autosuggest
-            suggestions={suggestions}
+            suggestions={classes}
             onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
             onSuggestionsClearRequested={this.onSuggestionsClearRequested}
             getSuggestionValue={getSuggestionValue}
