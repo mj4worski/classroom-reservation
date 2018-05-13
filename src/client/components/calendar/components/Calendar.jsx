@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import { connect } from 'react-redux';
 import Month from './Month';
 import Week from './Week';
 import { eventsType } from './types';
@@ -14,7 +15,7 @@ const CalendarType = {
 const filterEventForSpecificMonth = (events, month) =>
   events.filter(({ when }) => when.getMonth() === month);
 
-export default class Calendar extends Component {
+class Calendar extends Component {
   static propTypes = {
     events: eventsType,
   };
@@ -73,3 +74,9 @@ export default class Calendar extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  events: state.reservations,
+});
+
+export default connect(mapStateToProps, null)(Calendar);

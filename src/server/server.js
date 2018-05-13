@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -39,7 +40,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // error handler
 // define as the last app.use callback
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.send(err.message);
 });

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-for */
 import React, { PureComponent } from 'react';
 import moment from 'moment';
-import tick from '../calendar/tick-inside-circle.svg';
+import tick from '../calendar/components/tick-inside-circle.svg';
 
 import './CheckAvailability.scss';
 

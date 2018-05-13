@@ -64,7 +64,6 @@ class FindReservedClass extends PureComponent {
   render() {
     const { value, classes } = this.state;
 
-    // Autosuggest will pass through all these props to the input.
     const inputProps = {
       placeholder: 'Wpisz sale ktora Cie interesuje',
       value,

@@ -5,4 +5,5 @@ export const eventsType = PropTypes.arrayOf(PropTypes.shape({
   startTime: PropTypes.instanceOf(Date),
   endTime: PropTypes.instanceOf(Date),
   name: PropTypes.string,
+  className: PropTypes.string,
 }));
