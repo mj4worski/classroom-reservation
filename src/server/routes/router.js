@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/user');
 const Class = require('../models/class');
+const Reservation = require('../models/reservation');
 
 // TODO:: Split route to separate files.
 
@@ -62,6 +63,16 @@ router.get('/classes', (req, res, next) => {
       return next(err);
     }
     res.json(classes);
+  });
+});
+
+router.get('/reservations', (req, res, next) => {
+  // TODO:: Use match from populate
+  Reservation.find({}).populate('class').exec((err, reservations) => {
+    if (err) {
+      return next(err);
+    }
+    res.json(reservations.filter(reservation => reservation.class.name !== req.query.className));
   });
 });
 

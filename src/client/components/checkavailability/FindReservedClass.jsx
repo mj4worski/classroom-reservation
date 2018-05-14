@@ -1,5 +1,8 @@
 import React, { PureComponent } from 'react';
 import Autosuggest from 'react-autosuggest';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchReservations } from '../calendar';
 import { getClasses } from '../../services';
 import './FindReservedClass.scss';
 
@@ -20,6 +23,10 @@ function inputValueSameAsClassName(inputLength, inputValue) {
 }
 
 class FindReservedClass extends PureComponent {
+  static propTypes = {
+    onFindClickRequest: PropTypes.func.isRequired,
+  };
+
   state = {
     value: '',
     classes: [],
@@ -50,6 +57,12 @@ class FindReservedClass extends PureComponent {
     this.setState({
       classes: this.state.fetchedClasses,
     });
+  };
+
+  onSubmit = () => {
+    const { value } = this.state;
+    const { onFindClickRequest } = this.props;
+    onFindClickRequest(value);
   };
 
   // Teach Autosuggest how to calculate suggestions for any given input value.
@@ -84,10 +97,10 @@ class FindReservedClass extends PureComponent {
             theme={{ input: 'form-control' }}
           />
         </label>
-        <button type="button" className="btn btn-primary col-1">Szukaj</button>
+        <button type="button" className="btn btn-primary col-1" onClick={this.onSubmit}>Szukaj</button>
       </div>
     );
   }
 }
 
-export default FindReservedClass;
+export default connect(null, { onFindClickRequest: fetchReservations })(FindReservedClass);

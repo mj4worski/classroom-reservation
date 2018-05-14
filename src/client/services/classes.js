@@ -12,7 +12,7 @@ export const getReservations = (className) => {
   return fetch(url, {
     method: 'GET',
     headers: new Headers(),
-  }).then(res => res.json())
+  }).then(res => res.text())
     .catch(err => err);
 };
 
