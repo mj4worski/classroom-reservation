@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Month from './Month';
 import Week from './Week';
 import { eventsType } from './types';
+import arrow from './arrow.svg';
 
 import './Calendar.scss';
 
@@ -53,17 +54,25 @@ class Calendar extends Component {
     return (
       <div className="calendar">
         <header className="calendar-header">
-          <div>
-            <h1>{this.state.month.format('D dddd')}</h1>
-            <h1>{this.state.month.format('MMMM YYYY')}</h1>
+          <div className="calendar-current-date">
+            <h1 className="calendar-current-date__content">{this.state.month.format('D dddd')}</h1>
+            <h1 className="calendar-current-date__content">{this.state.month.format('MMMM YYYY')}</h1>
           </div>
           <div>
-            <button onClick={this.monthView}>Miesiac</button>
-            <button onClick={this.weekView}>Tydzien</button>
+            <button className="btn btn-outline-light" onClick={this.monthView}>
+                Miesiac
+            </button>
+            <button className="btn btn-outline-light" onClick={this.weekView}>
+                Tydzien
+            </button>
           </div>
-          <div className="calendar-header__navigation">
-            <button onClick={this.previous}>Left</button>
-            <button onClick={this.next}>Right</button>
+          <div className="calendar-header-navigation">
+            <button onClick={this.previous}>
+              <img className="calendar-header-navigation__arrow calendar-header-navigation__arrow--rotate" src={arrow} alt="left-arrow" />
+            </button>
+            <button onClick={this.next}>
+              <img className="calendar-header-navigation__arrow" src={arrow} alt="right-arrow" />
+            </button>
           </div>
         </header>
         <CalendarContent
