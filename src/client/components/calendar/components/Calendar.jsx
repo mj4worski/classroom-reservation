@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Month from './Month';
 import Week from './Week';
 import { eventsType } from './types';
@@ -19,6 +20,7 @@ const filterEventForSpecificMonth = (events, month) =>
 class Calendar extends Component {
   static propTypes = {
     events: eventsType,
+    children: PropTypes.node,
   };
 
   static defaultProps = {
@@ -46,35 +48,47 @@ class Calendar extends Component {
     this.setState({ calendarType: CalendarType.WEEK });
   };
 
+
+  renderHeaderBottom = children => (children ? <div>{children}</div> : null);
+
+  renderHeader = () => (
+    <header className="calendar-header">
+      <div className="calendar-current-date">
+        <h1 className="calendar-current-date__content">{this.state.month.format('D dddd')}</h1>
+        <h1 className="calendar-current-date__content">{this.state.month.format('MMMM YYYY')}</h1>
+      </div>
+      <div>
+        <button className="btn btn-outline-light" onClick={this.monthView}>
+                Miesiac
+        </button>
+        <button className="btn btn-outline-light" onClick={this.weekView}>
+                Tydzien
+        </button>
+      </div>
+      <div className="calendar-header-navigation">
+        <button onClick={this.previous}>
+          <img
+            className="calendar-header-navigation__arrow calendar-header-navigation__arrow--rotate"
+            src={arrow}
+            alt="left-arrow"
+          />
+        </button>
+        <button onClick={this.next}>
+          <img className="calendar-header-navigation__arrow" src={arrow} alt="right-arrow" />
+        </button>
+      </div>
+    </header>
+  );
+
   render() {
     const { month, calendarType } = this.state;
-    const { events } = this.props;
+    const { events, children } = this.props;
     const eventsForCurrentMonth = filterEventForSpecificMonth(events, month.get('month'));
     const CalendarContent = calendarType === CalendarType.MONTH ? Month : Week;
     return (
       <div className="calendar">
-        <header className="calendar-header">
-          <div className="calendar-current-date">
-            <h1 className="calendar-current-date__content">{this.state.month.format('D dddd')}</h1>
-            <h1 className="calendar-current-date__content">{this.state.month.format('MMMM YYYY')}</h1>
-          </div>
-          <div>
-            <button className="btn btn-outline-light" onClick={this.monthView}>
-                Miesiac
-            </button>
-            <button className="btn btn-outline-light" onClick={this.weekView}>
-                Tydzien
-            </button>
-          </div>
-          <div className="calendar-header-navigation">
-            <button onClick={this.previous}>
-              <img className="calendar-header-navigation__arrow calendar-header-navigation__arrow--rotate" src={arrow} alt="left-arrow" />
-            </button>
-            <button onClick={this.next}>
-              <img className="calendar-header-navigation__arrow" src={arrow} alt="right-arrow" />
-            </button>
-          </div>
-        </header>
+        {this.renderHeader()}
+        {this.renderHeaderBottom(children)}
         <CalendarContent
           month={month}
           events={eventsForCurrentMonth}

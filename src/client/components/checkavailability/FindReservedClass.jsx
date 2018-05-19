@@ -18,9 +18,10 @@ const renderSuggestion = suggestion => (
   </div>
 );
 
-function inputValueSameAsClassName(inputLength, inputValue) {
-  return ({ name: className }) => className.toLowerCase().slice(0, inputLength) === inputValue;
-}
+const inputValueSameAsClassName = (inputLength, inputValue) =>
+  ({ name: className }) => className.toLowerCase().slice(0, inputLength) === inputValue;
+
+const inputTheme = { input: 'form-control', container: 'find-reserved-class__input-container' };
 
 class FindReservedClass extends PureComponent {
   static propTypes = {
@@ -85,19 +86,17 @@ class FindReservedClass extends PureComponent {
 
     return (
       <div className="find-reserved-class">
-        <label htmlFor="example-search-input" className="col-11 col-form-label">
-          Wyszukaj sali
-          <Autosuggest
-            suggestions={classes}
-            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-            getSuggestionValue={getSuggestionValue}
-            renderSuggestion={renderSuggestion}
-            inputProps={inputProps}
-            theme={{ input: 'form-control' }}
-          />
-        </label>
-        <button type="button" className="btn btn-primary col-1" onClick={this.onSubmit}>Szukaj</button>
+        <span className="find-reserved-class__label">Wyszukaj</span>
+        <Autosuggest
+          suggestions={classes}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          getSuggestionValue={getSuggestionValue}
+          renderSuggestion={renderSuggestion}
+          inputProps={inputProps}
+          theme={inputTheme}
+        />
+        <button type="button" className="btn btn-danger find-reserved-class__find-button" onClick={this.onSubmit}>Szukaj</button>
       </div>
     );
   }

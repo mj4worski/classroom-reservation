@@ -1,4 +1,22 @@
 .find-reserved-class {
   display: flex;
   flex-wrap: nowrap;
+  background-color: #212529;
+  height: 60px;
+  align-items: center;
+
+  &__label {
+    color: white;
+    font-weight: 600;
+    margin-left: 15px;
+  }
+
+  &__input-container {
+    flex: 1;
+    margin: 0 15px;
+  }
+
+  &__find-button {
+    margin-right: 15px;
+  }
 }

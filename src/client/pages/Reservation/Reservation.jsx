@@ -4,8 +4,9 @@ import { FindReservedClass } from '../../components/checkavailability';
 
 const Reservation = () => (
   <div className="m-4">
-    <FindReservedClass />
-    <Calendar />
+    <Calendar>
+      <FindReservedClass />
+    </Calendar>
   </div>
 );
 
