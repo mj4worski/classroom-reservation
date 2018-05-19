@@ -2,7 +2,7 @@ import React from 'react';
 import Calendar from '../../components/calendar';
 import { FindReservedClass } from '../../components/checkavailability';
 
-const Reservation = () => (
+const YourCalendar = () => (
   <div className="m-4">
     <Calendar>
       <FindReservedClass />
@@ -10,4 +10,4 @@ const Reservation = () => (
   </div>
 );
 
-export default Reservation;
+export default YourCalendar;

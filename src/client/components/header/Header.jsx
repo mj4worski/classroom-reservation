@@ -9,7 +9,7 @@ export default () => (
       <div className="container">
         <h1 className="cr-header-content__heading mb-0">Rezerwacja sal</h1>
         <h2 className="cr-header-content__subheading mb-0">Akademia Górniczo-Hutnicza</h2>
-        <Link to="/reservation" className="btn cr-button mt-5">Sprawdź dostępność</Link>
+        <Link to="/calendar" className="btn cr-button mt-5">Moje reserwacje</Link>
       </div>
     </div>
     <div className="cr-circle cr-circle--position-1" />
