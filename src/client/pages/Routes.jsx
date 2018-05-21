@@ -4,7 +4,7 @@ import Main from '../pages/Main';
 import YourCalendar from './YourCalendar';
 import { LoginMobile } from '../components/Login';
 import Registration from '../components/Registration';
-import { Reservation } from '../components/reservation';
+import Reservation from './Reservation';
 
 const Routes = () => (
   <Fragment>

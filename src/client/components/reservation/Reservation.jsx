@@ -1,4 +1,5 @@
 import React from 'react';
+import Schedule from './Schedule';
 import './Reservation.scss';
 
 const DateDropdown = ({ date }) => (
@@ -79,7 +80,8 @@ const Reservation = () => {
         </div>
       </div>
       <div className="reservation__schedule">
-              Harmonogram
+          Harmonogram
+        <Schedule />
       </div>
     </div>
   );
