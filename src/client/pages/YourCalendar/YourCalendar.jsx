@@ -1,9 +1,10 @@
 import React from 'react';
 import Calendar from '../../components/calendar';
 import { FindReservedClass } from '../../components/checkavailability';
+import './YourCalendar.scss';
 
 const YourCalendar = () => (
-  <div className="m-4">
+  <div className="your-calendar-layout">
     <Calendar>
       <FindReservedClass />
     </Calendar>
