@@ -1,9 +1,28 @@
 .schedule {
   overflow: scroll;
   height: inherit;
+  position: relative;
+
+  &__cell {
+      height: 60px;
+      border: 1px solid black;
+  }
+
+  &__title {
+
+  }
 }
 
-.schedule-item {
-  height: 60px;
-  border: 1px solid black;
+.schedule-reservation {
+  position: absolute;
+  left: 30px;
+  width: 100%;
+
+  &--existing {
+    background-color: #6aa3ff;
+  }
+
+  &--your {
+    background-color: #dc3545;
+  }
 }

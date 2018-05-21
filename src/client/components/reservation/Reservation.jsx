@@ -2,6 +2,42 @@ import React from 'react';
 import Schedule from './Schedule';
 import './Reservation.scss';
 
+const existingReservationMock = [
+  {
+    name: 'Reservation 1',
+    startTime: new Date(2018, 4, 10, 7, 0),
+    endTime: new Date(2018, 4, 10, 8, 0),
+  },
+  {
+    name: 'Reservation 1',
+    startTime: new Date(2018, 4, 10, 8, 45),
+    endTime: new Date(2018, 4, 10, 9, 15),
+  },
+  {
+    name: 'Reservation 1',
+    startTime: new Date(2018, 4, 10, 12, 15),
+    endTime: new Date(2018, 4, 10, 13, 30),
+  },
+];
+
+const yourReservationsMock = [
+  {
+    name: 'Reservation 1',
+    startTime: new Date(2018, 4, 10, 13, 0),
+    endTime: new Date(2018, 4, 10, 14, 0),
+  },
+  {
+    name: 'Reservation 1',
+    startTime: new Date(2018, 4, 10, 14, 45),
+    endTime: new Date(2018, 4, 10, 15, 15),
+  },
+  {
+    name: 'Reservation 1',
+    startTime: new Date(2018, 4, 10, 16, 15),
+    endTime: new Date(2018, 4, 10, 18, 30),
+  },
+];
+
 const DateDropdown = ({ date }) => (
   <div className="dropdown">
     <button
@@ -80,8 +116,11 @@ const Reservation = () => {
         </div>
       </div>
       <div className="reservation__schedule">
-          Harmonogram
-        <Schedule />
+        <Schedule
+          title="Harmonogram"
+          existingReservations={existingReservationMock}
+          yourReservations={yourReservationsMock}
+        />
       </div>
     </div>
   );
