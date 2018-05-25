@@ -1,11 +1,11 @@
 /* eslint-disable no-use-before-define */
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { reservationsType } from './types';
 import './Schedule.scss';
 
 const ScheduleCell = ({ hour }) => (
-  <div className="schedule__cell">
+  <div className="schedule-cell">
     {hour}
   </div>
 );
@@ -40,7 +40,7 @@ export default class Schedule extends Component {
   renderReservations = (existingReservations, visualCssClass = '') => {
     if (existingReservations.length > 0) {
       return (
-        <div>
+        <Fragment>
           {existingReservations.map(reservation => (
             <div
               key={reservation.name + reservation.endTime}
@@ -50,7 +50,7 @@ export default class Schedule extends Component {
               {reservation.name}
             </div>
               ))}
-        </div>
+        </Fragment>
       );
     }
     return null;
@@ -69,10 +69,12 @@ export default class Schedule extends Component {
 
     return (
       <div className="schedule">
-        <span>{title}</span>
-        {this.renderScheduleCells()}
-        {this.renderReservations(existingReservations, 'schedule-reservation--existing')}
-        {this.renderReservations(yourReservations, 'schedule-reservation--your')}
+        <span className="schedule__title">{title}</span>
+        <div className="schedule__content">
+          {this.renderScheduleCells()}
+          {this.renderReservations(existingReservations, 'schedule-reservation--existing')}
+          {this.renderReservations(yourReservations, 'schedule-reservation--your')}
+        </div>
       </div>
     );
   }
