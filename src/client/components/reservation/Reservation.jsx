@@ -1,88 +1,74 @@
-import React from 'react';
+import React, { Component } from 'react';
+import moment from 'moment';
 import Schedule from './Schedule';
 import './Reservation.scss';
 
-const existingReservationMock = [
-  {
-    name: 'Reservation 1',
-    startTime: new Date(2018, 4, 10, 7, 0),
-    endTime: new Date(2018, 4, 10, 8, 0),
-  },
-  {
-    name: 'Reservation 1',
-    startTime: new Date(2018, 4, 10, 8, 45),
-    endTime: new Date(2018, 4, 10, 9, 15),
-  },
-  {
-    name: 'Reservation 1',
-    startTime: new Date(2018, 4, 10, 12, 15),
-    endTime: new Date(2018, 4, 10, 13, 30),
-  },
-];
+class Reservation extends Component {
+  state = {
+    when: moment(),
+    startTime: moment(),
+    endTime: moment(),
+    name: '',
+    className: '',
+  };
 
-const yourReservationsMock = [
-  {
-    name: 'Reservation 1',
-    startTime: new Date(2018, 4, 10, 13, 0),
-    endTime: new Date(2018, 4, 10, 14, 0),
-  },
-  {
-    name: 'Reservation 1',
-    startTime: new Date(2018, 4, 10, 14, 45),
-    endTime: new Date(2018, 4, 10, 15, 15),
-  },
-  {
-    name: 'Reservation 1',
-    startTime: new Date(2018, 4, 10, 16, 15),
-    endTime: new Date(2018, 4, 10, 18, 30),
-  },
-];
+  handleInputChange = (event) => {
+    const { target } = event;
+    const { value, name, type } = target;
+    let valueToUpdate = value;
 
-const DateDropdown = ({ date }) => (
-  <label className="date-button date-button--large" htmlFor="today">
-      Dzien rezerwacji:
-    <input id="today" type="date" className="btn btn-danger calendar" value={date.toISOString().substr(0, 10)} />
-  </label>
-);
+    if (type === 'time') {
+      valueToUpdate = this.state.when.clone();
+      valueToUpdate.set('hour', value.split(':')[0]);
+      valueToUpdate.set('minute', value.split(':')[1]);
+    }
+    this.setState({
+      [name]: moment(valueToUpdate),
+    });
+  };
 
-const TimeStart = ({ date }) => (
-  <label className="date-button" htmlFor="timeStart">
-      Godzina rozpoczecia:
-    <input id="timeStart" type="time" step="900" className="btn btn-danger clock" defaultValue="12:00" />
-  </label>
-);
+  renderDateInput = (props, type = 'date') => {
+    const {
+      // eslint-disable-next-line react/prop-types
+      title, name, date,
+    } = props;
 
-const TimeEnd = ({ date }) => (
-  <label className="date-button" htmlFor="timeEnd">
-      Godzina zakończenia:
-    <input id="timeEnd" type="time" step="900" className="btn btn-danger clock" defaultValue="12:00" />
-  </label>
-);
+    return (
+      <label className="date-button" htmlFor={title}>
+        {title}
+        <input
+          name={name}
+          id={title}
+          type={type}
+          className={`btn btn-danger ${type === 'date' ? 'calendar' : 'clock'}`}
+          defaultValue={type === 'date' ? date.format('YYYY-MM-DD') : date.format('HH:mm')}
+          onChange={this.handleInputChange}
+        />
+      </label>
+    );
+  };
 
-const Reservation = () => {
-  const date = new Date();
+  render() {
+    const { when, startTime, endTime } = this.state;
 
-  return (
-    <div className="reservation">
-      <div className="reservation__details">
-        <span>Szczegóły</span>
-        <input type="text" className="form-control" placeholder="Dodaj tytul zdarzenia" />
-        <input type="text" className="form-control" placeholder="Dodaj lokalizacje" />
-        <div className="reservation-time">
-          <DateDropdown date={date} />
-          <TimeStart date={date} />
-          <TimeEnd date={date} />
+    return (
+      <div className="reservation">
+        <div className="reservation__details">
+          <span>Szczegóły</span>
+          <input type="text" className="form-control" placeholder="Dodaj tytul zdarzenia" />
+          <input type="text" className="form-control" placeholder="Dodaj lokalizacje" />
+          <div className="reservation-time">
+            {this.renderDateInput({ title: 'Data rezerwacji:', name: 'when', date: when })}
+            {this.renderDateInput({ title: 'Godzina rozpoczecia:', name: 'startTime', date: startTime }, 'time')}
+            {this.renderDateInput({ title: 'Godzina zakończenia:', name: 'endTime', date: endTime }, 'time')}
+          </div>
+        </div>
+        <div className="reservation__schedule">
+          <Schedule title="Harmonogram" />
         </div>
       </div>
-      <div className="reservation__schedule">
-        <Schedule
-          title="Harmonogram"
-          existingReservations={existingReservationMock}
-          yourReservations={yourReservationsMock}
-        />
-      </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Reservation;
