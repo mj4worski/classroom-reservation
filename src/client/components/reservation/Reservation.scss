@@ -4,10 +4,12 @@
   height: 100%;
 
   &__details {
-    flex: 2
+    flex: 2;
+    margin-right: 15px
   }
 
   &__schedule {
+    margin-left: 15px;
     flex: 1;
     overflow: hidden;
     height: inherit;
@@ -16,4 +18,35 @@
 
 .reservation-time {
   display: flex;
+}
+
+.date-button {
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  padding: 16px;
+  flex: 1;
+
+  &--large {
+    flex: 2;
+  }
+}
+
+.calendar:before {
+  @extend  .svg-icon;
+  background-image: url("calendar.svg");
+}
+
+.clock:before {
+  @extend  .svg-icon;
+  background-image: url("clock.svg");
+}
+
+.svg-icon {
+  content: '';
+  background-size: 26px 26px;
+  display: block;
+  height: 26px;
+  width: 26px;
 }

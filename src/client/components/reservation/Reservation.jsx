@@ -39,63 +39,24 @@ const yourReservationsMock = [
 ];
 
 const DateDropdown = ({ date }) => (
-  <div className="dropdown">
-    <button
-      className="btn btn-secondary dropdown-toggle"
-      type="button"
-      id="dropdownMenuButton"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false"
-    >
-      {date}
-    </button>
-    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a className="dropdown-item" href="#">Action</a>
-      <a className="dropdown-item" href="#">Another action</a>
-      <a className="dropdown-item" href="#">Something else here</a>
-    </div>
-  </div>
+  <label className="date-button date-button--large" htmlFor="today">
+      Dzien rezerwacji:
+    <input id="today" type="date" className="btn btn-danger calendar" value={date.toISOString().substr(0, 10)} />
+  </label>
 );
 
-const TimeStart = ({ hour }) => (
-  <div className="dropdown">
-    <button
-      className="btn btn-secondary dropdown-toggle"
-      type="button"
-      id="dropdownMenuButton"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false"
-    >
-      {hour}
-    </button>
-    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a className="dropdown-item" href="#">Action</a>
-      <a className="dropdown-item" href="#">Another action</a>
-      <a className="dropdown-item" href="#">Something else here</a>
-    </div>
-  </div>
+const TimeStart = ({ date }) => (
+  <label className="date-button" htmlFor="timeStart">
+      Godzina rozpoczecia:
+    <input id="timeStart" type="time" step="900" className="btn btn-danger clock" defaultValue="12:00" />
+  </label>
 );
 
-const TimeEnd = ({ hour }) => (
-  <div className="dropdown">
-    <button
-      className="btn btn-secondary dropdown-toggle"
-      type="button"
-      id="dropdownMenuButton"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false"
-    >
-      {hour}
-    </button>
-    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a className="dropdown-item" href="#">Action</a>
-      <a className="dropdown-item" href="#">Another action</a>
-      <a className="dropdown-item" href="#">Something else here</a>
-    </div>
-  </div>
+const TimeEnd = ({ date }) => (
+  <label className="date-button" htmlFor="timeEnd">
+      Godzina zakończenia:
+    <input id="timeEnd" type="time" step="900" className="btn btn-danger clock" defaultValue="12:00" />
+  </label>
 );
 
 const Reservation = () => {
@@ -104,15 +65,13 @@ const Reservation = () => {
   return (
     <div className="reservation">
       <div className="reservation__details">
-            Szczegóły
-        <div>
-          <input type="text" className="form-control" placeholder="Dodaj tytul zdarzenia" />
-          <input type="text" className="form-control" placeholder="Dodaj lokalizacje" />
-          <div className="reservation-time">
-            <DateDropdown date={date.toString()} />
-            <TimeStart hour={date.getHours()} />
-            <TimeEnd hour={date.getHours() + 1} />
-          </div>
+        <span>Szczegóły</span>
+        <input type="text" className="form-control" placeholder="Dodaj tytul zdarzenia" />
+        <input type="text" className="form-control" placeholder="Dodaj lokalizacje" />
+        <div className="reservation-time">
+          <DateDropdown date={date} />
+          <TimeStart date={date} />
+          <TimeEnd date={date} />
         </div>
       </div>
       <div className="reservation__schedule">
