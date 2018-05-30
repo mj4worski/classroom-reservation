@@ -4,3 +4,26 @@
   overflow: hidden;
   margin: 24px; //TODO:: Move layout shares part to separate file.
 }
+
+.calendar-panel {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: #212529;
+  height: 60px;
+  align-items: center;
+
+  &__label {
+    color: white;
+    font-weight: 600;
+    margin-left: 15px;
+  }
+
+  &__find-button {
+    margin-right: 15px;
+  }
+
+  &__input {
+    flex: 1;
+    margin: 0 15px;
+  }
+}

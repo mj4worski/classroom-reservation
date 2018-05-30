@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchReservations } from '../calendar';
 import { getClasses } from '../../services';
-import './ClassSearch.scss';
 
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
@@ -21,11 +20,17 @@ const renderSuggestion = suggestion => (
 const inputValueSameAsClassName = (inputLength, inputValue) =>
   ({ name: className }) => className.toLowerCase().slice(0, inputLength) === inputValue;
 
-const inputTheme = { input: 'form-control', container: 'find-reserved-class__input-container' };
-
 class ClassSearch extends PureComponent {
   static propTypes = {
-    onFindClickRequest: PropTypes.func.isRequired,
+    onChangeRequest: PropTypes.func,
+    placeholder: PropTypes.string,
+    containerClassTheme: PropTypes.string,
+  };
+
+  static defaultProps = {
+    onChangeRequest: () => {},
+    placeholder: '',
+    containerClassTheme: '',
   };
 
   state = {
@@ -40,9 +45,8 @@ class ClassSearch extends PureComponent {
   }
 
   onChange = (event, { newValue }) => {
-    this.setState({
-      value: newValue,
-    });
+    const { onChangeRequest } = this.props;
+    this.setState({ value: newValue }, () => onChangeRequest(this.state.value));
   };
 
   // Autosuggest will call this function every time you need to update suggestions.
@@ -60,12 +64,6 @@ class ClassSearch extends PureComponent {
     });
   };
 
-  onSubmit = () => {
-    const { value } = this.state;
-    const { onFindClickRequest } = this.props;
-    onFindClickRequest(value);
-  };
-
   // Teach Autosuggest how to calculate suggestions for any given input value.
   getSuggestions = (value) => {
     const inputValue = value.trim().toLowerCase();
@@ -76,28 +74,28 @@ class ClassSearch extends PureComponent {
   };
 
   render() {
+    const { placeholder, containerClassTheme } = this.props;
     const { value, classes } = this.state;
 
     const inputProps = {
-      placeholder: 'Wpisz sale ktora Cie interesuje',
+      placeholder,
       value,
       onChange: this.onChange,
     };
 
+
+    const inputTheme = { input: 'form-control', container: containerClassTheme };
+
     return (
-      <div className="find-reserved-class">
-        <span className="find-reserved-class__label">Wyszukaj</span>
-        <Autosuggest
-          suggestions={classes}
-          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-          getSuggestionValue={getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          inputProps={inputProps}
-          theme={inputTheme}
-        />
-        <button type="button" className="btn btn-danger find-reserved-class__find-button" onClick={this.onSubmit}>Szukaj</button>
-      </div>
+      <Autosuggest
+        suggestions={classes}
+        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        inputProps={inputProps}
+        theme={inputTheme}
+      />
     );
   }
 }

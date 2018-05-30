@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import Schedule from './Schedule';
+import ClassSearch from '../ClassSearch';
 import './Reservation.scss';
 
 class Reservation extends Component {
@@ -56,7 +57,7 @@ class Reservation extends Component {
         <div className="reservation__details">
           <span>Szczegóły</span>
           <input type="text" className="form-control" placeholder="Dodaj tytul zdarzenia" />
-          <input type="text" className="form-control" placeholder="Dodaj lokalizacje" />
+          <ClassSearch placeholder="Dodaj lokalizacje" />
           <div className="reservation-time">
             {this.renderDateInput({ title: 'Data rezerwacji:', name: 'when', date: when })}
             {this.renderDateInput({ title: 'Godzina rozpoczecia:', name: 'startTime', date: startTime }, 'time')}
