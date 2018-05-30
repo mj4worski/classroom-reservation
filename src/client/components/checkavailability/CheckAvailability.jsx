@@ -26,7 +26,6 @@ export default class CheckAvailability extends PureComponent {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state);
   };
 
   render() {

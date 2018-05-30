@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchReservations } from '../calendar';
 import { getClasses } from '../../services';
-import './FindReservedClass.scss';
+import './ClassSearch.scss';
 
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
@@ -23,7 +23,7 @@ const inputValueSameAsClassName = (inputLength, inputValue) =>
 
 const inputTheme = { input: 'form-control', container: 'find-reserved-class__input-container' };
 
-class FindReservedClass extends PureComponent {
+class ClassSearch extends PureComponent {
   static propTypes = {
     onFindClickRequest: PropTypes.func.isRequired,
   };
@@ -102,4 +102,4 @@ class FindReservedClass extends PureComponent {
   }
 }
 
-export default connect(null, { onFindClickRequest: fetchReservations })(FindReservedClass);
+export default connect(null, { onFindClickRequest: fetchReservations })(ClassSearch);
