@@ -7,7 +7,7 @@ const ReservationSchema = Schema({
   startTime: { type: Date, required: true },
   endTime: { type: Date, required: true },
   name: String,
-  class: { type: Schema.Types.ObjectId, ref: 'Class' },
+  className: { type: Schema.Types.ObjectId, ref: 'Class' },
 });
 
 const Reservation = mongoose.model('Reservation', ReservationSchema);

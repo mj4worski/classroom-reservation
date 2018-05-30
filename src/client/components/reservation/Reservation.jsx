@@ -13,7 +13,11 @@ class Reservation extends Component {
     className: '',
   };
 
-  handleInputChange = (event) => {
+  onSubmit = () => {
+    console.log(this.state);
+  };
+
+  handleDateAndTimeInputChange = (event) => {
     const { target } = event;
     const { value, name, type } = target;
     let valueToUpdate = value;
@@ -27,6 +31,16 @@ class Reservation extends Component {
       [name]: moment(valueToUpdate),
     });
   };
+
+  handleClassInputChange = (value) => {
+    this.setState({ className: value });
+  };
+
+  handleNameInput = (event) => {
+    const { value } = event.target;
+    this.setState({ name: value });
+  };
+
 
   renderDateInput = (props, type = 'date') => {
     const {
@@ -43,7 +57,7 @@ class Reservation extends Component {
           type={type}
           className={`btn btn-danger ${type === 'date' ? 'calendar' : 'clock'}`}
           defaultValue={type === 'date' ? date.format('YYYY-MM-DD') : date.format('HH:mm')}
-          onChange={this.handleInputChange}
+          onChange={this.handleDateAndTimeInputChange}
         />
       </label>
     );
@@ -56,13 +70,14 @@ class Reservation extends Component {
       <div className="reservation">
         <div className="reservation__details">
           <span>Szczegóły</span>
-          <input type="text" className="form-control" placeholder="Dodaj tytul zdarzenia" />
-          <ClassSearch placeholder="Dodaj lokalizacje" />
+          <input type="text" className="form-control" placeholder="Dodaj tytul zdarzenia" onChange={this.handleNameInput} />
+          <ClassSearch placeholder="Dodaj lokalizacje" onChangeRequest={this.handleClassInputChange} />
           <div className="reservation-time">
             {this.renderDateInput({ title: 'Data rezerwacji:', name: 'when', date: when })}
             {this.renderDateInput({ title: 'Godzina rozpoczecia:', name: 'startTime', date: startTime }, 'time')}
             {this.renderDateInput({ title: 'Godzina zakończenia:', name: 'endTime', date: endTime }, 'time')}
           </div>
+          <button className="btn btn-danger" onClick={this.onSubmit}>Zatwierdz</button>
         </div>
         <div className="reservation__schedule">
           <Schedule title="Harmonogram" />

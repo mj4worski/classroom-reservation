@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
 import Autosuggest from 'react-autosuggest';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { fetchReservations } from '../calendar';
 import { getClasses } from '../../services';
 
 // When suggestion is clicked, Autosuggest needs to populate the input
@@ -20,7 +18,7 @@ const renderSuggestion = suggestion => (
 const inputValueSameAsClassName = (inputLength, inputValue) =>
   ({ name: className }) => className.toLowerCase().slice(0, inputLength) === inputValue;
 
-class ClassSearch extends PureComponent {
+export default class ClassSearch extends PureComponent {
   static propTypes = {
     onChangeRequest: PropTypes.func,
     placeholder: PropTypes.string,
@@ -99,5 +97,3 @@ class ClassSearch extends PureComponent {
     );
   }
 }
-
-export default connect(null, { onFindClickRequest: fetchReservations })(ClassSearch);
