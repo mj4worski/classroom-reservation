@@ -11,36 +11,80 @@ class Reservation extends Component {
     endTime: moment(),
     name: '',
     className: '',
+    yourReservations: [],
   };
 
   onSubmit = () => {
     console.log(this.state);
   };
 
-  handleDateAndTimeInputChange = (event) => {
+  handleTimeInputsChange = (event) => {
     const { target } = event;
     const { value, name, type } = target;
-    let valueToUpdate = value;
-
     if (type === 'time') {
-      valueToUpdate = this.state.when.clone();
-      valueToUpdate.set('hour', value.split(':')[0]);
-      valueToUpdate.set('minute', value.split(':')[1]);
+      this.updateTime(name, value);
     }
+    if (type === 'date') {
+      this.updateDate(name, value);
+    }
+  };
+
+  updateDate = (name, value) => {
+    const currentlySelectedDay = {
+      date: value.getDay(),
+      month: value.getMonth(),
+      year: value.getYear(),
+    };
+    const startTime = this.state.startTime.clone();
+    const endTime = this.state.endTime.clone();
+    startTime.set(currentlySelectedDay);
+    endTime.set(currentlySelectedDay);
+
     this.setState({
-      [name]: moment(valueToUpdate),
-    });
+      [name]: moment(value),
+      startTime,
+      endTime,
+    }, this.updateYourReservation);
+  };
+
+  updateTime = (name, value) => {
+    const dayToUpdate = this.state[name].clone();
+    dayToUpdate.set('hour', value.split(':')[0]);
+    dayToUpdate.set('minute', value.split(':')[1]);
+    this.setState({
+      [name]: dayToUpdate,
+    }, this.updateYourReservation);
   };
 
   handleClassInputChange = (value) => {
-    this.setState({ className: value });
+    this.setState({ className: value }, this.updateYourReservation);
   };
 
   handleNameInput = (event) => {
     const { value } = event.target;
-    this.setState({ name: value });
+    this.setState({ name: value }, this.updateYourReservation);
   };
 
+  updateYourReservation = () => {
+    const {
+      className, when, startTime, endTime, name,
+    } = this.state;
+    if (className !== '' && when.isValid() && startTime.isValid() && endTime.isValid()) {
+      this.setState({
+        yourReservations: [{
+          when: when.toDate(),
+          startTime: startTime.toDate(),
+          endTime: endTime.toDate(),
+          name,
+          className,
+        }],
+      });
+    } else {
+      this.setState({
+        yourReservations: [],
+      });
+    }
+  };
 
   renderDateInput = (props, type = 'date') => {
     const {
@@ -57,14 +101,16 @@ class Reservation extends Component {
           type={type}
           className={`btn btn-danger ${type === 'date' ? 'calendar' : 'clock'}`}
           defaultValue={type === 'date' ? date.format('YYYY-MM-DD') : date.format('HH:mm')}
-          onChange={this.handleDateAndTimeInputChange}
+          onChange={this.handleTimeInputsChange}
         />
       </label>
     );
   };
 
   render() {
-    const { when, startTime, endTime } = this.state;
+    const {
+      when, startTime, endTime, yourReservations,
+    } = this.state;
 
     return (
       <div className="reservation">
@@ -80,7 +126,7 @@ class Reservation extends Component {
           <button className="btn btn-danger" onClick={this.onSubmit}>Zatwierdz</button>
         </div>
         <div className="reservation__schedule">
-          <Schedule title="Harmonogram" />
+          <Schedule title="Harmonogram" yourReservations={yourReservations} />
         </div>
       </div>
     );
