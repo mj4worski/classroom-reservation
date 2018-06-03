@@ -23,12 +23,16 @@ export default class ClassSearch extends PureComponent {
     onChangeRequest: PropTypes.func,
     placeholder: PropTypes.string,
     containerClassTheme: PropTypes.string,
+    label: PropTypes.string,
+    errorMessage: PropTypes.string,
   };
 
   static defaultProps = {
     onChangeRequest: () => {},
     placeholder: '',
     containerClassTheme: '',
+    label: '',
+    errorMessage: '',
   };
 
   state = {
@@ -71,16 +75,34 @@ export default class ClassSearch extends PureComponent {
       this.state.fetchedClasses.filter(inputValueSameAsClassName(inputLength, inputValue));
   };
 
-  render() {
-    const { placeholder, containerClassTheme } = this.props;
-    const { value, classes } = this.state;
+  createOuterRender = (label, errorMessage) => {
+    if (label !== '' || errorMessage !== '') {
+      return inputProps => (
+        <label className="d-block" htmlFor="classSearch">
+          {label}
+          <input {...inputProps} />
+          <div className="invalid-feedback">
+            {errorMessage}
+          </div>
+        </label>
+      );
+    }
+    return undefined;
+  };
 
+
+  render() {
+    const {
+      placeholder, containerClassTheme, label, errorMessage,
+    } = this.props;
+    const { value, classes } = this.state;
     const inputProps = {
       placeholder,
       value,
       onChange: this.onChange,
+      required: Boolean(errorMessage),
+      id: 'classSearch',
     };
-
 
     const inputTheme = { input: 'form-control', container: containerClassTheme };
 
@@ -90,7 +112,9 @@ export default class ClassSearch extends PureComponent {
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
         getSuggestionValue={getSuggestionValue}
+        shouldRenderSuggestions={() => true}
         renderSuggestion={renderSuggestion}
+        renderInputComponent={this.createOuterRender(label, errorMessage)}
         inputProps={inputProps}
         theme={inputTheme}
       />

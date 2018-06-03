@@ -69,7 +69,7 @@ export default class Schedule extends Component {
 
     return (
       <div className="schedule">
-        <span className="schedule__title">{title}</span>
+        <h3 className="schedule__title">{title}</h3>
         <div className="schedule__content">
           {this.renderScheduleCells()}
           {this.renderReservations(existingReservations, 'schedule-reservation--existing')}

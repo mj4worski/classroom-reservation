@@ -86,6 +86,14 @@ class Reservation extends Component {
     }
   };
 
+  handleFormSubmit = (event) => {
+    if (event.target.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    event.target.classList.add('was-validated');
+  };
+
   renderDateInput = (props, type = 'date') => {
     const {
       // eslint-disable-next-line react/prop-types
@@ -102,6 +110,7 @@ class Reservation extends Component {
           className={`btn btn-danger ${type === 'date' ? 'calendar' : 'clock'}`}
           defaultValue={type === 'date' ? date.format('YYYY-MM-DD') : date.format('HH:mm')}
           onChange={this.handleTimeInputsChange}
+          required
         />
       </label>
     );
@@ -115,15 +124,34 @@ class Reservation extends Component {
     return (
       <div className="reservation">
         <div className="reservation__details">
-          <span>Szczegóły</span>
-          <input type="text" className="form-control" placeholder="Dodaj tytul zdarzenia" onChange={this.handleNameInput} />
-          <ClassSearch placeholder="Dodaj lokalizacje" onChangeRequest={this.handleClassInputChange} />
-          <div className="reservation-time">
-            {this.renderDateInput({ title: 'Data rezerwacji:', name: 'when', date: when })}
-            {this.renderDateInput({ title: 'Godzina rozpoczecia:', name: 'startTime', date: startTime }, 'time')}
-            {this.renderDateInput({ title: 'Godzina zakończenia:', name: 'endTime', date: endTime }, 'time')}
-          </div>
-          <button className="btn btn-danger" onClick={this.onSubmit}>Zatwierdz</button>
+          <form noValidate onSubmit={this.handleFormSubmit}>
+            <h3>Szczegóły dotyczace rezerwacji</h3>
+            <div className="form-group">
+              <label className="form-control-label d-block" htmlFor="eventName">
+                Tytuł zdarzenia
+                <input
+                  type="text"
+                  id="eventName"
+                  className="form-control form-control-danger"
+                  placeholder="Dodaj tytuł zdarzenia"
+                  onChange={this.handleNameInput}
+                  required
+                />
+                <div className="invalid-feedback">
+                  Proszę uzupelnić tytuł zdarzenia
+                </div>
+              </label>
+            </div>
+            <div className="form-group">
+              <ClassSearch label="Sala" errorMessage="Proszę wybrać salę" placeholder="Dodaj lokalizacje" onChangeRequest={this.handleClassInputChange} />
+            </div>
+            <div className="reservation-time">
+              {this.renderDateInput({ title: 'Data rezerwacji:', name: 'when', date: when })}
+              {this.renderDateInput({ title: 'Godzina rozpoczecia:', name: 'startTime', date: startTime }, 'time')}
+              {this.renderDateInput({ title: 'Godzina zakończenia:', name: 'endTime', date: endTime }, 'time')}
+            </div>
+            <button className="btn btn-danger" onClick={this.onSubmit}>Zatwierdź</button>
+          </form>
         </div>
         <div className="reservation__schedule">
           <Schedule title="Harmonogram" yourReservations={yourReservations} />
