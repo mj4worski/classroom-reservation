@@ -1,4 +1,8 @@
-.calendar {}
+.calendar {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 
 .calendar-header {
   display: flex;

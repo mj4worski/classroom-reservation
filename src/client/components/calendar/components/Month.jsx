@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { prepareWeeks } from './prepareWeeks';
 import WeekDays from './WeekDays';
 import CalendarRow from './CalendarRow';
@@ -15,14 +16,17 @@ const MonthDay = ({ dayNumber, events }) => (
 );
 
 MonthDay.propTypes = {
-  dayNumber: PropTypes.string.isRequired,
+  dayNumber: PropTypes.number.isRequired,
   events: eventsType.isRequired,
 };
 
+function getEventsForSpecificDay(events, day) {
+  return events.filter(({ when }) => when.getDate() === day);
+}
+
 export default class Month extends Component {
   static propTypes = {
-    // TODO: Consider how handle moment is type
-    month: PropTypes.any.isRequired,
+    month: PropTypes.instanceOf(moment).isRequired,
     events: PropTypes.arrayOf(PropTypes.shape({
       when: PropTypes.instanceOf(Date),
       startTime: PropTypes.instanceOf(Date),
@@ -33,14 +37,14 @@ export default class Month extends Component {
 
   renderDays = (week, events) => {
     const days = [];
+    let dayNumber = week.date();
     for (let i = 0; i < 7; i += 1) {
-      const dayNumber = week.date();
       days.push(<MonthDay
         dayNumber={dayNumber}
         key={dayNumber}
-        events={events.filter(({ when }) => when.getDate() === dayNumber)}
+        events={getEventsForSpecificDay(events, dayNumber)}
       />);
-      week = week.add(1, 'd');
+      dayNumber = dayNumber.add(1, 'd');
     }
     return days;
   };
@@ -52,7 +56,7 @@ export default class Month extends Component {
       <div className="month">
         <WeekDays />
         {weeks.map(week => (
-          <CalendarRow>
+          <CalendarRow key={weeks}>
             {this.renderDays(week, events)}
           </CalendarRow>
           ))

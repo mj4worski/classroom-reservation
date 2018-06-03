@@ -107,7 +107,7 @@ class Reservation extends Component {
           name={name}
           id={title}
           type={type}
-          className={`btn btn-danger ${type === 'date' ? 'calendar' : 'clock'}`}
+          className={`btn btn-danger ${type === 'date' ? 'calendar-icon' : 'clock-icon'}`}
           defaultValue={type === 'date' ? date.format('YYYY-MM-DD') : date.format('HH:mm')}
           onChange={this.handleTimeInputsChange}
           required

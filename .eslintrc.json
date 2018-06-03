@@ -41,6 +41,15 @@
     "no-shadow":"off",
     "no-underscore-dangle": "off",
     "func-names": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/*.story.jsx"
+        ]
+      }
+    ],
+    "no-use-before-define": [1, { "functions": true, "classes": true }]
   }
 }

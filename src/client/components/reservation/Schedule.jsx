@@ -1,9 +1,9 @@
-/* eslint-disable no-use-before-define */
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { reservationsType } from './types';
 import './Schedule.scss';
 
+// eslint-disable-next-line react/prop-types
 const ScheduleCell = ({ hour }) => (
   <div className="schedule-cell">
     {hour}

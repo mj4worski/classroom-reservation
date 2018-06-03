@@ -25,6 +25,7 @@ class Calendar extends Component {
 
   static defaultProps = {
     events: [],
+    children: null,
   };
 
   state = {
