@@ -1,5 +1,5 @@
 export const login = (user) => {
-  const url = new URL(`${SERVICE_URL}/login`);
+  const url = new URL(`${SERVICE_URL}/users/login`);
   const body = Object
     .keys(user)
     .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(user[key])}`)
@@ -13,7 +13,7 @@ export const login = (user) => {
 };
 
 export const registration = (user) => {
-  const url = new URL(`${SERVICE_URL}/registration`);
+  const url = new URL(`${SERVICE_URL}/users/registration`);
   const body = Object
     .keys(user)
     .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(user[key])}`)

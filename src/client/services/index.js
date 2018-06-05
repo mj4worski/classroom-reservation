@@ -1,2 +1,3 @@
 export { login, registration } from './authentication';
-export { getClasses, getReservations } from './classes';
+export { getClasses } from './classes';
+export { makeReservation, getReservations } from './reservations';
