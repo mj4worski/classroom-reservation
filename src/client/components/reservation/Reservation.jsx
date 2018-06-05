@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import Schedule from './Schedule';
 import ClassSearch from '../ClassSearch';
 import './Reservation.scss';
 
 class Reservation extends Component {
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+  };
+
   state = {
     when: moment(),
     startTime: moment(),
@@ -12,10 +17,6 @@ class Reservation extends Component {
     name: '',
     className: '',
     yourReservations: [],
-  };
-
-  onSubmit = () => {
-    console.log(this.state);
   };
 
   handleTimeInputsChange = (event) => {
@@ -87,11 +88,21 @@ class Reservation extends Component {
   };
 
   handleFormSubmit = (event) => {
-    if (event.target.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
     event.target.classList.add('was-validated');
+    if (event.target.checkValidity()) {
+      const {
+        className, endTime, name, startTime, when,
+      } = this.state;
+      this.props.onSubmit({
+        name,
+        className,
+        when: when.toDate(),
+        startTime: startTime.toDate(),
+        endTime: endTime.toDate(),
+      });
+    }
+    event.preventDefault();
+    event.stopPropagation();
   };
 
   renderDateInput = (props, type = 'date') => {
@@ -150,7 +161,7 @@ class Reservation extends Component {
               {this.renderDateInput({ title: 'Godzina rozpoczecia:', name: 'startTime', date: startTime }, 'time')}
               {this.renderDateInput({ title: 'Godzina zakończenia:', name: 'endTime', date: endTime }, 'time')}
             </div>
-            <button className="btn btn-danger" onClick={this.onSubmit}>Zatwierdź</button>
+            <button className="btn btn-danger">Zatwierdź</button>
           </form>
         </div>
         <div className="reservation__schedule">

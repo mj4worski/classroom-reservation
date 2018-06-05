@@ -11,8 +11,10 @@ export const makeReservation = (reservation) => {
   const url = new URL(`${SERVICE_URL}/reservations`);
   return fetch(url, {
     method: 'POST',
-    headers: new Headers(),
-    body: reservation,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(reservation),
   }).then(res => res.statusCode === 200)
     .catch(err => err);
 };
