@@ -37,14 +37,14 @@ export default class Month extends Component {
 
   renderDays = (week, events) => {
     const days = [];
-    let dayNumber = week.date();
+    let dayNumber = week;
     for (let i = 0; i < 7; i += 1) {
       days.push(<MonthDay
-        dayNumber={dayNumber}
-        key={dayNumber}
-        events={getEventsForSpecificDay(events, dayNumber)}
+        dayNumber={dayNumber.date()}
+        key={dayNumber.date()}
+        events={getEventsForSpecificDay(events, dayNumber.date())}
       />);
-      dayNumber = dayNumber.add(1, 'd');
+      dayNumber = week.add(1, 'd');
     }
     return days;
   };
