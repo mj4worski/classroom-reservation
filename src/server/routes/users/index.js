@@ -1,7 +1,7 @@
 const users = require('express').Router();
 const User = require('../../models/user');
 
-users.post('/registration', (req, res, next) => {
+users.post('/registrations', (req, res, next) => {
   if (req.body.email && req.body.password) {
     User.create({ email: req.body.email, password: req.body.password }, (error, user) => {
       if (error) {

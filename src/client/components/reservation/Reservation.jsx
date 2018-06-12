@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Schedule from './Schedule';
 import ClassSearch from '../ClassSearch';
+import { getReservationsByClassNameAndDate } from '../../services';
 import './Reservation.scss';
 
 class Reservation extends Component {
@@ -17,6 +18,7 @@ class Reservation extends Component {
     name: '',
     className: '',
     yourReservations: [],
+    existingReservations: [],
   };
 
   handleTimeInputsChange = (event) => {
@@ -26,15 +28,15 @@ class Reservation extends Component {
       this.updateTime(name, value);
     }
     if (type === 'date') {
-      this.updateDate(name, value);
+      this.updateDate(name, new Date(value));
     }
   };
 
-  updateDate = (name, value) => {
+  updateDate = (name, date) => {
     const currentlySelectedDay = {
-      date: value.getDay(),
-      month: value.getMonth(),
-      year: value.getYear(),
+      date: date.getDay(),
+      month: date.getMonth(),
+      year: date.getFullYear(),
     };
     const startTime = this.state.startTime.clone();
     const endTime = this.state.endTime.clone();
@@ -42,10 +44,10 @@ class Reservation extends Component {
     endTime.set(currentlySelectedDay);
 
     this.setState({
-      [name]: moment(value),
+      [name]: moment(date),
       startTime,
       endTime,
-    }, this.updateYourReservation);
+    }, this.updateReservations);
   };
 
   updateTime = (name, value) => {
@@ -54,22 +56,28 @@ class Reservation extends Component {
     dayToUpdate.set('minute', value.split(':')[1]);
     this.setState({
       [name]: dayToUpdate,
-    }, this.updateYourReservation);
+    }, this.updateReservations);
   };
 
   handleClassInputChange = (value) => {
-    this.setState({ className: value }, this.updateYourReservation);
+    this.setState({ className: value }, this.updateReservations);
   };
 
   handleNameInput = (event) => {
     const { value } = event.target;
-    this.setState({ name: value }, this.updateYourReservation);
+    this.setState({ name: value }, this.updateReservations);
   };
 
-  updateYourReservation = () => {
+  updateReservations = () => {
     const {
       className, when, startTime, endTime, name,
     } = this.state;
+
+    if (className !== '' && when.isValid()) {
+      getReservationsByClassNameAndDate(className, when.toISOString())
+        .then(reservations => this.setState({ existingReservations: reservations }));
+    }
+
     if (className !== '' && when.isValid() && startTime.isValid() && endTime.isValid()) {
       this.setState({
         yourReservations: [{
@@ -129,7 +137,7 @@ class Reservation extends Component {
 
   render() {
     const {
-      when, startTime, endTime, yourReservations,
+      when, startTime, endTime, yourReservations, existingReservations,
     } = this.state;
 
     return (
@@ -154,7 +162,12 @@ class Reservation extends Component {
               </label>
             </div>
             <div className="form-group">
-              <ClassSearch label="Sala" errorMessage="Proszę wybrać salę" placeholder="Dodaj lokalizacje" onChangeRequest={this.handleClassInputChange} />
+              <ClassSearch
+                label="Sala"
+                errorMessage="Proszę wybrać salę"
+                placeholder="Dodaj lokalizacje"
+                onChangeRequest={this.handleClassInputChange}
+              />
             </div>
             <div className="reservation-time">
               {this.renderDateInput({ title: 'Data rezerwacji:', name: 'when', date: when })}
@@ -165,7 +178,7 @@ class Reservation extends Component {
           </form>
         </div>
         <div className="reservation__schedule">
-          <Schedule title="Harmonogram" yourReservations={yourReservations} />
+          <Schedule title="Harmonogram" yourReservations={yourReservations} existingReservations={existingReservations} />
         </div>
       </div>
     );

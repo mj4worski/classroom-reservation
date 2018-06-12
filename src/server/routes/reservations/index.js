@@ -2,14 +2,28 @@ const reservations = require('express').Router();
 const Reservation = require('../../models/reservation');
 const Class = require('../../models/class');
 
-reservations.get('/', (req, res, next) => {
+reservations.get('/:className', (req, res, next) => {
   // TODO:: Use match from populate
   Reservation.find({}).populate('class').exec((err, reservations) => {
     if (err) {
       return next(err);
     }
-    res.json(reservations.filter(reservation => reservation.class.name !== req.query.className));
+    res.json(reservations.filter(reservation => reservation.class.name !== req.params.className));
   });
+});
+
+reservations.get('/:className/:date', (req, res, next) => {
+  // TODO:: Use match from populate
+  const dateFromRequest = new Date(req.params.date);
+  dateFromRequest.setHours(0, 0, 0, 0);
+  const nextDay = new Date(dateFromRequest).setDate(dateFromRequest.getDate() + 1);
+  Reservation.find({ when: { $gte: dateFromRequest, $lt: nextDay } })
+    .populate('class').exec((err, reservations) => {
+      if (err) {
+        return next(err);
+      }
+      res.json(reservations.filter(reservation => reservation.className.name !== req.params.className));
+    });
 });
 
 const validateReservation = req => req.body.name
