@@ -1,12 +1,12 @@
 import React from 'react';
 import { Reservation } from '../../components/reservation';
 import { makeReservation } from '../../services';
-import './Reservation.scss';
+import LayoutContent from '../../components/LayoutContent';
 
 const ReservationPage = () => (
-  <div className="reservation-layout">
+  <LayoutContent>
     <Reservation onSubmit={makeReservation} />
-  </div>
+  </LayoutContent>
 );
 
 export default ReservationPage;

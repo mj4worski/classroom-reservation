@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './pages/Routes';
 import Navigation from './components/Navigation';
@@ -7,11 +7,11 @@ import Footer from './components/footer';
 
 export default () => (
   <Router>
-    <div>
+    <Fragment>
       <Navigation />
       <Header />
       <Routes />
       <Footer />
-    </div>
+    </Fragment>
   </Router>
 );

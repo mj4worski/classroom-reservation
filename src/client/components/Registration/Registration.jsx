@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { registration } from './actions';
 
 import './Registration.scss';
+import LayoutContent from '../LayoutContent';
 
 class Registration extends PureComponent {
     static propTypes = {
@@ -35,42 +36,44 @@ class Registration extends PureComponent {
       const emailId = 'formEmialRegistration';
       const passwordId = 'formPasswordRegistration';
       return (
-        <form className="p-4">
-          <div className="form-group">
-            <label htmlFor={emailId} className="registration-form__label">
+        <LayoutContent>
+          <form className="p-4">
+            <div className="form-group">
+              <label htmlFor={emailId} className="registration-form__label">
                         Adres Email
-              <input
-                type="email"
-                className="form-control"
-                id={emailId}
-                placeholder="email@example.com"
-                value={email}
-                onChange={this.onEmailChange}
-              />
-            </label>
-          </div>
-          <div className="form-group">
-            <label htmlFor={passwordId} className="registration-form__label">
+                <input
+                  type="email"
+                  className="form-control"
+                  id={emailId}
+                  placeholder="email@example.com"
+                  value={email}
+                  onChange={this.onEmailChange}
+                />
+              </label>
+            </div>
+            <div className="form-group">
+              <label htmlFor={passwordId} className="registration-form__label">
                         Hasło
-              <input
-                type="text"
-                className="form-control"
-                id={passwordId}
-                placeholder="Password"
-                value={password}
-                onChange={this.onPasswordChange}
-              />
-            </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id={passwordId}
+                  placeholder="Password"
+                  value={password}
+                  onChange={this.onPasswordChange}
+                />
+              </label>
 
-          </div>
-          <button
-            type="submit"
-            className="registration-form__button btn btn-danger"
-            onClick={this.onSubmit}
-          >
+            </div>
+            <button
+              type="submit"
+              className="registration-form__button btn btn-danger"
+              onClick={this.onSubmit}
+            >
               Zarejestruj
-          </button>
-        </form>
+            </button>
+          </form>
+        </LayoutContent>
       );
     }
 }

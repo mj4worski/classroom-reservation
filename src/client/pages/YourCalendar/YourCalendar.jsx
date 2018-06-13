@@ -2,6 +2,7 @@ import React from 'react';
 import Calendar from '../../components/calendar';
 import ClassSearch from '../../components/ClassSearch';
 import './YourCalendar.scss';
+import LayoutContent from '../../components/LayoutContent';
 
 const CalendarPanel = () => (
   <div className="calendar-panel">
@@ -12,11 +13,11 @@ const CalendarPanel = () => (
 );
 
 const YourCalendar = () => (
-  <div className="your-calendar-layout">
+  <LayoutContent>
     <Calendar>
       <CalendarPanel />
     </Calendar>
-  </div>
+  </LayoutContent>
 );
 
 export default YourCalendar;
