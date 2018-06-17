@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { prepareWeeks } from './prepareWeeks';
 import WeekDays from './WeekDays';
-import CalendarRow from './CalendarRow';
+import { CalendarRow as Row, CalendarCell as Cell } from './layout';
 import { eventsType } from './types';
 
 import './Month.scss';
 
 const MonthDay = ({ dayNumber, events }) => (
-  <span className="month-day">
-    {dayNumber}
-    {events.length > 0 && events.map(event => <div>{event.name}</div>)}
-  </span>
+  <Cell>
+    <span className="month-day">
+      {dayNumber}
+      {events.length > 0 && events.map(event => <div>{event.name}</div>)}
+    </span>
+  </Cell>
 );
 
 MonthDay.propTypes = {
@@ -56,9 +58,9 @@ export default class Month extends Component {
       <div className="month">
         <WeekDays />
         {weeks.map(week => (
-          <CalendarRow key={weeks}>
+          <Row key={weeks}>
             {this.renderDays(week, events)}
-          </CalendarRow>
+          </Row>
           ))
         }
       </div>
