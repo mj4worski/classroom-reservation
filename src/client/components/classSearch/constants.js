@@ -1,0 +1,3 @@
+export const FETCH_CLASSES = 'FETCH_CLASSES';
+export const FETCH_CLASSES_FAILED = 'FETCH_CLASSES_FAILED';
+export const CLASSES = 'CLASSES';

@@ -4,5 +4,6 @@ export const getClasses = () => {
     method: 'GET',
     headers: new Headers(),
   }).then(res => res.json())
-    .catch(err => err);
+    .then(response => ({ response }))
+    .catch(error => ({ error }));
 };

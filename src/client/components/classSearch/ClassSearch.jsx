@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import Autosuggest from 'react-autosuggest';
 import PropTypes from 'prop-types';
-import { getClasses } from '../../services';
+import { withErrorHandler } from '../hoc';
 
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
@@ -18,32 +18,34 @@ const renderSuggestion = suggestion => (
 const inputValueSameAsClassName = (inputLength, inputValue) =>
   ({ name: className }) => className.toLowerCase().slice(0, inputLength) === inputValue;
 
-export default class ClassSearch extends PureComponent {
+class ClassSearch extends PureComponent {
   static propTypes = {
     onChangeRequest: PropTypes.func,
     placeholder: PropTypes.string,
     containerClassTheme: PropTypes.string,
     label: PropTypes.string,
     errorMessage: PropTypes.string,
+    onDidMount: PropTypes.func,
+    classes: PropTypes.arrayOf(PropTypes.object).isRequired,
   };
 
   static defaultProps = {
+    onDidMount: () => {},
     onChangeRequest: () => {},
     placeholder: '',
     containerClassTheme: '',
     label: '',
     errorMessage: '',
+    classes: [],
   };
 
   state = {
     value: '',
-    classes: [],
-    fetchedClasses: [],
+    classSuggestions: this.props.classes,
   };
 
   componentDidMount() {
-    getClasses()
-      .then(classes => this.setState({ fetchedClasses: classes, classes }));
+    this.props.onDidMount();
   }
 
   onChange = (event, { newValue }) => {
@@ -55,14 +57,14 @@ export default class ClassSearch extends PureComponent {
   // You already implemented this logic above, so just use it.
   onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
-      classes: this.getSuggestions(value),
+      classSuggestions: this.getSuggestions(value),
     });
   };
 
   // Autosuggest will call this function every time you need to clear suggestions.
   onSuggestionsClearRequested = () => {
     this.setState({
-      classes: this.state.fetchedClasses,
+      classSuggestions: this.props.classes,
     });
   };
 
@@ -71,8 +73,8 @@ export default class ClassSearch extends PureComponent {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
     return inputLength === 0 ?
-      this.state.fetchedClasses :
-      this.state.fetchedClasses.filter(inputValueSameAsClassName(inputLength, inputValue));
+      this.props.classes :
+      this.props.classes.filter(inputValueSameAsClassName(inputLength, inputValue));
   };
 
   createOuterRender = (label, errorMessage) => {
@@ -95,7 +97,7 @@ export default class ClassSearch extends PureComponent {
     const {
       placeholder, containerClassTheme, label, errorMessage,
     } = this.props;
-    const { value, classes } = this.state;
+    const { value, classSuggestions } = this.state;
     const inputProps = {
       placeholder,
       value,
@@ -108,7 +110,7 @@ export default class ClassSearch extends PureComponent {
 
     return (
       <Autosuggest
-        suggestions={classes}
+        suggestions={classSuggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
         getSuggestionValue={getSuggestionValue}
@@ -121,3 +123,5 @@ export default class ClassSearch extends PureComponent {
     );
   }
 }
+
+export default withErrorHandler(ClassSearch);

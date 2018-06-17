@@ -1,6 +1,6 @@
 import React from 'react';
 import Calendar from '../../components/calendar';
-import ClassSearch from '../../components/ClassSearch';
+import ClassSearch from '../../components/classSearch';
 import './YourCalendar.scss';
 import LayoutContent from '../../components/LayoutContent';
 

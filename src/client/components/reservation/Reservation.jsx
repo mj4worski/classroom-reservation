@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Schedule from './Schedule';
-import ClassSearch from '../ClassSearch';
+import ClassSearch from '../classSearch';
 import { getReservationsByClassNameAndDate } from '../../services';
 import './Reservation.scss';
 
