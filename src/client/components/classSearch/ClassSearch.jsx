@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import Autosuggest from 'react-autosuggest';
 import PropTypes from 'prop-types';
 import { withErrorHandler } from '../hoc';
+import './ClassSearch.scss';
 
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
@@ -22,7 +23,6 @@ class ClassSearch extends PureComponent {
   static propTypes = {
     onChangeRequest: PropTypes.func,
     placeholder: PropTypes.string,
-    containerClassTheme: PropTypes.string,
     label: PropTypes.string,
     errorMessage: PropTypes.string,
     onDidMount: PropTypes.func,
@@ -33,7 +33,6 @@ class ClassSearch extends PureComponent {
     onDidMount: () => {},
     onChangeRequest: () => {},
     placeholder: '',
-    containerClassTheme: '',
     label: '',
     errorMessage: '',
     classes: [],
@@ -95,7 +94,7 @@ class ClassSearch extends PureComponent {
 
   render() {
     const {
-      placeholder, containerClassTheme, label, errorMessage,
+      placeholder, label, errorMessage,
     } = this.props;
     const { value, classSuggestions } = this.state;
     const inputProps = {
@@ -106,20 +105,22 @@ class ClassSearch extends PureComponent {
       id: 'classSearch',
     };
 
-    const inputTheme = { input: 'form-control', container: containerClassTheme };
+    const inputTheme = { input: 'form-control', suggestionsContainer: 'class-search__container' };
 
     return (
-      <Autosuggest
-        suggestions={classSuggestions}
-        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-        getSuggestionValue={getSuggestionValue}
-        shouldRenderSuggestions={() => true}
-        renderSuggestion={renderSuggestion}
-        renderInputComponent={this.createOuterRender(label, errorMessage)}
-        inputProps={inputProps}
-        theme={inputTheme}
-      />
+      <div className="class-search">
+        <Autosuggest
+          suggestions={classSuggestions}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          getSuggestionValue={getSuggestionValue}
+          shouldRenderSuggestions={() => true}
+          renderSuggestion={renderSuggestion}
+          renderInputComponent={this.createOuterRender(label, errorMessage)}
+          inputProps={inputProps}
+          theme={inputTheme}
+        />
+      </div>
     );
   }
 }

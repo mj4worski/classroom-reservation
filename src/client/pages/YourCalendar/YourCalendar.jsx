@@ -7,7 +7,9 @@ import LayoutContent from '../../components/LayoutContent';
 const CalendarPanel = () => (
   <div className="calendar-panel">
     <span className="calendar-panel__label">Wyszukaj</span>
-    <ClassSearch placeholder="Wpisz sale ktora Cie interesuje" containerClassTheme="calendar-panel__input" />
+    <div className="calendar-panel__input">
+      <ClassSearch placeholder="Wpisz sale ktora Cie interesuje" />
+    </div>
     <button type="button" className="btn btn-danger calendar-panel__find-button">Szukaj</button>
   </div>
 );
