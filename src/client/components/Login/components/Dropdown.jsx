@@ -1,8 +1,8 @@
 import React from 'react';
 import LoginForm from './LoginForm';
-import './Login.scss';
+import './Dropdown.scss';
 
-const Login = () => (
+const Dropdown = () => (
   <div className="dropdown">
     <span className="nav-link dropdown-toggle" data-toggle="dropdown">Logowanie</span>
     <div className="dropdown-menu dropdown-container">
@@ -11,4 +11,4 @@ const Login = () => (
   </div>
 );
 
-export default Login;
+export default Dropdown;

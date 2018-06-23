@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { logIn } from '../actions';
 import './LoginForm.scss';
 
@@ -8,10 +9,12 @@ class LoginForm extends PureComponent {
     static propTypes = {
       incorrectDate: PropTypes.bool,
       onSubmitRequest: PropTypes.func.isRequired,
+      successLogin: PropTypes.bool,
     };
 
     static defaultProps = {
       incorrectDate: false,
+      successLogin: false,
     };
 
     state = {
@@ -41,10 +44,15 @@ class LoginForm extends PureComponent {
     );
 
     render() {
-      const { incorrectDate } = this.props;
+      const { incorrectDate, successLogin } = this.props;
       const { email, password } = this.state;
       const emailId = 'formEmial';
       const passwordId = 'formPassword';
+
+      if (successLogin) {
+        return <Redirect to="/calendar" />;
+      }
+
       return (
         <Fragment>
           {incorrectDate && this.renderAlert()}
@@ -89,11 +97,11 @@ class LoginForm extends PureComponent {
             </button>
           </form>
         </Fragment>
-
       );
     }
 }
 
-const mapStateToProps = ({ account }) => ({ incorrectDate: account.failedLogIn });
+const mapStateToProps = ({ account }) =>
+  ({ incorrectDate: account.failedLogIn, successLogin: account.loggedIn });
 
 export default connect(mapStateToProps, { onSubmitRequest: logIn })(LoginForm);
