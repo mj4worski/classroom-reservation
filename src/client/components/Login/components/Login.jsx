@@ -1,18 +1,14 @@
 import React from 'react';
-import MediaQuery from 'react-responsive';
-import { Link } from 'react-router-dom';
-
-import LoginDesktop from './LoginDesktop';
+import LoginForm from './LoginForm';
+import './Login.scss';
 
 const Login = () => (
-  <MediaQuery minWidth={992}>
-    {(matches) => {
-          if (matches) {
-              return <LoginDesktop />;
-          }
-              return <Link to="/login" className="nav-link">Logowanie Mobilne</Link>;
-      }}
-  </MediaQuery>
+  <div className="dropdown">
+    <span className="nav-link dropdown-toggle" data-toggle="dropdown">Logowanie</span>
+    <div className="dropdown-menu dropdown-container">
+      <LoginForm />
+    </div>
+  </div>
 );
 
 export default Login;
