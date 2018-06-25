@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withAuthentication } from '../hoc';
+import Dropdown from '../Dropdown';
 import Login from '../Login';
 
 import './Navigatio.scss';
@@ -36,12 +37,14 @@ class Navigation extends PureComponent {
                 </li>
                 <li className="nav-item">
                   {
-                                    (isAuthenticated ? (
-                                      <button>Wyloguj</button>
-                                    ) : (
-                                      <Login />
-                                    ))
-                                }
+                      (isAuthenticated ? (
+                        <button>Wyloguj</button>
+                      ) : (
+                        <Dropdown label="Logowanie">
+                          <Login />
+                        </Dropdown>
+                      ))
+                  }
                 </li>
               </ul>
             </div>
