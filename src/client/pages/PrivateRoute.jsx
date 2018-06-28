@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withAuthentication } from '../components/hoc';
 
@@ -12,9 +12,9 @@ const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => (
             ) : (
               <Redirect
                 to={{
-                        pathname: '/login',
-                        // eslint-disable-next-line react/prop-types
-                        state: { from: props.location },
+                    pathname: '/login',
+                    // eslint-disable-next-line react/prop-types
+                    state: { from: props.location },
                     }}
               />
             ))
@@ -23,8 +23,12 @@ const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => (
 );
 
 PrivateRoute.propTypes = {
-  component: PropTypes.node.isRequired,
+  component: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.element,
+    PropTypes.func,
+  ]).isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
 };
 
-export default withAuthentication(PrivateRoute);
+export default withRouter(withAuthentication(PrivateRoute));

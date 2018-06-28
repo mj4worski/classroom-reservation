@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { v4 } from 'uuid';
 import { logIn } from './actions';
 import './Login.scss';
@@ -12,6 +12,11 @@ class Login extends PureComponent {
       onSubmitRequest: PropTypes.func.isRequired,
       successLogin: PropTypes.bool,
       className: PropTypes.string,
+      location: PropTypes.shape({
+        state: PropTypes.shape({
+          from: PropTypes.object,
+        }),
+      }).isRequired,
     };
 
     static defaultProps = {
@@ -48,14 +53,14 @@ class Login extends PureComponent {
 
     render() {
       const { incorrectDate, successLogin, className } = this.props;
+      const { from } = this.props.location.state || { from: { pathname: '/' } };
       const { email, password } = this.state;
       const emailId = v4();
       const passwordId = v4();
       const rememberMedId = v4();
 
-      // TODO:: Fix Redirect
       if (successLogin) {
-        return <Redirect to="/calendar" />;
+        return <Redirect to={from} />;
       }
 
       return (
@@ -109,4 +114,4 @@ class Login extends PureComponent {
 const mapStateToProps = ({ account }) =>
   ({ incorrectDate: account.failedLogIn, successLogin: account.loggedIn });
 
-export default connect(mapStateToProps, { onSubmitRequest: logIn })(Login);
+export default withRouter(connect(mapStateToProps, { onSubmitRequest: logIn })(Login));
