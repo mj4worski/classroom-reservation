@@ -65,6 +65,7 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
-    "tether": "^1.4.3"
+    "tether": "^1.4.3",
+    "uuid": "^3.3.0"
   }
 }

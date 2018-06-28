@@ -2,19 +2,22 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { v4 } from 'uuid';
 import { logIn } from './actions';
-import './LoginForm.scss';
+import './Login.scss';
 
-class LoginForm extends PureComponent {
+class Login extends PureComponent {
     static propTypes = {
       incorrectDate: PropTypes.bool,
       onSubmitRequest: PropTypes.func.isRequired,
       successLogin: PropTypes.bool,
+      className: PropTypes.string,
     };
 
     static defaultProps = {
       incorrectDate: false,
       successLogin: false,
+      className: '',
     };
 
     state = {
@@ -44,12 +47,13 @@ class LoginForm extends PureComponent {
     );
 
     render() {
-      const { incorrectDate, successLogin } = this.props;
+      const { incorrectDate, successLogin, className } = this.props;
       const { email, password } = this.state;
-      const emailId = 'formEmial';
-      const passwordId = 'formPassword';
+      const emailId = v4();
+      const passwordId = v4();
+      const rememberMedId = v4();
 
-      //TODO:: Fix Redirect
+      // TODO:: Fix Redirect
       if (successLogin) {
         return <Redirect to="/calendar" />;
       }
@@ -57,9 +61,9 @@ class LoginForm extends PureComponent {
       return (
         <Fragment>
           {incorrectDate && this.renderAlert()}
-          <form className="p-4">
+          <form className={`login ${className}`}>
             <div className="form-group">
-              <label htmlFor={emailId} className="login-form__label">
+              <label htmlFor={emailId} className="login__label">
                           Adres Email
                 <input
                   type="email"
@@ -72,7 +76,7 @@ class LoginForm extends PureComponent {
               </label>
             </div>
             <div className="form-group">
-              <label htmlFor={passwordId} className="login-form__label">
+              <label htmlFor={passwordId} className="login__label">
                           Hasło
                 <input
                   type="password"
@@ -84,14 +88,14 @@ class LoginForm extends PureComponent {
               </label>
             </div>
             <div className="form-check mb-4">
-              <label className="form-check-label login-form__label" htmlFor="dropdownCheck2">
-                <input type="checkbox" className="form-check-input" id="dropdownCheck2" />
+              <label className="login_label form-check-label" htmlFor={rememberMedId}>
+                <input type="checkbox" className="form-check-input" id={rememberMedId} />
                           Zapamietaj mnie
               </label>
             </div>
             <button
               type="submit"
-              className="login-form__button btn btn-danger"
+              className="login__button btn btn-danger"
               onClick={this.onSubmit}
             >
                       Zaloguj
@@ -105,4 +109,4 @@ class LoginForm extends PureComponent {
 const mapStateToProps = ({ account }) =>
   ({ incorrectDate: account.failedLogIn, successLogin: account.loggedIn });
 
-export default connect(mapStateToProps, { onSubmitRequest: logIn })(LoginForm);
+export default connect(mapStateToProps, { onSubmitRequest: logIn })(Login);

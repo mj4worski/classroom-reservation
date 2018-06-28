@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { withAuthentication } from '../hoc';
 import Dropdown from '../Dropdown';
 import Login from '../Login';
-
 import './Navigatio.scss';
 
 class Navigation extends PureComponent {
@@ -16,7 +15,7 @@ class Navigation extends PureComponent {
       const { isAuthenticated } = this.props;
 
       return (
-        <nav className="navbar navbar-expand-lg navbar-dark cr-navbar fixed-top">
+        <nav className="navbar navbar-expand-lg navbar-dark navbar fixed-top">
           <div className="container">
             <span className="navbar-brand">Rezerwacja sal</span>
             <button
@@ -41,7 +40,7 @@ class Navigation extends PureComponent {
                         <button>Wyloguj</button>
                       ) : (
                         <Dropdown label="Logowanie">
-                          <Login />
+                          <Login className="navigation-login" />
                         </Dropdown>
                       ))
                   }
