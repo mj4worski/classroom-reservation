@@ -8,29 +8,33 @@ const routes = require('./routes/router');
 const cors = require('cors');
 
 mongoose.connect('mongodb://localhost:27017/classroom');
-const db = mongoose.connection;
+const mongooseConnection = mongoose.connection;
 
-// handle mongo error
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
+mongooseConnection.on('error', console.error.bind(console, 'connection error:'));
+mongooseConnection.once('open', () => {
   // we're connected!
 });
 
 const app = express();
 
-// use sessions for tracking logins
+const MONTH = (30 * 86400 * 1000);
+
+// FIXME:: MaxAge doesn't for each request
 app.use(session({
   secret: 'work hard',
-  resave: true,
+  resave: false,
+  rolling: true,
   saveUninitialized: false,
   store: new MongoStore({
-    mongooseConnection: db,
+    mongooseConnection,
   }),
+  cookie: { maxAge: MONTH },
 }));
 
 const corsOptions = {
   origin: 'http://localhost:8080',
   optionsSuccessStatus: 200,
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
@@ -47,10 +51,10 @@ app.use((err, req, res, next) => {
 
 // Make our db accessible to our router
 app.use((req, res, next) => {
-  req.db = db;
+  req.mongooseConnection = mongooseConnection;
   next();
 });
 
 app.use('/', routes);
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'));
+app.listen(3000, () => console.log('Example app listening on port 3000'));

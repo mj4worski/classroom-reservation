@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "start": "webpack-dev-server",
-    "start:server": "node src/server/server.js",
+    "start:server": "nodemon src/server/server.js",
     "storybook": "start-storybook -p 8080 -c .storybook",
     "lint": "eslint --ext js,jsx src"
   },
@@ -33,6 +33,7 @@
     "html-webpack-plugin": "^2.30.1",
     "jquery": "^3.2.1",
     "node-sass": "^4.7.2",
+    "nodemon": "^1.18.3",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
     "url-loader": "^0.6.2",

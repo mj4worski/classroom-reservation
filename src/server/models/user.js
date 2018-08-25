@@ -24,23 +24,24 @@ UserSchema.pre('save', function (next) {
   });
 });
 
-UserSchema.statics.authenticate = function (email, password, callback) {
-  return User.findOne({ email })
-    .exec((err, user) => {
-      if (err || !user) {
-        const userNotFoundErr = new Error('User not found.');
-        userNotFoundErr.status = 401;
-        return callback(err || userNotFoundErr);
+UserSchema.statics.authenticate = (email, password, callback) =>
+  User.findOne({ email }, (err, user) => {
+    if (err || !user) {
+      const userNotFoundErr = new Error('User not found.');
+      userNotFoundErr.status = 401;
+      return callback(err || userNotFoundErr);
+    }
+    bcrypt.compare(password, user.password, (err, result) => {
+      if (result) {
+        return callback(null, user);
       }
-      bcrypt.compare(password, user.password, (err, result) => {
-        if (result === true) {
-          return callback(null, user);
-        }
-        return callback();
-      });
+      return callback();
     });
-};
+  });
 
+UserSchema.statics.authenticateByUserId = (userId, callback) => User.findById(userId, callback);
+
+// eslint-disable-next-line no-multi-assign
 User = mongoose.model('User', UserSchema);
 
 module.exports = User;

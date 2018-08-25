@@ -20,6 +20,7 @@ class Login extends PureComponent {
     state = {
       email: '',
       password: '',
+      rememberMe: false,
     };
 
     onEmailChange = ({ target }) => {
@@ -30,11 +31,15 @@ class Login extends PureComponent {
       this.setState({ password: target.value });
     };
 
+    onRememberMeChange = ({ target }) => {
+      this.setState({ rememberMe: target.checked });
+    };
+
     onSubmit = (event) => {
       event.preventDefault();
       const { onSubmitRequest } = this.props;
-      const { email, password } = this.state;
-      onSubmitRequest({ email, password });
+      const { email, password, rememberMe } = this.state;
+      onSubmitRequest({ email, password, rememberMe });
     };
 
     renderAlert = () => (
@@ -81,8 +86,13 @@ class Login extends PureComponent {
             </div>
             <div className="form-check mb-4">
               <label className="login_label form-check-label" htmlFor={rememberMedId}>
-                <input type="checkbox" className="form-check-input" id={rememberMedId} />
-                          Zapamietaj mnie
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id={rememberMedId}
+                  onChange={this.onRememberMeChange}
+                />
+                  Zapamietaj mnie
               </label>
             </div>
             <button
@@ -90,7 +100,7 @@ class Login extends PureComponent {
               className="login__button btn btn-danger"
               onClick={this.onSubmit}
             >
-                      Zaloguj
+              Zaloguj
             </button>
           </form>
         </Fragment>
