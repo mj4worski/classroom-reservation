@@ -2,10 +2,9 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import './Dropdown.scss';
 
-// TODO:: Decouple Dropdown from navigation context
 class Dropdown extends PureComponent {
   static propTypes = {
-    label: PropTypes.string.isRequired,
+    label: PropTypes.node.isRequired,
     children: PropTypes.node.isRequired,
   };
 
@@ -13,7 +12,7 @@ class Dropdown extends PureComponent {
     const { children, label } = this.props;
     return (
       <div className="dropdown">
-        <span className="nav-link dropdown-toggle" data-toggle="dropdown">{label}</span>
+        <span className="nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">{label}</span>
         <div className="dropdown-menu dropdown-container">
           {children}
         </div>

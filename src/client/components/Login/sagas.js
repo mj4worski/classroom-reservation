@@ -7,7 +7,7 @@ import { LOG_IN, REMEMBER_ME } from './constants';
 function* login({ user }) {
   const status = yield call(loginService, user);
   if (status === 200) {
-    yield put(succeededLogin());
+    yield put(succeededLogin(user.email));
     yield put(push('/calendar'));
   } else {
     yield put(failedLogin());
@@ -19,9 +19,9 @@ export function* watchLogin() {
 }
 
 function* rememberMe() {
-  const status = yield call(loginRememberMe);
-  if (status === 200) {
-    yield put(succeededLogin());
+  const { email, logIn } = yield call(loginRememberMe);
+  if (logIn) {
+    yield put(succeededLogin(email));
   }
 }
 

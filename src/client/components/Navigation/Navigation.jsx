@@ -2,8 +2,9 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withAuthentication } from '../hoc';
-import Dropdown from '../Dropdown';
+import Dropdown from './Dropdown';
 import Login from '../Login';
+import { AccountLabel } from '../account';
 import './Navigatio.scss';
 
 class Navigation extends PureComponent {
@@ -18,26 +19,15 @@ class Navigation extends PureComponent {
         <nav className="navbar navbar-expand-lg navbar-dark navbar fixed-top">
           <div className="container">
             <span className="navbar-brand">Rezerwacja sal</span>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarResponsive"
-              aria-controls="navbarResponsive"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon" />
-            </button>
-            <div className="collapse navbar-collapse" id="navbarResponsive">
+            <div className="navbar-expand" >
               <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
+                <li className="nav-item d-flex align-items-center">
                   <Link to="/registration" className="nav-link">Rejestracja</Link>
                 </li>
                 <li className="nav-item">
                   {
                       (isAuthenticated ? (
-                        <button>Wyloguj</button>
+                        <Dropdown label={<AccountLabel />} />
                       ) : (
                         <Dropdown label="Logowanie">
                           <Login className="navigation-login" />

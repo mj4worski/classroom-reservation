@@ -25,6 +25,6 @@ export const loginRememberMe = () => {
   return fetch(url, {
     method: 'GET',
     credentials: 'include',
-  }).then(res => res.status)
+  }).then(res => res.json())
     .catch(err => err);
 };

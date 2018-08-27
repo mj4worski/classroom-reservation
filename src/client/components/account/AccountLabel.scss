@@ -1,0 +1,14 @@
+.account-label {
+  display: flex;
+  align-items: center;
+
+  &:after {
+    display: block;
+    content: '';
+    background-size: 26px 26px;
+    height: 26px;
+    width: 26px;
+    background-image: url("user.svg");
+    margin-left: 15px;
+  }
+}

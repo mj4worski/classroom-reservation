@@ -5,8 +5,9 @@ export const registration = user => ({
   user,
 });
 
-export const succeededRegistration = () => ({
+export const succeededRegistration = email => ({
   type: SUCCEEDED_REGISTRATION,
+  email,
 });
 
 export const failedRegistration = () => ({

@@ -7,7 +7,7 @@ import { REGISTRATION } from './constants';
 function* registration({ user }) {
   const status = yield call(registrationService, user);
   if (status === 200) {
-    yield put(succeededRegistration());
+    yield put(succeededRegistration(user.email));
     yield put(push('/calendar'));
   } else {
     yield put(failedRegistration());
