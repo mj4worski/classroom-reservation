@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withAuthentication } from '../hoc';
 import Dropdown from './Dropdown';
 import Login from '../Login';
-import { AccountLabel } from '../account';
+import { AccountLabel, AccountMenu } from '../account';
 import './Navigatio.scss';
 
 class Navigation extends PureComponent {
@@ -27,9 +27,11 @@ class Navigation extends PureComponent {
                 <li className="nav-item">
                   {
                       (isAuthenticated ? (
-                        <Dropdown label={<AccountLabel />} />
+                        <Dropdown label={<AccountLabel />}>
+                          <AccountMenu />
+                        </Dropdown>
                       ) : (
-                        <Dropdown label="Logowanie">
+                        <Dropdown label="Logowanie" transparent>
                           <Login className="navigation-login" />
                         </Dropdown>
                       ))
