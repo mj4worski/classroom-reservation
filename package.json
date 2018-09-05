@@ -10,7 +10,8 @@
     "start:dev": "webpack-dev-server",
     "start:server": "nodemon src/server/server.js",
     "storybook": "start-storybook -p 8080 -c .storybook",
-    "lint": "eslint --ext js,jsx src"
+    "lint": "eslint --ext js,jsx src",
+    "postinstall": "webpack"
   },
   "author": "Mateusz Jaworski (jaworskimateusz2@gmail.com)",
   "license": "ISC",
