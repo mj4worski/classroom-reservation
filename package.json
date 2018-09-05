@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "start": "webpack-dev-server",
+    "start": "node src/server/server.js",
+    "start:dev": "webpack-dev-server",
     "start:server": "nodemon src/server/server.js",
     "storybook": "start-storybook -p 8080 -c .storybook",
     "lint": "eslint --ext js,jsx src"

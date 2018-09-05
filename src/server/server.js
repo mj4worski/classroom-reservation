@@ -6,8 +6,9 @@ const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
 const routes = require('./routes/router');
 const cors = require('cors');
+const path = require('path');
 
-mongoose.connect('mongodb://localhost:27017/classroom');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/classroom');
 const mongooseConnection = mongoose.connection;
 
 mongooseConnection.on('error', console.error.bind(console, 'connection error:'));
@@ -42,12 +43,10 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// error handler
-// define as the last app.use callback
-app.use((err, req, res, next) => {
-  res.status(err.status || 500);
-  res.send(err.message);
-});
+
+// Create link to Angular build directory
+const distDir = path.join(__dirname, '../../', 'dist/');
+app.use(express.static(distDir));
 
 // Make our db accessible to our router
 app.use((req, res, next) => {
@@ -55,6 +54,12 @@ app.use((req, res, next) => {
   next();
 });
 
+// error handler
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.send(err.message);
+});
+
 app.use('/', routes);
 
-app.listen(3000, () => console.log('Example app listening on port 3000'));
+app.listen(process.env.PORT || 3000, () => console.log('Example app listening on port 3000'));
