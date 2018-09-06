@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 const express = require('express');
+const expressStaticGzip = require('express-static-gzip');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -17,6 +18,14 @@ mongooseConnection.once('open', () => {
 });
 
 const app = express();
+
+if (process.env.NODE_ENV === 'production') {
+  const compression = require('compression');
+  app.use(compression());
+
+  const distDir = path.join(__dirname, '../../', 'dist/');
+  app.use(expressStaticGzip(distDir));
+}
 
 const MONTH = (30 * 86400 * 1000);
 
@@ -42,11 +51,6 @@ app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-
-// Create link to Angular build directory
-const distDir = path.join(__dirname, '../../', 'dist/');
-app.use(express.static(distDir));
 
 // Make our db accessible to our router
 app.use((req, res, next) => {

@@ -11,13 +11,6 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
   },
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    compress: true,
-    port: 8080,
-    historyApiFallback: true,
-  },
-  devtool: 'source-map',
 
   module: {
     rules: [
@@ -33,25 +26,30 @@ module.exports = {
       {
         test: /\.css$/, use: ['style-loader?singleton', 'css-loader', 'postcss-loader'],
       },
+
       {
         test: /\.(scss)$/,
-        use: [{
-          loader: 'style-loader', // inject CSS to page
-        }, {
-          loader: 'css-loader', // translates CSS into CommonJS modules
-        }, {
-          loader: 'postcss-loader', // Run post css actions
-          options: {
-            plugins() { // post css plugins, can be exported to postcss.config.js
-              return [
-                precss,
-                autoprefixer,
-              ];
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader', // translates CSS into CommonJS modules
+            }, {
+              loader: 'postcss-loader', // Run post css actions
+              options: {
+                plugins() {
+                  // post css plugins, can be exported to postcss.config.js
+                  return [
+                    precss,
+                    autoprefixer,
+                  ];
+                },
+              },
+            }, {
+              loader: 'sass-loader', // compiles SASS to CSS
             },
-          },
-        }, {
-          loader: 'sass-loader', // compiles Sass to CSS
-        }],
+          ],
+        }),
       },
     ],
   },
@@ -71,9 +69,6 @@ module.exports = {
       Tether: 'tether',
       'window.Tether': 'tether',
       Popper: ['popper.js', 'default'],
-    }),
-    new webpack.DefinePlugin({
-      SERVICE_URL: JSON.stringify('http://localhost:3000'),
     }),
   ],
 };
