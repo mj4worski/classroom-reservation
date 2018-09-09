@@ -1,5 +1,7 @@
+@import '../../../theme.scss';
+
 .week-days {
-    background-color: #dc3545;
+    background-color: $light-red-color;
     color: #f5f5f5;
     font-size: 18px;
     text-align: center;

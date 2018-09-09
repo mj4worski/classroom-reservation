@@ -1,15 +1,23 @@
+@import '../../theme.scss';
+
 .account-menu {
   color: white;
   padding: 0;
   list-style-type: none;
 
   &__item {
-    padding: 0.8rem;
+    display: flex;
+    align-items: stretch;
+    min-height: 3rem;
     border-bottom: 1px solid rgba(white, 0.6);
     cursor: pointer;
 
     &:last-child {
       border-bottom: 1px solid transparent;
+    }
+
+    &:hover {
+      background-color: $light-red-color;
     }
 
   }

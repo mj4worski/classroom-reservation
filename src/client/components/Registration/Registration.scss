@@ -1,3 +1,5 @@
+@import '../../theme.scss';
+
 .registration {
   display: flex;
   width: 100%;
@@ -11,7 +13,7 @@
   flex: 1;
   font-family: 'Lato', serif;
   color: white;
-  background-color: #dc3545;
+  background-color: $light-red-color;
 
   &__title {
     text-align: center;

@@ -28,3 +28,12 @@ export const loginRememberMe = () => {
   }).then(res => res.json())
     .catch(err => err);
 };
+
+export const logout = () => {
+  const url = new URL(`${SERVICE_URL}/users/logout`);
+  return fetch(url, {
+    method: 'GET',
+    credentials: 'include',
+  }).then(res => res.status)
+    .catch(err => err);
+};

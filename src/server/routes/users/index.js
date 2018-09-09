@@ -58,15 +58,15 @@ users.post('/login', (req, res, next) => {
 });
 
 users.get('/logout', (req, res, next) => {
-  if (req.session) {
-    req.session.destroy((err) => {
-      if (err) {
-        return next(err);
-      }
-      return res.status(200).end();
-    });
+  if (!req.session) {
     return res.status(200).end();
   }
+  req.session.destroy((err) => {
+    if (err) {
+      return next(err);
+    }
+    return res.status(200).end();
+  });
 });
 
 module.exports = users;
