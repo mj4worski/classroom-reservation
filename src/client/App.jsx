@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Router } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { history } from './config';
-import Routes from './pages/Routes';
+import { Routes } from './routing';
 import Navigation from './components/Navigation';
 import Header from './components/header';
 import Footer from './components/footer';

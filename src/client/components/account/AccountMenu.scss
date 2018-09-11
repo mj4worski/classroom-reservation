@@ -11,6 +11,7 @@
     min-height: 3rem;
     border-bottom: 1px solid rgba(white, 0.6);
     cursor: pointer;
+    padding-left: 0.8rem;
 
     &:last-child {
       border-bottom: 1px solid transparent;
@@ -20,5 +21,17 @@
       background-color: $light-red-color;
     }
 
+  }
+
+  &__link-item {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      color: white;
+      text-decoration: none;
+    }
   }
 }

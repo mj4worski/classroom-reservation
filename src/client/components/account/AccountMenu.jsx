@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
+import { Link } from 'react-router-dom';
 import Logout from '../Logout';
 import './AccountMenu.scss';
 
-const AccountMenu = () => (
-  <ul className="account-menu">
-    <li className="account-menu__item" ><Logout /></li>
-  </ul>
-);
+class AccountMenu extends PureComponent {
+  renderLink = (href, content) => (
+    <li className="account-menu__item" >
+      <Link to={href} className="account-menu__link-item">{content}</Link>
+    </li>
+  );
+
+  renderItem = content => (
+    <li className="account-menu__item" >
+      {content}
+    </li>
+  );
+
+  render() {
+    return (
+      <ul className="account-menu">
+        {this.renderLink('/administration', 'Panel administracyjny')}
+        {this.renderItem(<Logout />)}
+      </ul>
+    );
+  }
+}
 
 
 export default AccountMenu;

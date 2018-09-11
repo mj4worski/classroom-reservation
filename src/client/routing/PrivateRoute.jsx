@@ -1,8 +1,9 @@
 import React from 'react';
 import { Redirect, Route, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { withAuthentication } from '../components/hoc';
+import { withAuthentication } from '../components/hoc/index';
 
+// TODO:: Add support for admin account
 const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => (
   <Route
     {...rest}

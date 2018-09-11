@@ -4,6 +4,7 @@ import ClassSearch from '../../components/classSearch';
 import './YourCalendar.scss';
 import LayoutContent from '../../components/LayoutContent';
 
+// TODO:: Move it
 const CalendarPanel = () => (
   <div className="calendar-panel">
     <span className="calendar-panel__label">Wyszukaj</span>
