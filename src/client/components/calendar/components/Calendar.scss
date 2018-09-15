@@ -12,11 +12,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
+  min-height: 100px;
 }
 
 .calendar-header-navigation {
-  //TODO:: Remove styling by html tag
-  & button {
+  &__button {
     background: transparent;
     color: inherit;
     border: none;
