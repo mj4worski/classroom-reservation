@@ -11,7 +11,7 @@ const Routes = () => (
     <Route path="/calendar" component={CalendarPage} />
     <Route path="/login" component={LoginPage} />
     <PrivateRoute path="/reservation" component={ReservationPage} />
-    <PrivateRoute path="/administration" component={AdministrationPage} />
+    <Route path="/administration" component={AdministrationPage} />
   </Fragment>
 );
 

@@ -1,7 +1,6 @@
-import { FETCH_CLASSES_FAILED } from '../../classSearch';
+import { FETCH_CLASSES_FAILED } from '../sagas';
 
-// TODO:: Move it!
-export const errors = (state = {}, action) => {
+const errors = (state = {}, action) => {
   switch (action.type) {
     case FETCH_CLASSES_FAILED:
       return {
@@ -12,3 +11,5 @@ export const errors = (state = {}, action) => {
       return state;
   }
 };
+
+export default errors;

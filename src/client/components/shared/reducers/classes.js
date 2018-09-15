@@ -1,6 +1,6 @@
-import { CLASSES } from './constants';
+import { CLASSES } from '../sagas';
 
-export const classes = (state = [], action) => {
+const classes = (state = [], action) => {
   switch (action.type) {
     case CLASSES:
       return [...action.classes];
@@ -8,3 +8,5 @@ export const classes = (state = [], action) => {
       return state;
   }
 };
+
+export default classes;

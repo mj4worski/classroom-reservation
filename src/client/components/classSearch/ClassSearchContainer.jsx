@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import ClassSearch from './ClassSearch';
-import { fetchClasses } from './actions';
+import { fetchClasses } from '../shared/sagas/';
 
 
 const mapStateToProps = state => ({
