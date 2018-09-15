@@ -1,7 +1,7 @@
 import React from 'react';
 import Calendar from '../../components/calendar';
 import ClassSearch from '../../components/classSearch';
-import './YourCalendar.scss';
+import './Calendar.scss';
 import LayoutContent from '../../components/LayoutContent';
 
 // TODO:: Move it
@@ -15,7 +15,7 @@ const CalendarPanel = () => (
   </div>
 );
 
-const YourCalendar = () => (
+const CalendarPage = () => (
   <LayoutContent>
     <Calendar>
       <CalendarPanel />
@@ -23,4 +23,4 @@ const YourCalendar = () => (
   </LayoutContent>
 );
 
-export default YourCalendar;
+export default CalendarPage;
