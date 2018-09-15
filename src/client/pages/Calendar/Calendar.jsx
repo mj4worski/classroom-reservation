@@ -2,7 +2,7 @@ import React from 'react';
 import Calendar from '../../components/calendar';
 import ClassSearch from '../../components/classSearch';
 import './Calendar.scss';
-import LayoutContent from '../../components/LayoutContent';
+import LayoutContent from '../../components/shared/LayoutContent';
 
 // TODO:: Move it
 const CalendarPanel = () => (

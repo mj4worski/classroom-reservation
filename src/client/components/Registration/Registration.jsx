@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { registration } from './actions';
 import calendarSvg from '../reservation/calendar.svg';
-import LayoutContent from '../LayoutContent';
+import LayoutContent from '../shared/LayoutContent';
 import './Registration.scss';
 
 class Registration extends PureComponent {

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import Autosuggest from 'react-autosuggest';
 import PropTypes from 'prop-types';
-import { withErrorHandler } from '../hoc';
+import { withErrorHandler } from '../shared/hoc';
 import './ClassSearch.scss';
 
 // When suggestion is clicked, Autosuggest needs to populate the input
