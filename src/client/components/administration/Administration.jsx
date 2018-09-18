@@ -59,38 +59,37 @@ class Administration extends PureComponent {
 
   renderClasses = () => {
     const { classes } = this.props;
-
-    const items = [];
-    const contents = [];
-
-    classes.forEach(({ name }) => {
-      items.push(<a
-        className="list-group-item list-group-item-action"
+    const mappedClasses = classes.reduce((obj, { name }) => {
+      obj.items.push(<a
+        className="list-group-item list-group-item-action administration-classes__list-item"
         data-toggle="list"
         href={`#${name.replace(/\s/g, '')}`}
         role="tab"
       >
         {name}
       </a>);
-
-      contents.push(<div
+      
+      obj.contents.push(<div
         className="tab-pane"
         id={name.replace(/\s/g, '')}
         role="tabpanel"
       >
         {name}
       </div>);
-    });
+
+      return obj;
+    }, { items: [], contents: [] });
+
     return (
       <div className="row">
         <div className="col-4">
-          <div className="list-group" id="list-tab" role="tablist">
-            {items}
+          <div className="list-group list-group-flush" id="list-tab" role="tablist">
+            {mappedClasses.items}
           </div>
         </div>
         <div className="col-8">
           <div className="tab-content">
-            {contents}
+            {mappedClasses.contents}
           </div>
         </div>
       </div>

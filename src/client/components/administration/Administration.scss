@@ -9,4 +9,32 @@
   &__header {
     margin-bottom: 1rem;
   }
+
+  &__list-item {
+    display: flex;
+    align-items: center;
+    
+    &::before {
+      content: '';
+      background-size: 18px 18px;
+      display: block;
+      height: 18px;
+      width: 18px;
+      background-image: url("play-button.svg");
+      margin-right: 0.8rem;
+    }
+
+    .active {
+      color: #fff;
+      background-color: #d61a1a;
+      border-color: #d61a1a;
+    }
+  }
+}
+
+.administration-classes__list-item.active { 
+  color: #fff;
+  background-color: #d61a1a;
+  border-color: #d61a1a;
+  border-radius: 10px;
 }

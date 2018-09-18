@@ -132,4 +132,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, { componentDidMount: fetchClasses })(withErrorHandler(ClassSearch));
-
