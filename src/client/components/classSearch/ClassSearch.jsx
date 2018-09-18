@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
 import PropTypes from 'prop-types';
 import { withErrorHandler } from '../shared/hoc';
+import { fetchClasses } from '../shared/sagas/';
 import './ClassSearch.scss';
 
 // When suggestion is clicked, Autosuggest needs to populate the input
@@ -25,12 +27,11 @@ class ClassSearch extends PureComponent {
     placeholder: PropTypes.string,
     label: PropTypes.string,
     errorMessage: PropTypes.string,
-    onDidMount: PropTypes.func,
+    componentDidMount: PropTypes.func.isRequired,
     classes: PropTypes.arrayOf(PropTypes.object).isRequired,
   };
 
   static defaultProps = {
-    onDidMount: () => {},
     onChangeRequest: () => {},
     placeholder: '',
     label: '',
@@ -44,7 +45,7 @@ class ClassSearch extends PureComponent {
   };
 
   componentDidMount() {
-    this.props.onDidMount();
+    this.props.componentDidMount();
   }
 
   onChange = (event, { newValue }) => {
@@ -125,4 +126,10 @@ class ClassSearch extends PureComponent {
   }
 }
 
-export default withErrorHandler(ClassSearch);
+const mapStateToProps = state => ({
+  classes: state.classes,
+  error: state.errors.classes,
+});
+
+export default connect(mapStateToProps, { componentDidMount: fetchClasses })(withErrorHandler(ClassSearch));
+

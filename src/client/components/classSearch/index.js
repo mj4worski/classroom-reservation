@@ -1,1 +1,1 @@
-export { default } from './ClassSearchContainer';
+export { default } from './ClassSearch';
