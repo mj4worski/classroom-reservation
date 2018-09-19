@@ -3,3 +3,4 @@
 /node_modules/
 /use-command
 /yarn-error.log
+.vscode/

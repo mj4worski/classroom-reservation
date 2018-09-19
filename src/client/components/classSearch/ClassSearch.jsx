@@ -131,4 +131,7 @@ const mapStateToProps = state => ({
   error: state.errors.classes,
 });
 
-export default connect(mapStateToProps, { componentDidMount: fetchClasses })(withErrorHandler(ClassSearch));
+export default connect(
+  mapStateToProps,
+  { componentDidMount: fetchClasses },
+)(withErrorHandler(ClassSearch));

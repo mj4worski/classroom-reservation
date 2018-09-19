@@ -32,6 +32,17 @@
   }
 }
 
+.administration-pane {
+  height: 100%;
+  padding-left: 2rem;
+
+  &__edit-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+}
+
 .administration-classes__list-item.active { 
   color: #fff;
   background-color: #d61a1a;
