@@ -8,7 +8,7 @@
     "build": "webpack --config webpack.prod.js",
     "start": "NODE_ENV=production node src/server/server.js",
     "start:dev:client": "webpack-dev-server --open --config webpack.dev.js",
-    "start:dev:server": "nodemon src/server/server.js",
+    "start:dev:server": "nodemon --inspect src/server/server.js",
     "storybook": "start-storybook -p 8080 -c .storybook",
     "lint": "eslint --ext js,jsx src",
     "postinstall": "webpack --config webpack.prod.js"
