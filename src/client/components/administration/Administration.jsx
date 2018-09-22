@@ -10,7 +10,9 @@ class Administration extends PureComponent {
   static propTypes = {
     componentDidMount: PropTypes.func.isRequired,
     onSubmitRequest: PropTypes.func,
-    classes: PropTypes.array,
+    classes: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    })),
   };
 
   static defaultProps = {
