@@ -71,16 +71,12 @@ class Administration extends PureComponent {
     }, { items: [], itemsPane: [] });
 
     return (
-      <div className="row">
-        <div className="col-4">
-          <div className="list-group list-group-flush" id="list-tab" role="tablist">
-            {mappedClasses.items}
-          </div>
+      <div className="row administration-class__content">
+        <div className="col-4 list-group list-group-flush administration-class-list" id="list-tab" role="tablist">
+          {mappedClasses.items}
         </div>
-        <div className="col-8">
-          <div className="tab-content">
-            {mappedClasses.itemsPane}
-          </div>
+        <div className="col-8 tab-content administration-pane">
+          {mappedClasses.itemsPane}
         </div>
       </div>
     );
@@ -88,7 +84,7 @@ class Administration extends PureComponent {
 
   renderItem = (name, active) => (
     <a
-      className={`list-group-item list-group-item-action administration-classes__list-item ${active ? 'show active' : ''}`}
+      className={`list-group-item list-group-item-action administration-class-list__item ${active ? 'show active' : ''}`}
       data-toggle="list"
       href={`#${removeWhiteCharacter(name)}`}
       role="tab"
@@ -99,14 +95,14 @@ class Administration extends PureComponent {
 
   renderItemPane = (name, active) => (
     <div
-      className={`tab-pane administration-pane ${active ? 'show active' : ''}`}
+      className={`tab-pane administration-pane__item ${active ? 'show active' : ''}`}
       id={removeWhiteCharacter(name)}
       role="tabpanel"
     >
       <h4>{name}</h4>
       <label
         htmlFor="class-field-edit"
-        className="administration-pane__edit-input"
+        className="administration-pane__input"
       >
         <h6>Edytuj sale</h6>
         <div className="form-inline">
@@ -142,11 +138,11 @@ class Administration extends PureComponent {
     return (
       <div className="administration">
         <h1>Administration</h1>
-        <div>
+        <div className="my-4">
           {this.renderClassInput()}
         </div>
-        <div className="administration-classes">
-          <h2 className="administration-classes__header">Lista dostępnych sal:</h2>
+        <div className="administration-class">
+          <h2 className="administration-class__header">Lista dostępnych sal:</h2>
           {this.renderClassesWithRelatedPanes()}
         </div>
       </div>
