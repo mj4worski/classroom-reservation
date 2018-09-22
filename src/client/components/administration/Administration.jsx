@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Tile from './Tile';
+import { fetchClasses, updateClass } from '../shared/sagas';
 import './Administration.scss';
-import { fetchClasses } from '../shared/sagas';
 
 const removeWhiteCharacter = string => string.replace(/\s/g, '');
 
@@ -13,6 +14,7 @@ class Administration extends PureComponent {
     classes: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string.isRequired,
     })),
+    classroomNameChangeRequested: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -61,12 +63,17 @@ class Administration extends PureComponent {
     </label>
   );
 
-  renderClassesWithRelatedPanes = () => {
-    const { classes } = this.props;
-
-    const mappedClasses = classes.reduce((obj, { name }, idx) => {
-      obj.items.push(this.renderItem(name, idx === 0));
-      obj.itemsPane.push(this.renderItemPane(name, idx === 0));
+  renderClassesWithRelatedTiles = () => {
+    const { classes, classroomNameChangeRequested } = this.props;
+    const mappedClasses = classes.reduce((obj, classroom, idx) => {
+      obj.items.push(this.renderItem(classroom.name, idx === 0));
+      obj.itemsPane.push(<Tile
+        classroom={classroom}
+        active={idx === 0}
+        id={removeWhiteCharacter(classroom.name)}
+        onEditSubmit={classroomNameChangeRequested}
+        key={classroom.name}
+      />);
       return obj;
     }, { items: [], itemsPane: [] });
 
@@ -75,7 +82,7 @@ class Administration extends PureComponent {
         <div className="col-4 list-group list-group-flush administration-class-list" id="list-tab" role="tablist">
           {mappedClasses.items}
         </div>
-        <div className="col-8 tab-content administration-pane">
+        <div className="col-8 tab-content administration__tile">
           {mappedClasses.itemsPane}
         </div>
       </div>
@@ -88,50 +95,10 @@ class Administration extends PureComponent {
       data-toggle="list"
       href={`#${removeWhiteCharacter(name)}`}
       role="tab"
+      key={name}
     >
       {name}
     </a>
-  )
-
-  renderItemPane = (name, active) => (
-    <div
-      className={`tab-pane administration-pane__item ${active ? 'show active' : ''}`}
-      id={removeWhiteCharacter(name)}
-      role="tabpanel"
-    >
-      <h4>{name}</h4>
-      <label
-        htmlFor="class-field-edit"
-        className="administration-pane__input"
-      >
-        <h6>Edytuj sale</h6>
-        <div className="form-inline">
-          <input
-            type="text"
-            className="form-control flex-grow-1"
-            id="class-field-edit"
-            placeholder="Edytuj sale"
-          />
-          <button
-            type="submit"
-            className="btn btn-danger m-lg-1"
-          >
-          Zatwierdź zmianę nazwy
-          </button>
-        </div>
-      </label>
-      <div className="d-flex">
-        <span className="font-weight-bold flex-grow-1">
-          Usuniecie sali spowoduje również odwołanie wszystkich rezerwacji związanych z salą.
-        </span>
-        <button
-          type="submit"
-          className="btn btn-danger"
-        >
-          Usuń sale
-        </button>
-      </div>
-    </div>
   )
 
   render() {
@@ -143,7 +110,7 @@ class Administration extends PureComponent {
         </div>
         <div className="administration-class">
           <h2 className="administration-class__header">Lista dostępnych sal:</h2>
-          {this.renderClassesWithRelatedPanes()}
+          {this.renderClassesWithRelatedTiles()}
         </div>
       </div>
     );
@@ -155,4 +122,10 @@ const mapStateToProps = ({ classes }) => ({
   classes,
 });
 
-export default connect(mapStateToProps, { componentDidMount: fetchClasses })(Administration);
+export default connect(
+  mapStateToProps,
+  {
+    componentDidMount: fetchClasses,
+    classroomNameChangeRequested: updateClass,
+  },
+)(Administration);

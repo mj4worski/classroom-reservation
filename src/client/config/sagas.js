@@ -2,7 +2,7 @@ import { all } from 'redux-saga/effects';
 import { watchRegistration } from '../components/Registration';
 import { watchLogin, watchLoginRememberMe } from '../components/Login';
 import { watchReservation } from '../components/calendar';
-import { watchClasses } from '../components/shared/sagas';
+import { watchClasses, watchUpdateClass } from '../components/shared/sagas';
 import { watchLogout } from '../components/Logout';
 
 export default function* rootSaga() {
@@ -11,6 +11,7 @@ export default function* rootSaga() {
     watchLogin(),
     watchReservation(),
     watchClasses(),
+    watchUpdateClass(),
     watchLoginRememberMe(),
     watchLogout(),
   ]);

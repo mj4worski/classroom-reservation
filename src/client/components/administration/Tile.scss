@@ -1,0 +1,10 @@
+.tile {
+  height: 100%;
+  padding-left: 2rem;
+
+  &__input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+}

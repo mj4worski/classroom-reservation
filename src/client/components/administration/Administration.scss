@@ -43,19 +43,8 @@
   }
 }
 
-.administration-pane {
-overflow: scroll;
-
-  &__item {
-    height: 100%;
-    padding-left: 2rem;
-  }
-
-  &__input {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-  }
+.administration__tile {
+  overflow: scroll;
 }
 
 .administration-class-list__item.active { 
