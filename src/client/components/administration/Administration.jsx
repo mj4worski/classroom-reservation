@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { classroomType } from './types';
 import Tile from './Tile';
+import Classroom from './Classroom';
 import { fetchClasses, updateClass } from '../shared/sagas';
 import './Administration.scss';
 
@@ -11,9 +13,7 @@ class Administration extends PureComponent {
   static propTypes = {
     componentDidMount: PropTypes.func.isRequired,
     onSubmitRequest: PropTypes.func,
-    classes: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    })),
+    classes: PropTypes.arrayOf(classroomType),
     classroomNameChangeRequested: PropTypes.func.isRequired,
   };
 
@@ -24,10 +24,17 @@ class Administration extends PureComponent {
 
   state = {
     className: '',
+    activeItemId: '',
   };
 
   componentDidMount() {
     this.props.componentDidMount();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.state.activeItemId === '' && nextProps.classes.length > 0) {
+      this.setState({ activeItemId: nextProps.classes[0]._id });
+    }
   }
 
   onClassChange = ({ target }) => {
@@ -40,6 +47,10 @@ class Administration extends PureComponent {
     const { className } = this.state;
     onSubmitRequest({ className });
   };
+
+  onClassroomClick = id => this.setState({ activeItemId: id })
+
+  isActive = id => this.state.activeItemId === id
 
   renderClassInput = () => (
     <label htmlFor="class-field">
@@ -65,11 +76,16 @@ class Administration extends PureComponent {
 
   renderClassesWithRelatedTiles = () => {
     const { classes, classroomNameChangeRequested } = this.props;
-    const mappedClasses = classes.reduce((obj, classroom, idx) => {
-      obj.items.push(this.renderItem(classroom.name, idx === 0));
+    const mappedClasses = classes.reduce((obj, classroom) => {
+      obj.items.push(<Classroom
+        classroom={classroom}
+        active={this.isActive(classroom._id)}
+        onClick={this.onClassroomClick}
+        key={classroom.name}
+      />);
       obj.itemsPane.push(<Tile
         classroom={classroom}
-        active={idx === 0}
+        active={this.isActive(classroom._id)}
         id={removeWhiteCharacter(classroom.name)}
         onEditSubmit={classroomNameChangeRequested}
         key={classroom.name}
@@ -88,18 +104,6 @@ class Administration extends PureComponent {
       </div>
     );
   };
-
-  renderItem = (name, active) => (
-    <a
-      className={`list-group-item list-group-item-action administration-class-list__item ${active ? 'show active' : ''}`}
-      data-toggle="list"
-      href={`#${removeWhiteCharacter(name)}`}
-      role="tab"
-      key={name}
-    >
-      {name}
-    </a>
-  )
 
   render() {
     return (

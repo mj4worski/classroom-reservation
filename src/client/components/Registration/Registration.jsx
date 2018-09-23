@@ -42,7 +42,7 @@ class Registration extends PureComponent {
               <span className="registration-info__title">
                     Tylko zarejestrowani użytkownicy mogą dokonywać rezerwacji sal
               </span>
-              <img src={calendarSvg} alt="calendar-icon" className="registration-info__calendar"/>
+              <img src={calendarSvg} alt="calendar-icon" className="registration-info__calendar" />
             </div>
             <form className="registration-form">
               <h1 className="registration-form__header">Rejestracja</h1>

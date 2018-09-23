@@ -1,13 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { classroomType } from './types';
 import './Tile.scss';
 
 class Tile extends PureComponent {
   static propTypes = {
-    classroom: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      _id: PropTypes.string.isRequired,
-    }).isRequired,
+    classroom: classroomType.isRequired,
     id: PropTypes.string.isRequired,
     active: PropTypes.bool,
     onEditSubmit: PropTypes.func.isRequired,
