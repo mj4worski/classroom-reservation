@@ -1,4 +1,4 @@
-import { CLASSES, SUCCEEDED_UPDATE_CLASS, SUCCEEDED_ADD_CLASS } from '../sagas';
+import { CLASSES, SUCCEEDED_UPDATE_CLASS, SUCCEEDED_ADD_CLASS, SUCCEEDED_DELETE_CLASS } from '../sagas';
 
 const classes = (state = [], action) => {
   switch (action.type) {
@@ -17,6 +17,8 @@ const classes = (state = [], action) => {
     }
     case SUCCEEDED_ADD_CLASS:
       return [...state, action.classroom];
+    case SUCCEEDED_DELETE_CLASS:
+      return state.filter(classroom => classroom._id !== action.classroomId);
     default:
       return state;
   }

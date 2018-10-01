@@ -31,3 +31,13 @@ export const addClass = (classroom) => {
     .then(response => ({ response }))
     .catch(err => err);
 };
+
+export const deleteClass = (classroomId) => {
+  const url = new URL(`${SERVICE_URL}/classes/${classroomId}`);
+  return fetch(url, {
+    method: 'DELETE',
+    headers: new Headers(),
+  }).then(res => res.json())
+    .then(response => ({ response }))
+    .catch(err => err);
+};

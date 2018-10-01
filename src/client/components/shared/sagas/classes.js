@@ -1,13 +1,15 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { getClasses, updateClass as updateClassService, addClass as addClassService } from '../../../services';
+import { getClasses, updateClass as updateClassService, addClass as addClassService, deleteClass as deleteClassService } from '../../../services';
 
 const FETCH_CLASSES = 'FETCH_CLASSES';
 const UPDATE_CLASS = 'UPDATE_CLASS';
 const ADD_CLASS = 'ADD_CLASS';
+const DELETE_CLASS = 'DELETE_CLASS';
 export const SUCCEEDED_UPDATE_CLASS = 'SUCCEEDED_UPDATE_CLASS';
 export const FETCH_CLASSES_FAILED = 'FETCH_CLASSES_FAILED';
 export const CLASSES = 'CLASSES';
 export const SUCCEEDED_ADD_CLASS = 'SUCCEEDED_ADD_CLASS';
+export const SUCCEEDED_DELETE_CLASS = 'SUCCEEDED_DELETE_CLASS';
 
 export const fetchClasses = () => ({
   type: FETCH_CLASSES,
@@ -42,6 +44,16 @@ const succeededAddClass = classroom => ({
   classroom,
 });
 
+export const deleteClass = classroomId => ({
+  type: DELETE_CLASS,
+  classroomId,
+});
+
+const succeededDeleteClass = classroomId => ({
+  type: SUCCEEDED_DELETE_CLASS,
+  classroomId,
+});
+
 export function* watchClasses() {
   yield takeLatest(FETCH_CLASSES, function* () {
     const { response } = yield call(getClasses);
@@ -68,6 +80,15 @@ export function* watchAddClass() {
     const { response } = yield call(addClassService, classroom);
     if (response) {
       yield put(succeededAddClass(response));
+    }
+  });
+}
+
+export function* watchDeleteClass() {
+  yield takeLatest(DELETE_CLASS, function* ({ classroomId }) {
+    const { response } = yield call(deleteClassService, classroomId);
+    if (response) {
+      yield put(succeededDeleteClass(response.classroomId));
     }
   });
 }

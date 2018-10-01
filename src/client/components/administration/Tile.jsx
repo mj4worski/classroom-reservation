@@ -9,6 +9,7 @@ class Tile extends PureComponent {
     id: PropTypes.string.isRequired,
     active: PropTypes.bool,
     onEditSubmit: PropTypes.func.isRequired,
+    onDeleteRequested: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -26,6 +27,11 @@ class Tile extends PureComponent {
 
   handleClassNameChange = (event) => {
     this.setState({ classroomName: event.target.value });
+  }
+
+  handleClassroomDelete = () => {
+    const { onDeleteRequested, classroom } = this.props;
+    onDeleteRequested(classroom._id);
   }
 
   render() {
@@ -69,6 +75,7 @@ class Tile extends PureComponent {
           <button
             type="submit"
             className="btn btn-danger"
+            onClick={this.handleClassroomDelete}
           >
             Usuń sale
           </button>

@@ -55,4 +55,19 @@ classes.post('/', (req, res, next) => {
   });
 });
 
+classes.delete('/:classroomId', (req, res, next) => {
+  const classroomId = req.params && req.params.classroomId;
+  if (!classroomId) {
+    const err = new Error('Require classroomId to delete');
+    err.status = 400;
+    return next(err);
+  }
+  Class.deleteOne({ _id: req.params.classroomId }, (err) => {
+    if (err) {
+      return next(err);
+    }
+    return res.json({ classroomId });
+  });
+});
+
 module.exports = classes;

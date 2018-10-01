@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { classroomType } from './types';
 import Tile from './Tile';
 import Classroom from './Classroom';
-import { fetchClasses, updateClass, addClass } from '../shared/sagas';
+import { fetchClasses, updateClass, addClass, deleteClass } from '../shared/sagas';
 import './Administration.scss';
 
 const removeWhiteCharacter = string => string.replace(/\s/g, '');
@@ -15,6 +15,7 @@ class Administration extends PureComponent {
     onAddClassRequest: PropTypes.func.isRequired,
     classes: PropTypes.arrayOf(classroomType),
     classroomNameChangeRequested: PropTypes.func.isRequired,
+    classroomDeleteRequested: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -22,8 +23,9 @@ class Administration extends PureComponent {
   };
 
   state = {
-    className: '',
+    classroomName: '',
     activeItemId: '',
+    filtredClassesroom: [],
   };
 
   componentDidMount() {
@@ -37,18 +39,18 @@ class Administration extends PureComponent {
   }
 
   onClassChange = ({ target }) => {
-    this.setState({ className: target.value });
+    this.setState({ classroomName: target.value });
   };
 
   onSubmit = (event) => {
     event.preventDefault();
     const { onAddClassRequest } = this.props;
-    const { className } = this.state;
-    if (!className) {
+    const { classroomName } = this.state;
+    if (!classroomName) {
       return;
     }
-    this.setState({ className: '' });
-    onAddClassRequest({ name: className });
+    this.setState({ classroomName: '' });
+    onAddClassRequest({ name: classroomName });
   };
 
   onClassroomClick = id => this.setState({ activeItemId: id })
@@ -60,7 +62,7 @@ class Administration extends PureComponent {
       <h6>Wprowadź sale</h6>
       <div className="form-inline">
         <input
-          value={this.state.className}
+          value={this.state.classroomName}
           type="text"
           className="form-control"
           id="class-field"
@@ -79,7 +81,7 @@ class Administration extends PureComponent {
   );
 
   renderClassesWithRelatedTiles = () => {
-    const { classes, classroomNameChangeRequested } = this.props;
+    const { classes, classroomNameChangeRequested, classroomDeleteRequested } = this.props;
     const mappedClasses = classes.reduce((obj, classroom) => {
       obj.items.push(<Classroom
         classroom={classroom}
@@ -92,6 +94,7 @@ class Administration extends PureComponent {
         active={this.isActive(classroom._id)}
         id={removeWhiteCharacter(classroom.name)}
         onEditSubmit={classroomNameChangeRequested}
+        onDeleteRequested={classroomDeleteRequested}
         key={classroom.name}
       />);
       return obj;
@@ -136,5 +139,6 @@ export default connect(
     componentDidMount: fetchClasses,
     classroomNameChangeRequested: updateClass,
     onAddClassRequest: addClass,
+    classroomDeleteRequested: deleteClass,
   },
 )(Administration);
