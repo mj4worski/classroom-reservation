@@ -1,0 +1,61 @@
+@import '../../theme.scss';
+
+.administration {
+  width: 100%;
+  margin: 2rem;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.administration-class {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  height: 60vh;
+
+  &__header {
+    margin-bottom: 1rem;
+  }
+
+  &__content {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 1rem;
+    border-radius: 15px;
+    height: 100%;
+  }
+}
+
+.administration-class-list {
+  overflow: scroll;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    
+    &::before {
+      content: '';
+      background-size: 18px 18px;
+      display: block;
+      height: 18px;
+      width: 18px;
+      background-image: url("play-button.svg");
+      margin-right: 0.8rem;
+    }
+  }
+}
+
+.administration__tile {
+  overflow: scroll;
+}
+
+.administration-class-list__item.active { 
+  color: #fff;
+  background-color: $light-red-color;
+  border-color: $light-red-color;
+  border-radius: 10px;
+}

@@ -67,14 +67,14 @@ class Calendar extends Component {
         </button>
       </div>
       <div className="calendar-header-navigation">
-        <button onClick={this.previous}>
+        <button className="calendar-header-navigation__button" onClick={this.previous}>
           <img
             className="calendar-header-navigation__arrow calendar-header-navigation__arrow--rotate"
             src={arrow}
             alt="left-arrow"
           />
         </button>
-        <button onClick={this.next}>
+        <button className="calendar-header-navigation__button" onClick={this.next}>
           <img className="calendar-header-navigation__arrow" src={arrow} alt="right-arrow" />
         </button>
       </div>

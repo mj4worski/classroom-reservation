@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { history } from './config';
 import { Routes } from './routing';
 import Navigation from './components/Navigation';
-import Header from './components/header';
-import Footer from './components/footer';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import { rememberMe } from './components/Login';
 
 class App extends PureComponent {

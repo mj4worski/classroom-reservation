@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { withAuthentication } from '../hoc';
+import { withAuthentication } from '../shared/hoc';
 import Dropdown from './Dropdown';
 import Login from '../Login';
 import { AccountLabel, AccountMenu } from '../account';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { registration } from './actions';
 import calendarSvg from '../reservation/calendar.svg';
-import LayoutContent from '../LayoutContent';
+import LayoutContent from '../shared/LayoutContent';
 import './Registration.scss';
 
 class Registration extends PureComponent {
@@ -42,7 +42,7 @@ class Registration extends PureComponent {
               <span className="registration-info__title">
                     Tylko zarejestrowani użytkownicy mogą dokonywać rezerwacji sal
               </span>
-              <img src={calendarSvg} alt="calendar-icon" className="registration-info__calendar"/>
+              <img src={calendarSvg} alt="calendar-icon" className="registration-info__calendar" />
             </div>
             <form className="registration-form">
               <h1 className="registration-form__header">Rejestracja</h1>

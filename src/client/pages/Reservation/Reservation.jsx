@@ -1,7 +1,7 @@
 import React from 'react';
 import { Reservation } from '../../components/reservation';
 import { makeReservation } from '../../services';
-import LayoutContent from '../../components/LayoutContent';
+import LayoutContent from '../../components/shared/LayoutContent';
 
 const ReservationPage = () => (
   <LayoutContent>
