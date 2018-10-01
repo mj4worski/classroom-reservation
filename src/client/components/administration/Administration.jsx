@@ -9,6 +9,9 @@ import './Administration.scss';
 
 const removeWhiteCharacter = string => string.replace(/\s/g, '');
 
+const bySearchResult = searchResult => item => item.name
+  .toLowerCase()
+  .indexOf(searchResult.toLowerCase()) !== -1;
 class Administration extends PureComponent {
   static propTypes = {
     componentDidMount: PropTypes.func.isRequired,
@@ -25,7 +28,8 @@ class Administration extends PureComponent {
   state = {
     classroomName: '',
     activeItemId: '',
-    filtredClassesroom: [],
+    searchResult: '',
+    filtredClassesroom: this.props.classes,
   };
 
   componentDidMount() {
@@ -36,10 +40,15 @@ class Administration extends PureComponent {
     if (this.state.activeItemId === '' && nextProps.classes.length > 0) {
       this.setState({ activeItemId: nextProps.classes[0]._id });
     }
+    this.setState({ filtredClassesroom: nextProps.classes }, this.filterClasses);
   }
 
   onClassChange = ({ target }) => {
     this.setState({ classroomName: target.value });
+  };
+
+  onClassSearchChange = ({ target }) => {
+    this.setState({ searchResult: target.value }, this.filterClasses);
   };
 
   onSubmit = (event) => {
@@ -57,14 +66,22 @@ class Administration extends PureComponent {
 
   isActive = id => this.state.activeItemId === id
 
+  filterClasses() {
+    const { classes } = this.props;
+    const { searchResult } = this.state;
+
+    const filtredClassesroom = classes.filter(bySearchResult(searchResult));
+    this.setState({ filtredClassesroom });
+  }
+
   renderClassInput = () => (
-    <label htmlFor="class-field">
+    <label htmlFor="class-field" className="mb-3">
       <h6>Wprowadź sale</h6>
       <div className="form-inline">
         <input
           value={this.state.classroomName}
           type="text"
-          className="form-control"
+          className="form-control w-50"
           id="class-field"
           placeholder="Wprowadz sale"
           onChange={this.onClassChange}
@@ -80,9 +97,26 @@ class Administration extends PureComponent {
     </label>
   );
 
+  renderClassSearchInput = () => (
+    <label htmlFor="class-search-field" className="mb-3">
+      <h6>Wyszukaj sale</h6>
+      <div className="form-inline">
+        <input
+          value={this.state.searchResult}
+          type="text"
+          className="form-control w-50"
+          id="class-search-field"
+          placeholder="Wprowadź szukaną sale."
+          onChange={this.onClassSearchChange}
+        />
+      </div>
+    </label>
+  );
+
   renderClassesWithRelatedTiles = () => {
-    const { classes, classroomNameChangeRequested, classroomDeleteRequested } = this.props;
-    const mappedClasses = classes.reduce((obj, classroom) => {
+    const { filtredClassesroom } = this.state;
+    const { classroomNameChangeRequested, classroomDeleteRequested } = this.props;
+    const mappedClasses = filtredClassesroom.reduce((obj, classroom) => {
       obj.items.push(<Classroom
         classroom={classroom}
         active={this.isActive(classroom._id)}
@@ -116,8 +150,9 @@ class Administration extends PureComponent {
     return (
       <div className="administration">
         <h1>Administration</h1>
-        <div className="my-4">
+        <div className="administration__form">
           {this.renderClassInput()}
+          {this.renderClassSearchInput()}
         </div>
         <div className="administration-class">
           <h2 className="administration-class__header">Lista dostępnych sal:</h2>
