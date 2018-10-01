@@ -9,12 +9,25 @@ export const getClasses = () => {
 };
 
 export const updateClass = (classroom) => {
+  const url = new URL(`${SERVICE_URL}/classes/edit`);
+  return fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    credentials: 'include',
+    body: JSON.stringify({ classroom }),
+  }).then(res => res.json())
+    .then(response => ({ response }))
+    .catch(err => err);
+};
+
+export const addClass = (classroom) => {
   const url = new URL(`${SERVICE_URL}/classes`);
   return fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
     credentials: 'include',
     body: JSON.stringify({ classroom }),
-  }).then(res => res.status)
+  }).then(res => res.json())
+    .then(response => ({ response }))
     .catch(err => err);
 };

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { classroomType } from './types';
 import Tile from './Tile';
 import Classroom from './Classroom';
-import { fetchClasses, updateClass } from '../shared/sagas';
+import { fetchClasses, updateClass, addClass } from '../shared/sagas';
 import './Administration.scss';
 
 const removeWhiteCharacter = string => string.replace(/\s/g, '');
@@ -12,14 +12,13 @@ const removeWhiteCharacter = string => string.replace(/\s/g, '');
 class Administration extends PureComponent {
   static propTypes = {
     componentDidMount: PropTypes.func.isRequired,
-    onSubmitRequest: PropTypes.func,
+    onAddClassRequest: PropTypes.func.isRequired,
     classes: PropTypes.arrayOf(classroomType),
     classroomNameChangeRequested: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     classes: [],
-    onSubmitRequest: () => {},
   };
 
   state = {
@@ -43,9 +42,13 @@ class Administration extends PureComponent {
 
   onSubmit = (event) => {
     event.preventDefault();
-    const { onSubmitRequest } = this.props;
+    const { onAddClassRequest } = this.props;
     const { className } = this.state;
-    onSubmitRequest({ className });
+    if (!className) {
+      return;
+    }
+    this.setState({ className: '' });
+    onAddClassRequest({ name: className });
   };
 
   onClassroomClick = id => this.setState({ activeItemId: id })
@@ -57,6 +60,7 @@ class Administration extends PureComponent {
       <h6>Wprowadź sale</h6>
       <div className="form-inline">
         <input
+          value={this.state.className}
           type="text"
           className="form-control"
           id="class-field"
@@ -131,5 +135,6 @@ export default connect(
   {
     componentDidMount: fetchClasses,
     classroomNameChangeRequested: updateClass,
+    onAddClassRequest: addClass,
   },
 )(Administration);

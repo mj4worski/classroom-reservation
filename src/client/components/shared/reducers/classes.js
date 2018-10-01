@@ -1,4 +1,4 @@
-import { CLASSES, SUCCEEDED_UPDATE_CLASS } from '../sagas';
+import { CLASSES, SUCCEEDED_UPDATE_CLASS, SUCCEEDED_ADD_CLASS } from '../sagas';
 
 const classes = (state = [], action) => {
   switch (action.type) {
@@ -15,6 +15,8 @@ const classes = (state = [], action) => {
         };
       });
     }
+    case SUCCEEDED_ADD_CLASS:
+      return [...state, action.classroom];
     default:
       return state;
   }

@@ -18,8 +18,10 @@ classes.get('/', (req, res, next) => {
   });
 });
 
-classes.post('/', (req, res, next) => {
-  const { classroom } = req.body;
+classes.post('/edit', (req, res, next) => {
+  const {
+    classroom,
+  } = req.body;
   Class.findById(classroom._id, (error, classroomEntity) => {
     if (error) {
       return handleError('Problem with updating Classroom', next);
@@ -33,6 +35,23 @@ classes.post('/', (req, res, next) => {
       }
       res.send(updatedClassroom);
     });
+  });
+});
+
+classes.post('/', (req, res, next) => {
+  const {
+    classroom,
+  } = req.body;
+  if (!classroom.name) {
+    const err = new Error('Require classroom name');
+    err.status = 400;
+    return next(err);
+  }
+  Class.create(classroom, (err, classroomEntity) => {
+    if (err) {
+      return next(err);
+    }
+    res.json(classroomEntity);
   });
 });
 

@@ -22,7 +22,7 @@ reservations.get('/:className/:date', (req, res, next) => {
       if (err) {
         return next(err);
       }
-      res.json(reservations.filter(reservation => reservation.className.name !== req.params.className));
+      res.json(reservations.filter(item => item.className.name !== req.params.className));
     });
 });
 
