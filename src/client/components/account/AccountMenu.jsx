@@ -20,6 +20,8 @@ class AccountMenu extends PureComponent {
     return (
       <ul className="account-menu">
         {this.renderLink('/administration', 'Panel administracyjny')}
+        {this.renderLink('/reservation', 'Rezerwacja sali')}
+        {this.renderLink('/calendar', 'Moje rezerwacje')}
         {this.renderItem(<Logout />)}
       </ul>
     );
