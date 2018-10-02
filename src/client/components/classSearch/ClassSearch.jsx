@@ -13,7 +13,7 @@ const getSuggestionValue = suggestion => suggestion.name;
 
 // Use your imagination to render suggestions.
 const renderSuggestion = suggestion => (
-  <div>
+  <div className="suggestion">
     {suggestion.name}
   </div>
 );
@@ -81,7 +81,7 @@ class ClassSearch extends PureComponent {
     if (label !== '' || errorMessage !== '') {
       return inputProps => (
         <label className="d-block" htmlFor="classSearch">
-          {label}
+          <h6>{label}</h6>
           <input {...inputProps} />
           <div className="invalid-feedback">
             {errorMessage}

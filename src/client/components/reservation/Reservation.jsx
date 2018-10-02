@@ -121,7 +121,7 @@ class Reservation extends Component {
 
     return (
       <label className="date-button" htmlFor={title}>
-        {title}
+        <h6>{title}</h6>
         <input
           name={name}
           id={title}
@@ -147,7 +147,7 @@ class Reservation extends Component {
             <h3>Szczegóły dotyczace rezerwacji</h3>
             <div className="form-group">
               <label className="form-control-label d-block" htmlFor="eventName">
-                Tytuł zdarzenia
+                <h6>Tytuł zdarzenia</h6>
                 <input
                   type="text"
                   id="eventName"

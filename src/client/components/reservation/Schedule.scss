@@ -29,12 +29,18 @@ $cell-number-width: 30px;
   position: absolute;
   left: $cell-number-width;
   width: calc(100% - #{$cell-number-width});
+  padding: 0.5rem;
+  font-weight: 600;
 
   &--existing {
     background-color: #6aa3ff;
+    border-radius: 15px;
+    color: black;
   }
 
   &--your {
     background-color: $light-red-color;
+    border-radius: 15px;
+    color: white;
   }
 }
