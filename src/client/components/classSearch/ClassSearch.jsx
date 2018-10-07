@@ -49,8 +49,12 @@ class ClassSearch extends PureComponent {
   }
 
   onChange = (event, { newValue }) => {
+    this.setState({ value: newValue });
+  };
+
+  onSuggestionSelected = (event, { suggestionValue }) => {
     const { onChangeRequest } = this.props;
-    this.setState({ value: newValue }, () => onChangeRequest(this.state.value));
+    onChangeRequest(suggestionValue);
   };
 
   // Autosuggest will call this function every time you need to update suggestions.
@@ -120,6 +124,7 @@ class ClassSearch extends PureComponent {
           renderInputComponent={this.createOuterRender(label, errorMessage)}
           inputProps={inputProps}
           theme={inputTheme}
+          onSuggestionSelected={this.onSuggestionSelected}
         />
       </div>
     );

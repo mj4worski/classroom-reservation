@@ -2,32 +2,38 @@ const reservations = require('express').Router();
 const Reservation = require('../../models/reservation');
 const Class = require('../../models/class');
 
-reservations.get('/:className', (req, res, next) => {
-  // TODO:: Use match from populate
-  Reservation.find({}).populate('class').exec((err, reservations) => {
+reservations.get('/:classroomName', (req, res, next) => {
+  const { classroomName } = req.params;
+  Reservation.find({}).populate({
+    path: 'classroom',
+    match: { name: classroomName },
+  }).exec((err, reservations) => {
     if (err) {
       return next(err);
     }
-    res.json(reservations.filter(reservation => reservation.class.name !== req.params.className));
+    res.json(reservations.filter(reservation => reservation.classroom));
   });
 });
 
-reservations.get('/:className/:date', (req, res, next) => {
-  // TODO:: Use match from populate
-  const dateFromRequest = new Date(req.params.date);
+reservations.get('/:classroomName/:date', (req, res, next) => {
+  const { classroomName, date } = req.params;
+  const dateFromRequest = new Date(date);
   dateFromRequest.setHours(0, 0, 0, 0);
   const nextDay = new Date(dateFromRequest).setDate(dateFromRequest.getDate() + 1);
   Reservation.find({ when: { $gte: dateFromRequest, $lt: nextDay } })
-    .populate('class').exec((err, reservations) => {
+    .populate({
+      path: 'classroom',
+      match: { name: classroomName },
+    }).exec((err, reservations) => {
       if (err) {
         return next(err);
       }
-      res.json(reservations.filter(item => item.className.name !== req.params.className));
+      res.json(reservations.filter(reservation => reservation.classroom));
     });
 });
 
 const validateReservation = req => req.body.name
-    && req.body.className
+    && req.body.classroomName
     && req.body.when
     && req.body.startTime
     && req.body.endTime;
@@ -38,7 +44,7 @@ reservations.post('/', (req, res, next) => {
     err.status = 400;
     return next(err);
   }
-  Class.findOne({ name: req.body.className }, (err, classDoc) => {
+  Class.findOne({ name: req.body.classroomName }, (err, classDoc) => {
     if (err) {
       return next(err);
     }
@@ -48,11 +54,11 @@ reservations.post('/', (req, res, next) => {
       return next(err);
     }
 
-    Reservation.create({ ...req.body, className: classDoc._id }, (err) => {
+    Reservation.create({ ...req.body, classroom: classDoc._id }, (err, reservation) => {
       if (err) {
         return next(err);
       }
-      return res.status(200).end();
+      return res.json(reservation);
     });
   });
 });

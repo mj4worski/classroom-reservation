@@ -25,7 +25,7 @@ export const getReservationsByClassNameAndDate = (className, date) => {
     .catch(err => err);
 };
 
-export const makeReservation = (reservation) => {
+export const makeReservation = (reservation, sucess = () => {}, error = () => {}) => {
   const url = new URL(`${SERVICE_URL}/reservations`);
   return fetch(url, {
     method: 'POST',
@@ -33,6 +33,11 @@ export const makeReservation = (reservation) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(reservation),
-  }).then(res => res.statusCode === 200)
-    .catch(err => err);
+  }).then((res) => {
+    if (res.status === 200) {
+      sucess();
+    } else {
+      error();
+    }
+  }).catch(err => error(err));
 };

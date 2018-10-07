@@ -16,12 +16,12 @@ class Reservation extends Component {
     startTime: moment(),
     endTime: moment(),
     name: '',
-    className: '',
+    classroomName: '',
     yourReservations: [],
     existingReservations: [],
   };
 
-  handleTimeInputsChange = (event) => {
+  onTimeChange = (event) => {
     const { target } = event;
     const { value, name, type } = target;
     if (type === 'time') {
@@ -30,6 +30,15 @@ class Reservation extends Component {
     if (type === 'date') {
       this.updateDate(name, new Date(value));
     }
+  };
+
+  onClassroomNameChange = (value) => {
+    this.setState({ classroomName: value }, this.updateReservations);
+  };
+
+  onReservationNameChange = (event) => {
+    const { value } = event.target;
+    this.setState({ name: value }, this.updateYourReservations);
   };
 
   updateDate = (name, date) => {
@@ -56,62 +65,69 @@ class Reservation extends Component {
     dayToUpdate.set('minute', value.split(':')[1]);
     this.setState({
       [name]: dayToUpdate,
-    }, this.updateReservations);
-  };
-
-  handleClassInputChange = (value) => {
-    this.setState({ className: value }, this.updateReservations);
-  };
-
-  handleNameInput = (event) => {
-    const { value } = event.target;
-    this.setState({ name: value }, this.updateReservations);
+    }, this.updateYourReservations);
   };
 
   updateReservations = () => {
+    this.updateExistingReservations();
+    this.updateYourReservations();
+  }
+
+  updateYourReservations = () => {
     const {
-      className, when, startTime, endTime, name,
+      classroomName, when, startTime, endTime, name,
     } = this.state;
 
-    if (className !== '' && when.isValid()) {
-      getReservationsByClassNameAndDate(className, when.toISOString())
-        .then(reservations => this.setState({ existingReservations: reservations }));
-    }
-
-    if (className !== '' && when.isValid() && startTime.isValid() && endTime.isValid()) {
+    if (when.isValid() && startTime.isValid() && endTime.isValid()) {
       this.setState({
         yourReservations: [{
           when: when.toDate(),
           startTime: startTime.toDate(),
           endTime: endTime.toDate(),
           name,
-          className,
+          classroomName,
         }],
-      });
-    } else {
-      this.setState({
-        yourReservations: [],
       });
     }
   };
 
+  updateExistingReservations = () => {
+    const {
+      classroomName, when,
+    } = this.state;
+
+    if (when.isValid()) {
+      getReservationsByClassNameAndDate(classroomName, when.toISOString())
+        .then(reservations => this.setState({ existingReservations: reservations }));
+    }
+  }
+
   handleFormSubmit = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     event.target.classList.add('was-validated');
     if (event.target.checkValidity()) {
       const {
-        className, endTime, name, startTime, when,
+        classroomName, endTime, name, startTime, when,
       } = this.state;
       this.props.onSubmit({
         name,
-        className,
+        classroomName,
         when: when.toDate(),
         startTime: startTime.toDate(),
         endTime: endTime.toDate(),
-      });
+      }, this.reservationSuccess);
     }
-    event.preventDefault();
-    event.stopPropagation();
   };
+
+  reservationSuccess = () => {
+    this.setState({
+      existingReservations: [...this.state.existingReservations, ...this.state.yourReservations],
+      yourReservations: [],
+      name: '',
+      classroomName: '',
+    });
+  }
 
   renderDateInput = (props, type = 'date') => {
     const {
@@ -128,7 +144,7 @@ class Reservation extends Component {
           type={type}
           className={`btn btn-danger ${type === 'date' ? 'calendar-icon' : 'clock-icon'}`}
           defaultValue={type === 'date' ? date.format('YYYY-MM-DD') : date.format('HH:mm')}
-          onChange={this.handleTimeInputsChange}
+          onChange={this.onTimeChange}
           required
         />
       </label>
@@ -153,7 +169,7 @@ class Reservation extends Component {
                   id="eventName"
                   className="form-control form-control-danger"
                   placeholder="Dodaj tytuł zdarzenia"
-                  onChange={this.handleNameInput}
+                  onChange={this.onReservationNameChange}
                   required
                 />
                 <div className="invalid-feedback">
@@ -166,7 +182,7 @@ class Reservation extends Component {
                 label="Sala"
                 errorMessage="Proszę wybrać salę"
                 placeholder="Dodaj lokalizacje"
-                onChangeRequest={this.handleClassInputChange}
+                onChangeRequest={this.onClassroomNameChange}
               />
             </div>
             <div className="reservation-time">
