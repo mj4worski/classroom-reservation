@@ -20,11 +20,16 @@ mongooseConnection.once('open', () => {
 const app = express();
 
 if (process.env.NODE_ENV === 'production') {
+  // eslint-disable-next-line global-require
   const compression = require('compression');
   app.use(compression());
 
   const distDir = path.join(__dirname, '../../', 'dist/');
   app.use(expressStaticGzip(distDir));
+
+  app.get('*', (req, res) => {
+    res.redirect('/');
+  });
 }
 
 const MONTH = (30 * 86400 * 1000);

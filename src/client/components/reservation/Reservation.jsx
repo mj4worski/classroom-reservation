@@ -3,9 +3,22 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Schedule from './Schedule';
 import ClassSearch from '../classSearch';
+import SuccessModal from './SuccessModal';
+import FailureModal from './FailureModal';
 import { getReservationsByClassNameAndDate } from '../../services';
 import './Reservation.scss';
 
+const FAILURE_CONTENT_FOR_VALIDATION = `Nie możesz dokonać rezerwacji ponieważ sala,
+ którą chcesz zarezerwować jest już zajęta w danym terminie.`;
+
+/* eslint-disable  max-len */
+const checkIfYourReservationIsBetweenExistings =
+(yourReservations, existingReservations) => existingReservations.some(existingReservation =>
+  yourReservations.startTime.isBetween(existingReservation.startTime, existingReservation.endTime)
+   || yourReservations.endTime.isBetween(existingReservation.startTime, existingReservation.endTime));
+/* eslint-enable max-len */
+
+// TODO:: Refactoring require. Reservation should be splited to follows SRP
 class Reservation extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
@@ -16,12 +29,15 @@ class Reservation extends Component {
     startTime: moment(),
     endTime: moment(),
     name: '',
-    className: '',
+    classroomName: '',
     yourReservations: [],
     existingReservations: [],
+    successModalOpen: false,
+    failureModalOpen: false,
+    failureModalContent: undefined,
   };
 
-  handleTimeInputsChange = (event) => {
+  onTimeChange = (event) => {
     const { target } = event;
     const { value, name, type } = target;
     if (type === 'time') {
@@ -30,6 +46,15 @@ class Reservation extends Component {
     if (type === 'date') {
       this.updateDate(name, new Date(value));
     }
+  };
+
+  onClassroomNameChange = (value) => {
+    this.setState({ classroomName: value }, this.updateReservations);
+  };
+
+  onReservationNameChange = (event) => {
+    const { value } = event.target;
+    this.setState({ name: value }, this.updateYourReservations);
   };
 
   updateDate = (name, date) => {
@@ -56,62 +81,98 @@ class Reservation extends Component {
     dayToUpdate.set('minute', value.split(':')[1]);
     this.setState({
       [name]: dayToUpdate,
-    }, this.updateReservations);
-  };
-
-  handleClassInputChange = (value) => {
-    this.setState({ className: value }, this.updateReservations);
-  };
-
-  handleNameInput = (event) => {
-    const { value } = event.target;
-    this.setState({ name: value }, this.updateReservations);
+    }, this.updateYourReservations);
   };
 
   updateReservations = () => {
+    this.updateExistingReservations();
+    this.updateYourReservations();
+  }
+
+  updateYourReservations = () => {
     const {
-      className, when, startTime, endTime, name,
+      classroomName, when, startTime, endTime, name,
     } = this.state;
 
-    if (className !== '' && when.isValid()) {
-      getReservationsByClassNameAndDate(className, when.toISOString())
-        .then(reservations => this.setState({ existingReservations: reservations }));
-    }
-
-    if (className !== '' && when.isValid() && startTime.isValid() && endTime.isValid()) {
+    if (when.isValid() && startTime.isValid() && endTime.isValid()) {
       this.setState({
         yourReservations: [{
           when: when.toDate(),
           startTime: startTime.toDate(),
           endTime: endTime.toDate(),
           name,
-          className,
+          classroom: { name: classroomName },
         }],
-      });
-    } else {
-      this.setState({
-        yourReservations: [],
       });
     }
   };
 
+  updateExistingReservations = () => {
+    const {
+      classroomName, when,
+    } = this.state;
+
+    if (when.isValid()) {
+      getReservationsByClassNameAndDate(classroomName, when.toISOString())
+        .then(reservations => this.setState({ existingReservations: reservations }));
+    }
+  }
+
   handleFormSubmit = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     event.target.classList.add('was-validated');
     if (event.target.checkValidity()) {
       const {
-        className, endTime, name, startTime, when,
+        classroomName, endTime, name, startTime, when, existingReservations,
       } = this.state;
+
+      if (checkIfYourReservationIsBetweenExistings({ startTime, endTime }, existingReservations)) {
+        this.setState({
+          failureModalOpen: true,
+          failureModalContent: FAILURE_CONTENT_FOR_VALIDATION,
+        });
+        return;
+      }
       this.props.onSubmit({
         name,
-        className,
+        classroomName,
         when: when.toDate(),
         startTime: startTime.toDate(),
         endTime: endTime.toDate(),
-      });
+      }, this.reservationSuccess, this.reservationFailure);
     }
-    event.preventDefault();
-    event.stopPropagation();
-  };
+  }
+
+
+  reservationSuccess = () => {
+    this.setState({
+      existingReservations: [...this.state.existingReservations, ...this.state.yourReservations],
+      yourReservations: [],
+      name: '',
+      classroomName: '',
+      successModalOpen: true,
+    });
+  }
+
+  reservationFailure = () => {
+    this.setState({
+      failureModalOpen: true,
+    });
+  }
+
+  closeSuccessModal = () => {
+    this.setState({
+      successModalOpen: false,
+    });
+  }
+
+  closeFailureModal = () => {
+    this.setState({
+      failureModalOpen: false,
+      failureModalContent: undefined,
+    });
+  }
 
   renderDateInput = (props, type = 'date') => {
     const {
@@ -121,14 +182,14 @@ class Reservation extends Component {
 
     return (
       <label className="date-button" htmlFor={title}>
-        {title}
+        <h6>{title}</h6>
         <input
           name={name}
           id={title}
           type={type}
           className={`btn btn-danger ${type === 'date' ? 'calendar-icon' : 'clock-icon'}`}
           defaultValue={type === 'date' ? date.format('YYYY-MM-DD') : date.format('HH:mm')}
-          onChange={this.handleTimeInputsChange}
+          onChange={this.onTimeChange}
           required
         />
       </label>
@@ -137,7 +198,14 @@ class Reservation extends Component {
 
   render() {
     const {
-      when, startTime, endTime, yourReservations, existingReservations,
+      when,
+      startTime,
+      endTime,
+      yourReservations,
+      existingReservations,
+      successModalOpen,
+      failureModalOpen,
+      failureModalContent,
     } = this.state;
 
     return (
@@ -147,13 +215,13 @@ class Reservation extends Component {
             <h3>Szczegóły dotyczace rezerwacji</h3>
             <div className="form-group">
               <label className="form-control-label d-block" htmlFor="eventName">
-                Tytuł zdarzenia
+                <h6>Tytuł zdarzenia</h6>
                 <input
                   type="text"
                   id="eventName"
                   className="form-control form-control-danger"
                   placeholder="Dodaj tytuł zdarzenia"
-                  onChange={this.handleNameInput}
+                  onChange={this.onReservationNameChange}
                   required
                 />
                 <div className="invalid-feedback">
@@ -166,7 +234,7 @@ class Reservation extends Component {
                 label="Sala"
                 errorMessage="Proszę wybrać salę"
                 placeholder="Dodaj lokalizacje"
-                onChangeRequest={this.handleClassInputChange}
+                onChangeRequest={this.onClassroomNameChange}
               />
             </div>
             <div className="reservation-time">
@@ -180,6 +248,12 @@ class Reservation extends Component {
         <div className="reservation__schedule">
           <Schedule title="Harmonogram" yourReservations={yourReservations} existingReservations={existingReservations} />
         </div>
+        <SuccessModal open={successModalOpen} onCloseRequest={this.closeSuccessModal} />
+        <FailureModal
+          open={failureModalOpen}
+          onCloseRequest={this.closeFailureModal}
+          content={failureModalContent}
+        />
       </div>
     );
   }

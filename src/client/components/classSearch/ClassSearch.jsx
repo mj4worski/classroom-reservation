@@ -13,7 +13,7 @@ const getSuggestionValue = suggestion => suggestion.name;
 
 // Use your imagination to render suggestions.
 const renderSuggestion = suggestion => (
-  <div>
+  <div className="suggestion">
     {suggestion.name}
   </div>
 );
@@ -49,8 +49,12 @@ class ClassSearch extends PureComponent {
   }
 
   onChange = (event, { newValue }) => {
+    this.setState({ value: newValue });
+  };
+
+  onSuggestionSelected = (event, { suggestionValue }) => {
     const { onChangeRequest } = this.props;
-    this.setState({ value: newValue }, () => onChangeRequest(this.state.value));
+    onChangeRequest(suggestionValue);
   };
 
   // Autosuggest will call this function every time you need to update suggestions.
@@ -81,7 +85,7 @@ class ClassSearch extends PureComponent {
     if (label !== '' || errorMessage !== '') {
       return inputProps => (
         <label className="d-block" htmlFor="classSearch">
-          {label}
+          <h6>{label}</h6>
           <input {...inputProps} />
           <div className="invalid-feedback">
             {errorMessage}
@@ -120,6 +124,7 @@ class ClassSearch extends PureComponent {
           renderInputComponent={this.createOuterRender(label, errorMessage)}
           inputProps={inputProps}
           theme={inputTheme}
+          onSuggestionSelected={this.onSuggestionSelected}
         />
       </div>
     );

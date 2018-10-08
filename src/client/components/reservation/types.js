@@ -5,5 +5,5 @@ export const reservationsType = PropTypes.arrayOf(PropTypes.shape({
   startTime: PropTypes.instanceOf(Date).isRequired,
   endTime: PropTypes.instanceOf(Date).isRequired,
   name: PropTypes.string.isRequired,
-  className: PropTypes.string.isRequired,
+  classroom: PropTypes.shape({ name: PropTypes.string.isRequired }),
 }));
