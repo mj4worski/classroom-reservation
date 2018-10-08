@@ -24,13 +24,22 @@ export default class Modal extends Component {
     }
 
     componentDidMount() {
-      window.document.body.classList.add('modal-open');
       window.document.body.appendChild(this.el);
     }
 
+    getSnapshotBeforeUpdate() {
+      if (this.props.open) {
+        window.document.body.classList.add('modal-open');
+        return null;
+      }
+      window.document.body.classList.remove('modal-open');
+      return null;
+    }
+
+    componentDidUpdate() {}
+
     componentWillUnmount() {
       window.document.body.removeChild(this.el);
-      window.document.body.classList.remove('modal-open');
     }
 
   renderModal = ({

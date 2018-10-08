@@ -8,6 +8,17 @@ import FailureModal from './FailureModal';
 import { getReservationsByClassNameAndDate } from '../../services';
 import './Reservation.scss';
 
+const FAILURE_CONTENT_FOR_VALIDATION = `Nie możesz dokonać rezerwacji ponieważ sala,
+ którą chcesz zarezerwować jest już zajęta w danym terminie.`;
+
+/* eslint-disable  max-len */
+const checkIfYourReservationIsBetweenExistings =
+(yourReservations, existingReservations) => existingReservations.some(existingReservation =>
+  yourReservations.startTime.isBetween(existingReservation.startTime, existingReservation.endTime)
+   || yourReservations.endTime.isBetween(existingReservation.startTime, existingReservation.endTime));
+/* eslint-enable max-len */
+
+// TODO:: Refactoring require. Reservation should be splited to follows SRP
 class Reservation extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
@@ -23,6 +34,7 @@ class Reservation extends Component {
     existingReservations: [],
     successModalOpen: false,
     failureModalOpen: false,
+    failureModalContent: undefined,
   };
 
   onTimeChange = (event) => {
@@ -112,8 +124,16 @@ class Reservation extends Component {
     event.target.classList.add('was-validated');
     if (event.target.checkValidity()) {
       const {
-        classroomName, endTime, name, startTime, when,
+        classroomName, endTime, name, startTime, when, existingReservations,
       } = this.state;
+
+      if (checkIfYourReservationIsBetweenExistings({ startTime, endTime }, existingReservations)) {
+        this.setState({
+          failureModalOpen: true,
+          failureModalContent: FAILURE_CONTENT_FOR_VALIDATION,
+        });
+        return;
+      }
       this.props.onSubmit({
         name,
         classroomName,
@@ -122,7 +142,8 @@ class Reservation extends Component {
         endTime: endTime.toDate(),
       }, this.reservationSuccess, this.reservationFailure);
     }
-  };
+  }
+
 
   reservationSuccess = () => {
     this.setState({
@@ -149,6 +170,7 @@ class Reservation extends Component {
   closeFailureModal = () => {
     this.setState({
       failureModalOpen: false,
+      failureModalContent: undefined,
     });
   }
 
@@ -183,6 +205,7 @@ class Reservation extends Component {
       existingReservations,
       successModalOpen,
       failureModalOpen,
+      failureModalContent,
     } = this.state;
 
     return (
@@ -226,7 +249,11 @@ class Reservation extends Component {
           <Schedule title="Harmonogram" yourReservations={yourReservations} existingReservations={existingReservations} />
         </div>
         <SuccessModal open={successModalOpen} onCloseRequest={this.closeSuccessModal} />
-        <FailureModal open={failureModalOpen} onCloseRequest={this.closeFailureModal} />
+        <FailureModal
+          open={failureModalOpen}
+          onCloseRequest={this.closeFailureModal}
+          content={failureModalContent}
+        />
       </div>
     );
   }
