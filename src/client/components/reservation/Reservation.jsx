@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Schedule from './Schedule';
 import ClassSearch from '../classSearch';
+import SuccessModal from './SuccessModal';
+import FailureModal from './FailureModal';
 import { getReservationsByClassNameAndDate } from '../../services';
 import './Reservation.scss';
 
@@ -19,6 +21,8 @@ class Reservation extends Component {
     classroomName: '',
     yourReservations: [],
     existingReservations: [],
+    successModalOpen: false,
+    failureModalOpen: false,
   };
 
   onTimeChange = (event) => {
@@ -116,7 +120,7 @@ class Reservation extends Component {
         when: when.toDate(),
         startTime: startTime.toDate(),
         endTime: endTime.toDate(),
-      }, this.reservationSuccess);
+      }, this.reservationSuccess, this.reservationFailure);
     }
   };
 
@@ -126,6 +130,25 @@ class Reservation extends Component {
       yourReservations: [],
       name: '',
       classroomName: '',
+      successModalOpen: true,
+    });
+  }
+
+  reservationFailure = () => {
+    this.setState({
+      failureModalOpen: true,
+    });
+  }
+
+  closeSuccessModal = () => {
+    this.setState({
+      successModalOpen: false,
+    });
+  }
+
+  closeFailureModal = () => {
+    this.setState({
+      failureModalOpen: false,
     });
   }
 
@@ -153,7 +176,13 @@ class Reservation extends Component {
 
   render() {
     const {
-      when, startTime, endTime, yourReservations, existingReservations,
+      when,
+      startTime,
+      endTime,
+      yourReservations,
+      existingReservations,
+      successModalOpen,
+      failureModalOpen,
     } = this.state;
 
     return (
@@ -196,6 +225,8 @@ class Reservation extends Component {
         <div className="reservation__schedule">
           <Schedule title="Harmonogram" yourReservations={yourReservations} existingReservations={existingReservations} />
         </div>
+        <SuccessModal open={successModalOpen} onCloseRequest={this.closeSuccessModal} />
+        <FailureModal open={failureModalOpen} onCloseRequest={this.closeFailureModal} />
       </div>
     );
   }
