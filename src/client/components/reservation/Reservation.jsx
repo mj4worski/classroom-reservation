@@ -89,7 +89,7 @@ class Reservation extends Component {
           startTime: startTime.toDate(),
           endTime: endTime.toDate(),
           name,
-          classroomName,
+          classroom: { name: classroomName },
         }],
       });
     }
