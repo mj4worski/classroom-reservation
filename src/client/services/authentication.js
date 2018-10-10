@@ -5,7 +5,7 @@ export const login = (user) => {
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
     credentials: 'include',
     body: JSON.stringify(user),
-  }).then(res => res.status)
+  }).then(res => res.json())
     .catch(err => err);
 };
 
@@ -16,7 +16,7 @@ export const registration = (user) => {
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
     credentials: 'include',
     body: JSON.stringify(user),
-  }).then(res => res.status)
+  }).then(res => res.json())
     .catch(err => err);
 };
 

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Route } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import { ReservationPage, AdministrationPage, CalendarPage, LoginPage, MainPage } from '../pages';
-import Registration from '../components/Registration';
+import Registration from '../components/registration';
 
 const Routes = () => (
   <Fragment>

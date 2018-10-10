@@ -4,22 +4,22 @@ const User = require('../../models/user');
 users.post('/registration', (req, res, next) => {
   const { email, password } = req.body;
   if (email && password) {
-    User.create({ email, password }, (error) => {
+    User.create({ email, password }, (error, user) => {
       if (error) {
         return next(error);
       }
-      return res.status(200).end();
+      return res.json({ id: user._id, email: user.email, logIn: true });
     });
   } else {
     const err = new Error('All fields required');
     err.status = 400;
-    return res.json({ registration: true });
+    return res.json({ logIn: true });
   }
 });
 
 users.get('/rememberMe', (req, res, next) => {
   if (!req.session || !req.session.userId) {
-    return res.status(401).end();
+    return res.json({ logIn: false });
   }
   User.authenticateByUserId(req.session.userId, (error, user) => {
     if (error) {
@@ -32,7 +32,7 @@ users.get('/rememberMe', (req, res, next) => {
       return res.status(401).end();
     }
     req.session.userId = user._id;
-    return res.json({ email: user.email, logIn: true });
+    return res.json({ id: user._id, email: user.email, logIn: true });
   });
 });
 
@@ -53,7 +53,7 @@ users.post('/login', (req, res, next) => {
     if (rememberMe) {
       req.session.userId = user._id;
     }
-    return res.status(200).end();
+    return res.json({ id: user._id, email: user.email, logIn: true });
   });
 });
 
