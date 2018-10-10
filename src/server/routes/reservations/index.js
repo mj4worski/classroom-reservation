@@ -1,6 +1,7 @@
 const reservations = require('express').Router();
 const Reservation = require('../../models/reservation');
 const Class = require('../../models/class');
+const User = require('../../models/user');
 
 reservations.get('/:classroomName', (req, res, next) => {
   const { classroomName } = req.params;
@@ -36,7 +37,8 @@ const validateReservation = req => req.body.name
     && req.body.classroomName
     && req.body.when
     && req.body.startTime
-    && req.body.endTime;
+    && req.body.endTime
+    && req.body.userId;
 
 reservations.post('/', (req, res, next) => {
   if (!validateReservation(req)) {
@@ -54,11 +56,22 @@ reservations.post('/', (req, res, next) => {
       return next(err);
     }
 
-    Reservation.create({ ...req.body, classroom: classDoc._id }, (err, reservation) => {
+    User.findOne({ _id: req.body.userId }, (err, user) => {
       if (err) {
         return next(err);
       }
-      return res.json(reservation);
+      if (!user) {
+        const err = new Error('User not exist in database');
+        err.status = 400;
+        return next(err);
+      }
+
+      Reservation.create({ ...req.body, classroom: classDoc._id, user: user._id }, (err, reservation) => {
+        if (err) {
+          return next(err);
+        }
+        return res.json(reservation);
+      });
     });
   });
 });

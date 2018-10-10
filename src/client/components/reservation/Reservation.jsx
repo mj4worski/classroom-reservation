@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { connect } from 'react-redux';
 import Schedule from './Schedule';
 import ClassSearch from '../classSearch';
 import SuccessModal from './SuccessModal';
@@ -22,6 +23,7 @@ const checkIfYourReservationIsBetweenExistings =
 class Reservation extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
+    userId: PropTypes.string.isRequired,
   };
 
   state = {
@@ -140,6 +142,7 @@ class Reservation extends Component {
         when: when.toDate(),
         startTime: startTime.toDate(),
         endTime: endTime.toDate(),
+        userId: this.props.userId,
       }, this.reservationSuccess, this.reservationFailure);
     }
   }
@@ -259,4 +262,8 @@ class Reservation extends Component {
   }
 }
 
-export default Reservation;
+const mapStateToProps = ({ account }) => ({
+  userId: account.id,
+});
+
+export default connect(mapStateToProps, null)(Reservation);

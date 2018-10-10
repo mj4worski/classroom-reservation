@@ -8,6 +8,7 @@ const ReservationSchema = Schema({
   endTime: { type: Date, required: true },
   name: String,
   classroom: { type: Schema.Types.ObjectId, ref: 'Class' },
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
 const Reservation = mongoose.model('Reservation', ReservationSchema);
