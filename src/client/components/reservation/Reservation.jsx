@@ -15,8 +15,8 @@ const FAILURE_CONTENT_FOR_VALIDATION = `Nie możesz dokonać rezerwacji poniewa�
 /* eslint-disable  max-len */
 const checkIfYourReservationIsBetweenExistings =
 (yourReservations, existingReservations) => existingReservations.some(existingReservation =>
-  yourReservations.startTime.isBetween(existingReservation.startTime, existingReservation.endTime)
-   || yourReservations.endTime.isBetween(existingReservation.startTime, existingReservation.endTime));
+  yourReservations.startTime.isSameOrAfter(existingReservation.startTime)
+   || yourReservations.endTime.isSameOrBefore(existingReservation.endTime));
 /* eslint-enable max-len */
 
 // TODO:: Refactoring require. Reservation should be splited to follows SRP
