@@ -12,7 +12,7 @@ const MonthDay = ({ dayNumber, events }) => (
   <Cell>
     <span className="month-day">
       {dayNumber}
-      {events.length > 0 && events.map(event => <div>{event.name}</div>)}
+      {events.length > 0 && events.map(event => <div key={event._id} >{event.name}</div>)}
     </span>
   </Cell>
 );
@@ -34,6 +34,7 @@ export default class Month extends Component {
       startTime: PropTypes.instanceOf(Date),
       endTime: PropTypes.instanceOf(Date),
       name: PropTypes.string,
+      _id: PropTypes.string,
     })).isRequired,
   };
 

@@ -8,7 +8,7 @@ const Routes = () => (
   <Fragment>
     <Route exact path="/" component={MainPage} />
     <Route path="/registration" component={Registration} />
-    <Route path="/calendar" component={CalendarPage} />
+    <PrivateRoute path="/calendar" component={CalendarPage} />
     <Route path="/login" component={LoginPage} />
     <PrivateRoute path="/reservation" component={ReservationPage} />
     <Route path="/administration" component={AdministrationPage} />

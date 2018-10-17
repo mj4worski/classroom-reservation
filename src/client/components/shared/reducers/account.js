@@ -3,6 +3,7 @@ import { SUCCEEDED_LOG_IN, FAILED_LOG_IN, LOG_IN } from '../../Login';
 import { SUCCEEDED_LOG_OUT } from '../../Logout';
 
 const defaultState = { loggedIn: false, failedLogIn: false };
+export const getUserId = state => state.account.id;
 
 const account = (state = defaultState, action) => {
   const { type, user } = action;

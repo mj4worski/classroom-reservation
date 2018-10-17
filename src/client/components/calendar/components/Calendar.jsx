@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Month from './Month';
 import Week from './Week';
 import { eventsType } from './types';
+import { fetchReservationsByUserId } from '../actions';
 import arrow from './arrow.svg';
 
 import './Calendar.scss';
@@ -21,6 +22,7 @@ class Calendar extends Component {
   static propTypes = {
     events: eventsType,
     children: PropTypes.node,
+    featchReservationRequest: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -32,6 +34,10 @@ class Calendar extends Component {
     month: moment(),
     calendarType: CalendarType.MONTH,
   };
+
+  componentDidMount() {
+    this.props.featchReservationRequest();
+  }
 
   previous = () => {
     this.setState({ month: this.state.month.add(-1, 'M') });
@@ -48,7 +54,6 @@ class Calendar extends Component {
   weekView = () => {
     this.setState({ calendarType: CalendarType.WEEK });
   };
-
 
   renderHeaderBottom = children => (children ? <div>{children}</div> : null);
 
@@ -103,4 +108,7 @@ const mapStateToProps = state => ({
   events: state.reservations,
 });
 
-export default connect(mapStateToProps, null)(Calendar);
+export default connect(
+  mapStateToProps,
+  { featchReservationRequest: fetchReservationsByUserId },
+)(Calendar);

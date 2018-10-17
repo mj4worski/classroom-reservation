@@ -3,8 +3,12 @@ const Reservation = require('../../models/reservation');
 const Class = require('../../models/class');
 const User = require('../../models/user');
 
-reservations.get('/:classroomName', (req, res, next) => {
-  const { classroomName } = req.params;
+reservations.get('', (req, res, next) => {
+  const { classroomName } = req.query;
+  if (!classroomName) {
+    next();
+    return;
+  }
   Reservation.find({}).populate({
     path: 'classroom',
     match: { name: classroomName },
@@ -13,6 +17,28 @@ reservations.get('/:classroomName', (req, res, next) => {
       return next(err);
     }
     res.json(reservations.filter(reservation => reservation.classroom));
+  });
+});
+
+reservations.get('/', (req, res, next) => {
+  const { userId } = req.query;
+  if (!userId) {
+    const err = new Error('Precondition Failed');
+    err.status = 412;
+    return next(err);
+  }
+  Reservation.find({}).populate([
+    {
+      path: 'user',
+      match: { _id: userId },
+    },
+    {
+      path: 'classroom',
+    }]).exec((err, reservations) => {
+    if (err) {
+      return next(err);
+    }
+    res.json(reservations.filter(reservation => reservation.user));
   });
 });
 
@@ -66,7 +92,11 @@ reservations.post('/', (req, res, next) => {
         return next(err);
       }
 
-      Reservation.create({ ...req.body, classroom: classDoc._id, user: user._id }, (err, reservation) => {
+      Reservation.create({
+        ...req.body,
+        classroom: classDoc._id,
+        user: user._id,
+      }, (err, reservation) => {
         if (err) {
           return next(err);
         }
