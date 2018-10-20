@@ -15,8 +15,8 @@ const CalendarType = {
   WEEK: 'week',
 };
 
-const filterEventForSpecificMonth = (events, month) =>
-  events.filter(({ when }) => when.getMonth() === month);
+const filterEventByMonthAndYear = (events, month, year) =>
+  events.filter(({ when }) => when.getMonth() === month && when.getFullYear() === year);
 
 class Calendar extends Component {
   static propTypes = {
@@ -60,8 +60,7 @@ class Calendar extends Component {
   renderHeader = () => (
     <header className="calendar-header">
       <div className="calendar-current-date">
-        <h1 className="calendar-current-date__content">{this.state.month.format('D dddd')}</h1>
-        <h1 className="calendar-current-date__content">{this.state.month.format('MMMM YYYY')}</h1>
+        <h1 className="calendar-current-date__content">{this.state.month.locale('pl').format('MMMM YYYY')}</h1>
       </div>
       <div>
         <button className="btn btn-outline-light" onClick={this.monthView}>
@@ -89,7 +88,11 @@ class Calendar extends Component {
   render() {
     const { month, calendarType } = this.state;
     const { events, children } = this.props;
-    const eventsForCurrentMonth = filterEventForSpecificMonth(events, month.get('month'));
+    const eventsForCurrentMonth = filterEventByMonthAndYear(
+      events,
+      month.get('month'),
+      month.get('year'),
+    );
     const CalendarContent = calendarType === CalendarType.MONTH ? Month : Week;
     return (
       <div className="calendar">
