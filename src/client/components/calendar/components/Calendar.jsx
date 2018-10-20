@@ -101,6 +101,7 @@ class Calendar extends Component {
         <CalendarContent
           month={month}
           events={eventsForCurrentMonth}
+          currentMonth={month.get('month')}
         />
       </div>
     );

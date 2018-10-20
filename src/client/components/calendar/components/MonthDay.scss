@@ -1,0 +1,35 @@
+@import '../../../theme.scss';
+
+.month-day {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    min-height: 130px;
+
+    &--inactive {
+        background: linear-gradient(to right bottom, rgba(52, 58, 64, 0.36), #49505726);
+    }
+
+    &__day-number {
+        font-weight: 500;
+        width: 100%
+    }
+
+    &__content {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-weight: 600;
+
+        &:before {
+            content: "\A";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: $light-red-color;
+            display: inline-block;
+            margin: 0 10px;
+        }
+    }
+}

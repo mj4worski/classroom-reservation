@@ -2,25 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { prepareWeeks } from './prepareWeeks';
+import MonthDay from './MonthDay';
 import WeekDays from './WeekDays';
-import { CalendarRow as Row, CalendarCell as Cell } from './layout';
-import { eventsType } from './types';
+import { CalendarRow as Row } from './layout';
 
 import './Month.scss';
-
-const MonthDay = ({ dayNumber, events }) => (
-  <Cell>
-    <span className="month-day">
-      {dayNumber}
-      {events.length > 0 && events.map(event => <div key={event._id} >{event.name}</div>)}
-    </span>
-  </Cell>
-);
-
-MonthDay.propTypes = {
-  dayNumber: PropTypes.number.isRequired,
-  events: eventsType.isRequired,
-};
 
 function getEventsForSpecificDay(events, day) {
   return events.filter(({ when }) => when.getDate() === day);
@@ -36,6 +22,7 @@ export default class Month extends Component {
       name: PropTypes.string,
       _id: PropTypes.string,
     })).isRequired,
+    currentMonth: PropTypes.number.isRequired,
   };
 
   renderDays = (week, events) => {
@@ -46,6 +33,7 @@ export default class Month extends Component {
         dayNumber={dayNumber.date()}
         key={dayNumber.date()}
         events={getEventsForSpecificDay(events, dayNumber.date())}
+        inactive={this.props.currentMonth !== dayNumber.month()}
       />);
       dayNumber = week.add(1, 'd');
     }
