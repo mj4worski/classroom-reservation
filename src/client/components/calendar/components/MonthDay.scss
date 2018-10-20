@@ -6,9 +6,17 @@
     width: 100%;
     border: 1px solid rgba(0, 0, 0, 0.03);
     min-height: 130px;
+    &:hover {
+        background-color: rgba(220, 53, 69, 0.14);
+        cursor: pointer
+    }
 
     &--inactive {
         background: linear-gradient(to right bottom, rgba(52, 58, 64, 0.36), #49505726);
+        &:hover {
+            background: linear-gradient(to right bottom, rgba(52, 58, 64, 0.36), #49505726);
+            cursor: default;
+        }
     }
 
     &__day-number {
