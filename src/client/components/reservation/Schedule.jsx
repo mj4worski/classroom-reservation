@@ -6,7 +6,7 @@ import './Schedule.scss';
 // eslint-disable-next-line react/prop-types
 const ScheduleCell = ({ hour }) => (
   <div className="schedule-cell">
-    {hour}
+    <span className="schedule-cell__hour">{hour}</span>
   </div>
 );
 

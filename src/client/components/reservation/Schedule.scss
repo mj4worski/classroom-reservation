@@ -1,6 +1,6 @@
 @import '../../theme.scss';
 
-$cell-number-width: 30px;
+$cell-number-width: 52px;
 
 .schedule {
   display: flex;
@@ -22,7 +22,23 @@ $cell-number-width: 30px;
 
 .schedule-cell {
   height: 60px;
-  border: 1px solid black;
+  border: 1px solid #ced4da;
+
+  &__hour {
+    display: block;
+    padding: 16px;
+    font-weight: 600;
+  }
+  
+  &:first-child {
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+  }
+
+  &:last-child {
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+  }
 }
 
 .schedule-reservation {

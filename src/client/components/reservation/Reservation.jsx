@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { connect } from 'react-redux';
+import Board from './Board';
 import Schedule from './Schedule';
 import ClassSearch from '../classSearch';
 import SuccessModal from './SuccessModal';
@@ -15,8 +16,10 @@ const FAILURE_CONTENT_FOR_VALIDATION = `Nie możesz dokonać rezerwacji poniewa�
 /* eslint-disable  max-len */
 const checkIfYourReservationIsBetweenExistings =
 (yourReservations, existingReservations) => existingReservations.some(existingReservation =>
-  yourReservations.startTime.isSameOrAfter(existingReservation.startTime)
-   || yourReservations.endTime.isSameOrBefore(existingReservation.endTime));
+  (yourReservations.startTime.isBetween(existingReservation.startTime, existingReservation.endTime)
+   || yourReservations.endTime.isBetween(existingReservation.startTime, existingReservation.endTime))
+   || (yourReservations.startTime.isBefore(existingReservation.startTime)
+   && yourReservations.endTime.isAfter(existingReservation.endTime)));
 /* eslint-enable max-len */
 
 // TODO:: Refactoring require. Reservation should be splited to follows SRP
@@ -247,6 +250,7 @@ class Reservation extends Component {
             </div>
             <button className="btn btn-danger">Zatwierdź</button>
           </form>
+          <Board />
         </div>
         <div className="reservation__schedule">
           <Schedule title="Harmonogram" yourReservations={yourReservations} existingReservations={existingReservations} />
