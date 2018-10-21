@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Route } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
-import { ReservationPage, AdministrationPage, CalendarPage, LoginPage, MainPage } from '../pages';
+import { ReservationPage, AdministrationPage, CalendarPage, LoginPage, MainPage, MyReservationPage } from '../pages';
 import Registration from '../components/registration';
 
 const Routes = () => (
@@ -12,6 +12,7 @@ const Routes = () => (
     <Route path="/login" component={LoginPage} />
     <PrivateRoute path="/reservation" component={ReservationPage} />
     <Route path="/administration" component={AdministrationPage} />
+    <PrivateRoute path="/myreservation" component={MyReservationPage} />
   </Fragment>
 );
 
