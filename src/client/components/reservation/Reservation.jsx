@@ -139,6 +139,7 @@ class Reservation extends Component {
         });
         return;
       }
+      event.target.classList.remove('was-validated');
       this.props.onSubmit({
         name,
         classroomName,
@@ -156,7 +157,6 @@ class Reservation extends Component {
       existingReservations: [...this.state.existingReservations, ...this.state.yourReservations],
       yourReservations: [],
       name: '',
-      classroomName: '',
       successModalOpen: true,
     });
   }
@@ -204,6 +204,7 @@ class Reservation extends Component {
 
   render() {
     const {
+      name,
       when,
       startTime,
       endTime,
@@ -227,6 +228,7 @@ class Reservation extends Component {
                   id="eventName"
                   className="form-control form-control-danger"
                   placeholder="Dodaj tytuł zdarzenia"
+                  value={name}
                   onChange={this.onReservationNameChange}
                   required
                 />

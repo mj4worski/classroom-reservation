@@ -8,8 +8,8 @@ import { CalendarRow as Row } from './layout';
 
 import './Month.scss';
 
-function getEventsForSpecificDay(events, day) {
-  return events.filter(({ when }) => when.getDate() === day);
+function getEventsForSpecificDate(events, date) {
+  return events.filter(({ when: eventDate }) => eventDate.getDate() === date.date() && eventDate.getMonth() === date.month());
 }
 
 export default class Month extends Component {
@@ -27,15 +27,15 @@ export default class Month extends Component {
 
   renderDays = (week, events) => {
     const days = [];
-    let dayNumber = week;
+    let dayInGivenWeek = week;
     for (let i = 0; i < 7; i += 1) {
       days.push(<MonthDay
-        dayNumber={dayNumber.date()}
-        key={dayNumber.date()}
-        events={getEventsForSpecificDay(events, dayNumber.date())}
-        inactive={this.props.currentMonth !== dayNumber.month()}
+        dayNumber={dayInGivenWeek.date()}
+        key={dayInGivenWeek.date()}
+        events={getEventsForSpecificDate(events, dayInGivenWeek)}
+        inactive={this.props.currentMonth !== dayInGivenWeek.month()}
       />);
-      dayNumber = week.add(1, 'd');
+      dayInGivenWeek = week.add(1, 'd');
     }
     return days;
   };
