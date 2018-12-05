@@ -1,4 +1,4 @@
 export { default } from './components/Calendar';
-export { watchReservation } from './sagas';
+export { watchReservation, watchReservationByUserId } from './sagas';
 export { reservations as reservationsReducer } from './reducers';
-export { fetchReservations } from './actions';
+export { fetchReservations, fetchReservationsByUserId } from './actions';

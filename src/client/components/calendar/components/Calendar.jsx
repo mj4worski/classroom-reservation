@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Month from './Month';
 import Week from './Week';
 import { eventsType } from './types';
+import { fetchReservationsByUserId } from '../actions';
 import arrow from './arrow.svg';
 
 import './Calendar.scss';
@@ -14,13 +15,14 @@ const CalendarType = {
   WEEK: 'week',
 };
 
-const filterEventForSpecificMonth = (events, month) =>
-  events.filter(({ when }) => when.getMonth() === month);
+const filterEventByMonthAndYear = (events, month, year) =>
+  events.filter(({ when }) => when.getMonth() === month && when.getFullYear() === year);
 
 class Calendar extends Component {
   static propTypes = {
     events: eventsType,
     children: PropTypes.node,
+    featchReservationRequest: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -32,6 +34,10 @@ class Calendar extends Component {
     month: moment(),
     calendarType: CalendarType.MONTH,
   };
+
+  componentDidMount() {
+    this.props.featchReservationRequest();
+  }
 
   previous = () => {
     this.setState({ month: this.state.month.add(-1, 'M') });
@@ -49,14 +55,12 @@ class Calendar extends Component {
     this.setState({ calendarType: CalendarType.WEEK });
   };
 
-
   renderHeaderBottom = children => (children ? <div>{children}</div> : null);
 
   renderHeader = () => (
     <header className="calendar-header">
       <div className="calendar-current-date">
-        <h1 className="calendar-current-date__content">{this.state.month.format('D dddd')}</h1>
-        <h1 className="calendar-current-date__content">{this.state.month.format('MMMM YYYY')}</h1>
+        <h1 className="calendar-current-date__content">{this.state.month.locale('pl').format('MMMM YYYY')}</h1>
       </div>
       <div>
         <button className="btn btn-outline-light" onClick={this.monthView}>
@@ -84,7 +88,11 @@ class Calendar extends Component {
   render() {
     const { month, calendarType } = this.state;
     const { events, children } = this.props;
-    const eventsForCurrentMonth = filterEventForSpecificMonth(events, month.get('month'));
+    const eventsForCurrentMonth = filterEventByMonthAndYear(
+      events,
+      month.get('month'),
+      month.get('year'),
+    );
     const CalendarContent = calendarType === CalendarType.MONTH ? Month : Week;
     return (
       <div className="calendar">
@@ -93,6 +101,7 @@ class Calendar extends Component {
         <CalendarContent
           month={month}
           events={eventsForCurrentMonth}
+          currentMonth={month.get('month')}
         />
       </div>
     );
@@ -103,4 +112,7 @@ const mapStateToProps = state => ({
   events: state.reservations,
 });
 
-export default connect(mapStateToProps, null)(Calendar);
+export default connect(
+  mapStateToProps,
+  { featchReservationRequest: fetchReservationsByUserId },
+)(Calendar);

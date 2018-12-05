@@ -2,28 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { prepareWeeks } from './prepareWeeks';
+import MonthDay from './MonthDay';
 import WeekDays from './WeekDays';
-import { CalendarRow as Row, CalendarCell as Cell } from './layout';
-import { eventsType } from './types';
+import { CalendarRow as Row } from './layout';
 
 import './Month.scss';
 
-const MonthDay = ({ dayNumber, events }) => (
-  <Cell>
-    <span className="month-day">
-      {dayNumber}
-      {events.length > 0 && events.map(event => <div>{event.name}</div>)}
-    </span>
-  </Cell>
-);
-
-MonthDay.propTypes = {
-  dayNumber: PropTypes.number.isRequired,
-  events: eventsType.isRequired,
-};
-
-function getEventsForSpecificDay(events, day) {
-  return events.filter(({ when }) => when.getDate() === day);
+function getEventsForSpecificDate(events, date) {
+  return events.filter(({ when: eventDate }) => eventDate.getDate() === date.date() && eventDate.getMonth() === date.month());
 }
 
 export default class Month extends Component {
@@ -34,19 +20,22 @@ export default class Month extends Component {
       startTime: PropTypes.instanceOf(Date),
       endTime: PropTypes.instanceOf(Date),
       name: PropTypes.string,
+      _id: PropTypes.string,
     })).isRequired,
+    currentMonth: PropTypes.number.isRequired,
   };
 
   renderDays = (week, events) => {
     const days = [];
-    let dayNumber = week;
+    let dayInGivenWeek = week;
     for (let i = 0; i < 7; i += 1) {
       days.push(<MonthDay
-        dayNumber={dayNumber.date()}
-        key={dayNumber.date()}
-        events={getEventsForSpecificDay(events, dayNumber.date())}
+        dayNumber={dayInGivenWeek.date()}
+        key={dayInGivenWeek.date()}
+        events={getEventsForSpecificDate(events, dayInGivenWeek)}
+        inactive={this.props.currentMonth !== dayInGivenWeek.month()}
       />);
-      dayNumber = week.add(1, 'd');
+      dayInGivenWeek = week.add(1, 'd');
     }
     return days;
   };

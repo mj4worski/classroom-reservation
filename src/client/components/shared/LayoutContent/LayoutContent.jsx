@@ -15,6 +15,6 @@ LayoutContent.propTypes = {
 
 LayoutContent.defaultProps = {
   className: '',
-}
+};
 
 export default LayoutContent;

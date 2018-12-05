@@ -5,8 +5,24 @@ const mapTimeStringToDateObject = (key, value) => {
   return value;
 };
 
+const buildUrlWithQueryParams = (url, parameters = {}) => {
+  let qs = '';
+  Object.keys(parameters).forEach((key) => {
+    const value = parameters[key];
+    qs += `${encodeURIComponent(key)}=${encodeURIComponent(value)}&`;
+  });
+  if (qs.length > 0) {
+    qs = qs.substring(0, qs.length - 1);
+    return `${url}?${qs}`;
+  }
+
+  return url;
+};
+
 export const getReservationsByClassName = (className) => {
-  const url = new URL(`${SERVICE_URL}/reservations/${className}`);
+  const url = buildUrlWithQueryParams(`${SERVICE_URL}/reservations/${className}`, {
+    classroomName: className,
+  });
   return fetch(url, {
     method: 'GET',
     headers: new Headers(),
@@ -17,6 +33,18 @@ export const getReservationsByClassName = (className) => {
 
 export const getReservationsByClassNameAndDate = (className, date) => {
   const url = new URL(`${SERVICE_URL}/reservations/${className}/${date}`);
+  return fetch(url, {
+    method: 'GET',
+    headers: new Headers(),
+  }).then(res => res.text())
+    .then(resAsText => JSON.parse(resAsText, mapTimeStringToDateObject))
+    .catch(err => err);
+};
+
+export const getReservationsAssigneToUser = (userId) => {
+  const url = buildUrlWithQueryParams(`${SERVICE_URL}/reservations`, {
+    userId,
+  });
   return fetch(url, {
     method: 'GET',
     headers: new Headers(),

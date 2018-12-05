@@ -5,9 +5,9 @@ export const logIn = user => ({
   user,
 });
 
-export const succeededLogin = email => ({
+export const succeededLogin = user => ({
   type: SUCCEEDED_LOG_IN,
-  email,
+  user,
 });
 
 export const failedLogin = () => ({
