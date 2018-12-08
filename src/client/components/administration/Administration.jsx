@@ -110,13 +110,18 @@ class Administration extends PureComponent {
   renderClassesWithRelatedTiles = () => {
     const { filtredClassesroom } = this.state;
     const { classroomNameChangeRequested, classroomDeleteRequested } = this.props;
-    return (<Tiles
-      items={filtredClassesroom}
-      TileComponent={<AdministrationForm
-        onEditSubmit={classroomNameChangeRequested}
-        onDeleteRequested={classroomDeleteRequested}
-      />}
-    />);
+    return (
+      <Tiles items={filtredClassesroom}>
+        {
+        date => (
+          <AdministrationForm
+            {...date}
+            onEditSubmit={classroomNameChangeRequested}
+            onDeleteRequested={classroomDeleteRequested}
+          />)
+        }
+      </Tiles>
+    );
   };
 
   render() {

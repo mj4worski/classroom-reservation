@@ -1,10 +1,11 @@
 import React from 'react';
 import Calendar from '../../components/calendar';
-import './Calendar.scss';
 import LayoutContent from '../../components/shared/LayoutContent';
+import './Calendar.scss';
+
 
 const CalendarPage = () => (
-  <LayoutContent>
+  <LayoutContent className="calendar-page">
     <Calendar />
   </LayoutContent>
 );

@@ -9,15 +9,19 @@ class Tiles extends PureComponent {
       name: PropTypes.string.isRequired,
       _id: PropTypes.string.isRequired,
     })).isRequired,
-    TileComponent: PropTypes.node.isRequired,
+    children: PropTypes.node,
+  }
+
+  static defaultProps = {
+    children: () => {},
   }
 
   state = {
-    activeItemId: '',
+    activeItemId: this.props.items.length > 0 && this.props.items[0]._id,
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.activeItemId === '' && nextProps.items.length > 0) {
+    if (this.state.activeItemId === false && nextProps.items.length > 0) {
       this.setState({ activeItemId: nextProps.items[0]._id });
     }
   }
@@ -26,7 +30,7 @@ class Tiles extends PureComponent {
   isActive = id => this.state.activeItemId === id
 
   render() {
-    const { items, TileComponent } = this.props;
+    const { items, children } = this.props;
     const mappedTiles = items.reduce((obj, item) => {
       obj.items.push(<TileItem
         _id={item._id}
@@ -35,11 +39,10 @@ class Tiles extends PureComponent {
         onClick={this.onClassroomClick}
         key={item.name}
       />);
-      obj.itemsPane.push(React.cloneElement(TileComponent, {
+      obj.itemsPane.push(children({
         label: item.name,
         active: this.isActive(item._id),
         _id: item._id,
-        key: item.name,
       }));
       return obj;
     }, { items: [], itemsPane: [] });
