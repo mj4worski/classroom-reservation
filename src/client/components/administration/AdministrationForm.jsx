@@ -1,12 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { classroomType } from './types';
-import './Tile.scss';
+import './AdministrationForm.scss';
 
-class Tile extends PureComponent {
+class AdministrationForm extends PureComponent {
   static propTypes = {
-    classroom: classroomType.isRequired,
-    id: PropTypes.string.isRequired,
+    label: PropTypes.string,
+    _id: PropTypes.string,
     active: PropTypes.bool,
     onEditSubmit: PropTypes.func.isRequired,
     onDeleteRequested: PropTypes.func.isRequired,
@@ -14,15 +13,17 @@ class Tile extends PureComponent {
 
   static defaultProps = {
     active: false,
+    label: '',
+    _id: '',
   }
 
   state = {
-    classroomName: this.props.classroom.name,
+    classroomName: this.props.label,
   }
 
   handleEditSubmit = () => {
-    const { onEditSubmit, classroom } = this.props;
-    onEditSubmit({ name: this.state.classroomName, _id: classroom._id });
+    const { onEditSubmit, _id } = this.props;
+    onEditSubmit({ name: this.state.classroomName, _id });
   }
 
   handleClassNameChange = (event) => {
@@ -30,24 +31,24 @@ class Tile extends PureComponent {
   }
 
   handleClassroomDelete = () => {
-    const { onDeleteRequested, classroom } = this.props;
-    onDeleteRequested(classroom._id);
+    const { onDeleteRequested, _id } = this.props;
+    onDeleteRequested(_id);
   }
 
   render() {
-    const { classroom, active, id } = this.props;
+    const { label, active, _id } = this.props;
     const { classroomName } = this.state;
 
     return (
       <div
-        className={`tab-pane tile ${active ? 'show active' : ''}`}
-        id={id}
+        className={`tab-pane administration-form ${active ? 'show active' : ''}`}
+        id={_id}
         role="tabpanel"
       >
-        <h4>{classroom.name}</h4>
+        <h4>{label}</h4>
         <label
           htmlFor="class-field-edit"
-          className="tile__input"
+          className="administration-form__input"
         >
           <h6>Edytuj sale</h6>
           <div className="form-inline">
@@ -85,4 +86,4 @@ class Tile extends PureComponent {
   }
 }
 
-export default Tile;
+export default AdministrationForm;

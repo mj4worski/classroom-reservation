@@ -1,0 +1,24 @@
+@import '../../theme.scss';
+
+.tile-item {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    
+    &::before {
+      content: '';
+      background-size: 18px 18px;
+      display: block;
+      height: 18px;
+      width: 18px;
+      background-image: url("play-button.svg");
+      margin-right: 0.8rem;
+    }
+
+    &.active { 
+        color: #fff;
+        background-color: $light-red-color;
+        border-color: $light-red-color;
+        border-radius: 10px;
+      }
+}

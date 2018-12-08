@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { ReservationsType } from './types';
+import './MyReservation.scss';
 
 class MyReservation extends PureComponent {
   static propTypes = {
@@ -16,11 +17,19 @@ class MyReservation extends PureComponent {
   render() {
     const { reservations, date } = this.props;
     return (
-      <div>
-        <h1>Moje rezerwacje dla dnia: {`${date.date}-${date.months}-${date.years}`} </h1>
-        <ul>
-          {reservations.map(reservation => <li key={reservation._id}>{`Nazwa rezerwacji: ${reservation.name} sala: ${reservation.classroom.name}`}</li>)}
-        </ul>
+      <div className="my-reservation">
+        <h1 className="my-reservation__header">Moje rezerwacje dla dnia: {`${date.date}-${date.months}-${date.years}`} </h1>
+        <div className="my-reservation__content">
+          <div>
+          Rezerwacje w danym dniu:
+            <ul>
+              {reservations.map(reservation => <li key={reservation._id}>{reservation.name}</li>)}
+            </ul>
+          </div>
+          <div>
+          Bla bla bla bla bla bla bla
+          </div>
+        </div>
       </div>
     );
   }
