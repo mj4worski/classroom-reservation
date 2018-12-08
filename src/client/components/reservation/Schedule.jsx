@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { reservationsType } from './types';
+import { ReservationsType } from './types';
 import './Schedule.scss';
 
 // eslint-disable-next-line react/prop-types
@@ -26,8 +26,8 @@ const calculateHeight = (startTime, endTime) => {
 
 export default class Schedule extends Component {
   static propTypes = {
-    existingReservations: reservationsType,
-    yourReservations: reservationsType,
+    existingReservations: ReservationsType,
+    yourReservations: ReservationsType,
     title: PropTypes.string,
   };
 

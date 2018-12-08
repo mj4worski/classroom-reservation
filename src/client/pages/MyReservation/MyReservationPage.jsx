@@ -2,10 +2,11 @@ import React from 'react';
 import { MyReservation } from '../../components/reservation';
 import LayoutContent from '../../components/shared/LayoutContent';
 
-const MyReservationPage = () => (
+const MyReservationPage = props => (
   <LayoutContent>
-    <MyReservation />
+    <MyReservation reservations={props.location.state.reservations} />
   </LayoutContent>
 );
+
 
 export default MyReservationPage;
