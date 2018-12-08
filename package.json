@@ -40,6 +40,7 @@
     "jquery": "^3.2.1",
     "node-sass": "^4.7.2",
     "nodemon": "^1.18.3",
+    "react-moment-proptypes": "^1.6.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
     "url-loader": "^0.6.2",

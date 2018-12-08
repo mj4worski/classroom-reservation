@@ -2,12 +2,10 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { classroomType } from './types';
-import Tile from './Tile';
-import Classroom from './Classroom';
+import AdministrationForm from './AdministrationForm';
+import Tiles from '../Tiles';
 import { fetchClasses, updateClass, addClass, deleteClass } from '../shared/sagas';
 import './Administration.scss';
-
-const removeWhiteCharacter = string => string.replace(/\s/g, '');
 
 const bySearchResult = searchResult => item => item.name
   .toLowerCase()
@@ -62,10 +60,6 @@ class Administration extends PureComponent {
     onAddClassRequest({ name: classroomName });
   };
 
-  onClassroomClick = id => this.setState({ activeItemId: id })
-
-  isActive = id => this.state.activeItemId === id
-
   filterClasses() {
     const { classes } = this.props;
     const { searchResult } = this.state;
@@ -116,33 +110,17 @@ class Administration extends PureComponent {
   renderClassesWithRelatedTiles = () => {
     const { filtredClassesroom } = this.state;
     const { classroomNameChangeRequested, classroomDeleteRequested } = this.props;
-    const mappedClasses = filtredClassesroom.reduce((obj, classroom) => {
-      obj.items.push(<Classroom
-        classroom={classroom}
-        active={this.isActive(classroom._id)}
-        onClick={this.onClassroomClick}
-        key={classroom.name}
-      />);
-      obj.itemsPane.push(<Tile
-        classroom={classroom}
-        active={this.isActive(classroom._id)}
-        id={removeWhiteCharacter(classroom.name)}
-        onEditSubmit={classroomNameChangeRequested}
-        onDeleteRequested={classroomDeleteRequested}
-        key={classroom.name}
-      />);
-      return obj;
-    }, { items: [], itemsPane: [] });
-
     return (
-      <div className="row administration-class__content">
-        <div className="col-4 list-group list-group-flush administration-class-list" id="list-tab" role="tablist">
-          {mappedClasses.items}
-        </div>
-        <div className="col-8 tab-content administration__tile">
-          {mappedClasses.itemsPane}
-        </div>
-      </div>
+      <Tiles items={filtredClassesroom}>
+        {
+        date => (
+          <AdministrationForm
+            {...date}
+            onEditSubmit={classroomNameChangeRequested}
+            onDeleteRequested={classroomDeleteRequested}
+          />)
+        }
+      </Tiles>
     );
   };
 
