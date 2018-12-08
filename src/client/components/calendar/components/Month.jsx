@@ -9,7 +9,8 @@ import { CalendarRow as Row } from './layout';
 import './Month.scss';
 
 function getEventsForSpecificDate(events, date) {
-  return events.filter(({ when: eventDate }) => eventDate.getDate() === date.date() && eventDate.getMonth() === date.month());
+  return events.filter(({ when: eventDate }) =>
+    eventDate.getDate() === date.date() && eventDate.getMonth() === date.month());
 }
 
 export default class Month extends Component {
@@ -30,9 +31,9 @@ export default class Month extends Component {
     let dayInGivenWeek = week;
     for (let i = 0; i < 7; i += 1) {
       days.push(<MonthDay
-        dayNumber={dayInGivenWeek.date()}
+        date={dayInGivenWeek.clone()}
         key={dayInGivenWeek.date()}
-        events={getEventsForSpecificDate(events, dayInGivenWeek)}
+        reservations={getEventsForSpecificDate(events, dayInGivenWeek)}
         inactive={this.props.currentMonth !== dayInGivenWeek.month()}
       />);
       dayInGivenWeek = week.add(1, 'd');

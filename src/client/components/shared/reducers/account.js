@@ -1,4 +1,4 @@
-import { SUCCEEDED_REGISTRATION } from '../../registration';
+import { SUCCEEDED_REGISTRATION } from '../../Registration';
 import { SUCCEEDED_LOG_IN, FAILED_LOG_IN, LOG_IN } from '../../Login';
 import { SUCCEEDED_LOG_OUT } from '../../Logout';
 

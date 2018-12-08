@@ -4,7 +4,7 @@ import LayoutContent from '../../components/shared/LayoutContent';
 
 const MyReservationPage = props => (
   <LayoutContent>
-    <MyReservation reservations={props.location.state.reservations} />
+    <MyReservation {...props.location.state} />
   </LayoutContent>
 );
 
