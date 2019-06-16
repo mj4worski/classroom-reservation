@@ -46,13 +46,15 @@ app.use(session({
   cookie: { maxAge: MONTH },
 }));
 
-const corsOptions = {
-  origin: 'http://localhost:8080',
-  optionsSuccessStatus: 200,
-  credentials: true,
-};
 
-app.use(cors(corsOptions));
+if (process.env.NODE_ENV !== 'production') {
+  const corsOptions = {
+    origin: 'http://localhost:8080',
+    optionsSuccessStatus: 200,
+    credentials: true,
+  };
+  app.use(cors(corsOptions));
+}
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
