@@ -14,6 +14,8 @@ classes.get('/', (req, res, next) => {
       err.status = 500;
       return next(err);
     }
+    console.log("Request ++++", req);
+    console.log("Classes ++++", classes);
     res.json(classes);
   });
 });
