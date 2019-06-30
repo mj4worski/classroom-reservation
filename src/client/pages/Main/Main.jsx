@@ -1,8 +1,9 @@
 import React from 'react';
 import imageSrc from '../../../../assets/images/agh.jpg';
+import './Main.scss';
 
 const Main = () => (
-  <section>
+  <section className="main-page">
     <div className="container">
       <div className="row align-items-center">
         <div className="col-lg-6 order-lg-2">
