@@ -1,5 +1,5 @@
 import { all } from 'redux-saga/effects';
-import { watchRegistration } from '../components/Registration';
+import { watchRegistration } from '../components/registration';
 import { watchLogin, watchLoginRememberMe } from '../components/Login';
 import { watchReservation, watchReservationByUserId } from '../components/calendar';
 import { watchClasses, watchUpdateClass, watchAddClass, watchDeleteClass } from '../components/shared/sagas';

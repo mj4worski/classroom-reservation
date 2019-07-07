@@ -10,7 +10,7 @@
     flex-direction: column;
     width: 100%;
     border: 1px solid rgba(0, 0, 0, 0.03);
-    min-height: 130px;
+    min-height: 110px;
     @include reset-default-link-styles;
 
     &:hover {

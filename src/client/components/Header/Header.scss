@@ -3,11 +3,11 @@
 .cr-header {
   position: relative;
   overflow: hidden;
-  padding-top: calc(4rem + 55px);
+  padding-top: calc(4rem + 30px);
   padding-bottom: 2rem;
   background: linear-gradient(45deg, $green-color, $black-color 55%, $red-color) no-repeat scroll center center;
   background-size: cover;
-  min-height: 35vh;
+  min-height: 30vh;
 }
 
 .cr-header-content {
