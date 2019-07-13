@@ -8,7 +8,7 @@ import './Table.scss';
 export default class Table extends PureComponent {
     static propTypes = {
       title: PropTypes.node.isRequired,
-      hiddeTitle: PropTypes.bool,
+      hiddeTitle: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
       children: PropTypes.node.isRequired,
     };
 

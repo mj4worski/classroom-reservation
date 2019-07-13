@@ -9,31 +9,31 @@ class AdministrationForm extends PureComponent {
     active: PropTypes.bool,
     onEditSubmit: PropTypes.func.isRequired,
     onDeleteRequested: PropTypes.func.isRequired,
-  }
+  };
 
   static defaultProps = {
     active: false,
     label: '',
     _id: '',
-  }
+  };
 
   state = {
     classroomName: this.props.label,
-  }
+  };
 
   handleEditSubmit = () => {
     const { onEditSubmit, _id } = this.props;
     onEditSubmit({ name: this.state.classroomName, _id });
-  }
+  };
 
   handleClassNameChange = (event) => {
     this.setState({ classroomName: event.target.value });
-  }
+  };
 
   handleClassroomDelete = () => {
     const { onDeleteRequested, _id } = this.props;
     onDeleteRequested(_id);
-  }
+  };
 
   render() {
     const { label, active, _id } = this.props;

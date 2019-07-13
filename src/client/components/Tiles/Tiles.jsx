@@ -8,17 +8,20 @@ class Tiles extends PureComponent {
     items: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string.isRequired,
       _id: PropTypes.string.isRequired,
+      startTime: PropTypes.instanceOf(Date),
+      endTime: PropTypes.instanceOf(Date),
+      className: PropTypes.string,
     })).isRequired,
-    children: PropTypes.node,
-  }
+    children: PropTypes.func,
+  };
 
   static defaultProps = {
     children: () => {},
-  }
+  };
 
   state = {
     activeItemId: this.props.items.length > 0 && this.props.items[0]._id,
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
     if (this.state.activeItemId === false && nextProps.items.length > 0) {
@@ -26,8 +29,8 @@ class Tiles extends PureComponent {
     }
   }
 
-  onClassroomClick = id => this.setState({ activeItemId: id })
-  isActive = id => this.state.activeItemId === id
+  onClassroomClick = id => this.setState({ activeItemId: id });
+  isActive = id => this.state.activeItemId === id;
 
   render() {
     const { items, children } = this.props;
@@ -43,16 +46,23 @@ class Tiles extends PureComponent {
         label: item.name,
         active: this.isActive(item._id),
         _id: item._id,
+        reservation: {
+          startTime: item.startTime,
+          endTime: item.endTime,
+          className: item.classroom && item.classroom.name,
+        },
       }));
       return obj;
     }, { items: [], itemsPane: [] });
-
     return (
       <div className="row tiles">
-        <div className="col-4 list-group list-group-flush tiles__item" id="list-tab" role="tablist">
-          {mappedTiles.items}
+        <div className="title-container col-4">
+          <div className="list-group list-group-flush tiles__item" id="list-tab" role="tablist">
+            {mappedTiles.items}
+          </div>
         </div>
-        <div className="col-8 tab-content tiles__tile">
+
+        <div className="col-8 tab-content">
           {mappedTiles.itemsPane}
         </div>
       </div>
