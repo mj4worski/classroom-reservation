@@ -1,10 +1,15 @@
 .my-reservation {
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    &__header {
 
+    &__header {
+        display: flex;
+        justify-content: center;
     }
 
     &__content {
         display: flex;
+        flex: 1;
     }
 }

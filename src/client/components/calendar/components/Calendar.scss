@@ -8,11 +8,10 @@
   display: flex;
   background-size: cover;
   background: linear-gradient(to right bottom, rgba(black, 0.85), rgba(#1d1d2f, 0.85)), url("calendar-header.jpg") top;
-  height: 19vh; //TODO:: Considering for different resolution
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  min-height: 100px;
+  min-height: 150px;
 }
 
 .calendar-header-navigation {

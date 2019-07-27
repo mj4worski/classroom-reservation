@@ -4,12 +4,9 @@
     border-radius: 15px;
     height: 100%;
     width: 100%;
+}
 
-    &__item {
-        overflow: scroll;
-    }
-
-    &__tile {
-        overflow: scroll;
-    }
+.title-container {
+    max-height: 45vh;
+    overflow-y: auto;
 }

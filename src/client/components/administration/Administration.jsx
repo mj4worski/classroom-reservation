@@ -127,7 +127,7 @@ class Administration extends PureComponent {
   render() {
     return (
       <div className="administration">
-        <h1>Administration</h1>
+        <h1>Panel Administratora</h1>
         <div className="administration__form">
           {this.renderClassInput()}
           {this.renderClassSearchInput()}

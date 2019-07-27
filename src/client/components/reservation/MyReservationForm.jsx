@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import './MyReservationForm.scss';
 
 class MyReservationForm extends PureComponent {
@@ -9,34 +10,41 @@ class MyReservationForm extends PureComponent {
     active: PropTypes.bool,
     onEditSubmit: PropTypes.func.isRequired,
     onDeleteRequested: PropTypes.func.isRequired,
-  }
+    reservation: PropTypes.shape({
+      startTime: PropTypes.instanceOf(Date).isRequired,
+      endTime: PropTypes.instanceOf(Date).isRequired,
+      className: PropTypes.string.isRequired,
+    }).isRequired,
+  };
 
   static defaultProps = {
     active: false,
     label: '',
     _id: '',
-  }
+  };
 
   state = {
     classroomName: this.props.label,
-  }
+  };
 
   handleEditSubmit = () => {
     const { onEditSubmit, _id } = this.props;
     onEditSubmit({ name: this.state.classroomName, _id });
-  }
+  };
 
   handleClassNameChange = (event) => {
     this.setState({ classroomName: event.target.value });
-  }
+  };
 
   handleClassroomDelete = () => {
     const { onDeleteRequested, _id } = this.props;
     onDeleteRequested(_id);
-  }
+  };
 
   render() {
-    const { label, active, _id } = this.props;
+    const {
+      label, active, _id, reservation,
+    } = this.props;
     const { classroomName } = this.state;
 
     return (
@@ -50,7 +58,7 @@ class MyReservationForm extends PureComponent {
           htmlFor="class-field-edit"
           className="administration-form__input"
         >
-          <h6>Edytuj sale</h6>
+          <h6>Zmień nazwę rezerwacji sale</h6>
           <div className="form-inline">
             <input
               value={classroomName}
@@ -69,9 +77,50 @@ class MyReservationForm extends PureComponent {
             </button>
           </div>
         </label>
+
+
+        <label
+          htmlFor="class-field-edit"
+          className="administration-form__input"
+        >
+          <h6>Rezerwacja dotyczy sali</h6>
+          <div className="form-inline">
+            <input
+              value={reservation.className}
+              type="text"
+              className="form-control flex-grow-1"
+              id="class-field-edit"
+              disabled
+            />
+          </div>
+        </label>
+
+        <label
+          htmlFor="class-field-edit"
+          className="administration-form__input"
+        >
+          <h6>Czas trwania rezerwacji</h6>
+          <div className="form-inline">
+            <input
+              value={moment(reservation.startTime).format('hh:mm')}
+              type="text"
+              className="form-control flex-grow-1"
+              id="class-field-edit"
+              disabled
+            />
+            <input
+              value={moment(reservation.endTime).format('hh:mm')}
+              type="text"
+              className="form-control flex-grow-1"
+              id="class-field-edit"
+              disabled
+            />
+          </div>
+        </label>
+
         <div className="d-flex">
           <span className="font-weight-bold flex-grow-1">
-            Usuniecie sali spowoduje również odwołanie wszystkich rezerwacji związanych z salą.
+            Usuń rezerwacje.
           </span>
           <button
             type="submit"

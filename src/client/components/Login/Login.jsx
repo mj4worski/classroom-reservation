@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
 import { logIn } from './actions';
+import Table from '../Table';
 import './Login.scss';
 
 class Login extends PureComponent {
@@ -56,9 +57,14 @@ class Login extends PureComponent {
       const rememberMedId = v4();
 
       return (
-        <Fragment>
-          {incorrectDate && this.renderAlert()}
+        <Table
+          title="Pamiętaj o tym by nie udostępniać danych do konta osobom trzecim"
+          hiddeTitle={className}
+        >
           <form className={`login ${className}`}>
+            {incorrectDate && this.renderAlert()}
+            <h1 className="login__header">Logowanie</h1>
+            <h2 className="login__sub-header">Zaloguj się do już istniejącego konta</h2>
             <div className="form-group">
               <label htmlFor={emailId} className="login__label">
                           Adres Email
@@ -103,7 +109,7 @@ class Login extends PureComponent {
               Zaloguj
             </button>
           </form>
-        </Fragment>
+        </Table>
       );
     }
 }

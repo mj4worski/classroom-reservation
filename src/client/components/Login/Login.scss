@@ -1,5 +1,18 @@
 .login {
-  width: 100%;
+  flex: 3;
+  padding: 1.5rem;
+
+  &__header {
+    font-size: 2rem;
+    font-weight: 600 !important;
+  }
+
+  &__sub-header {
+    font-size: 1.3rem;
+    font-weight: 400 !important;
+    padding: 1rem 1rem 1rem 0;
+  }
+
 
   &__label {
     width: 100%;
