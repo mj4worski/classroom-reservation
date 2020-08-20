@@ -52,7 +52,7 @@
     "autoprefixer": "^7.2.3",
     "babel-eslint": "^8.2.2",
     "babel-polyfill": "^6.26.0",
-    "bcrypt": "^1.0.3",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.2",
     "bootstrap": "^4.1.3",
     "classname": "^0.0.0",
