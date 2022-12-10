@@ -61,7 +61,7 @@
     "connected-react-router": "^4.4.1",
     "cors": "^2.8.4",
     "exports-loader": "^0.6.4",
-    "express": "^4.16.2",
+    "express": "^4.17.3",
     "express-session": "^1.15.6",
     "express-static-gzip": "^1.1.1",
     "history": "^4.7.2",
